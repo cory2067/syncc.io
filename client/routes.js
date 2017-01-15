@@ -1,6 +1,11 @@
-FlowRouter.route('/quickstart', {
+FlowRouter.route('/', {
     action: function(params) {
-        console.log("render editor");
-        BlazeLayout.render('EditorPage');
+        BlazeLayout.render('App', {main: 'HomePage'});
+    }
+});
+
+FlowRouter.route('/editor', {
+    action: function(params) {
+        BlazeLayout.render('App', {main: 'EditorPage'})
     }
 });
