@@ -1,5 +1,8 @@
 <template name="HomePage">
   <p>welcome to the site thing</p>
   {{> loginButtons}}
+  {{#if currentUser}}
+    <p>You're logged in.</p>
+  {{/if}}
   <a href="/editor">go to the editor</a>
 </template>
