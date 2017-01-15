@@ -1,9 +1,11 @@
 CodeMirrors = {};
 
+var editor;
+
 Template.CodeMirror.rendered = function() {
 	var options = this.data.options || { lineNumbers: true };
 	var textarea = this.find("textarea");
-	var editor = CodeMirror.fromTextArea(textarea, options);
+	editor = CodeMirror.fromTextArea(textarea, options);
 
   	CodeMirrors[this.data.id || "code-mirror-textarea"] = editor;
 

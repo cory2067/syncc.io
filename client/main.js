@@ -1,6 +1,5 @@
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
-
 import './main.html';
 
 Template.hello.onCreated(function helloOnCreated() {
@@ -19,7 +18,7 @@ Template.EditorPage.helpers({
   editorOptions() {
       return {
           lineNumbers: true,
-          mode: "xml",
+          mode: "javascript",
           theme: "night",
           //keyMap: "vim",
           indentUnit: 4,
@@ -38,6 +37,9 @@ Template.EditorPage.helpers({
 
 Template.hello.events({
   'click button'(event, instance) {
+    var editor = $('.CodeMirror')[0].CodeMirror;
+    var line = editor.getLine(0);
+    editor.replaceRange("new stuff\n", {line:0,ch:0}, {line:0,ch:line.length});
     // increment the counter when button is clicked
     instance.counter.set(instance.counter.get() + 1);
   },
