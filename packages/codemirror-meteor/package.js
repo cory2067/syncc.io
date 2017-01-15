@@ -71,7 +71,12 @@ Package.onUse(function (api) {
 	api.add_files('lib/codemirror/addon/mode/overlay.js', "client");
 
 	// markdown list continuation; nice complement for gfm
+	api.add_files('lib/codemirror/addon/edit/closebrackets.js', "client");
+	api.add_files('lib/codemirror/addon/edit/closetag.js', "client");
 	api.add_files('lib/codemirror/addon/edit/continuelist.js', "client");
+	api.add_files('lib/codemirror/addon/edit/matchbrackets.js', "client");
+	api.add_files('lib/codemirror/addon/edit/matchtags.js', "client");
+	api.add_files('lib/codemirror/addon/edit/trailingspace.js', "client");
 
 	// modes
 	api.add_files('lib/codemirror/mode/apl/apl.js', "client");

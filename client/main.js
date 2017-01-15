@@ -19,10 +19,15 @@ Template.EditorPage.helpers({
   editorOptions() {
       return {
           lineNumbers: true,
-          autoCloseBrackets: true,
-          mode: "javascript",
+          mode: "xml",
           theme: "night",
-          matchBrackets: true
+          //keyMap: "vim",
+          indentUnit: 4,
+          indentWithTabs: true,
+          autoCloseBrackets: true,
+          matchBrackets: true,
+          matchTags: true,
+          autoCloseTags: true
       }
   },
 
