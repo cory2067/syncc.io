@@ -4,10 +4,14 @@
 
 <body>
   <h1>Welcome to Meteor!</h1>
-
+  {{> EditorPage}}
   {{> hello}}
   {{> info}}
 </body>
+
+<template name="EditorPage">
+  {{> CodeMirror id="some-id" name="someName" options=editorOptions code=editorCode}}
+</template>
 
 <template name="hello">
   <button>Click Me</button>

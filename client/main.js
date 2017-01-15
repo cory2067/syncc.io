@@ -8,10 +8,27 @@ Template.hello.onCreated(function helloOnCreated() {
   this.counter = new ReactiveVar(0);
 });
 
+
 Template.hello.helpers({
   counter() {
     return Template.instance().counter.get();
+  }
+});
+
+Template.EditorPage.helpers({
+  editorOptions() {
+      return {
+          lineNumbers: true,
+          autoCloseBrackets: true,
+          mode: "javascript",
+          theme: "night",
+          matchBrackets: true
+      }
   },
+
+  editorCode() {
+      return "Code to show in editor";
+  }
 });
 
 Template.hello.events({
