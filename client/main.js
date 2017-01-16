@@ -35,6 +35,25 @@ Template.EditorPage.helpers({
   }
 });
 
+Template.HomePage.onRendered(function () {
+  this.$('#jstree').jstree({
+    core: {
+      themes: {
+        name: 'proton',
+        dots: true,
+        icons: true
+      },
+      data: [{
+        text: 'Root node', 'children': [{
+          text: 'Child node 1'
+        }, {
+          text: 'Child node 2'
+        }]
+      }]
+    }
+  });
+});
+
 Template.hello.events({
   'click button'(event, instance) {
     var editor = $('.CodeMirror')[0].CodeMirror;
