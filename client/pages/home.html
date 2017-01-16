@@ -1,10 +1,9 @@
 <template name="HomePage">
+  {{> Header}}
   <p>welcome to the site thing</p>
-  {{> loginButtons}}
   {{#if currentUser}}
     <p>You're logged in</p>
   {{/if}}
-  <a href="/editor">go to the editor</a>
   <div id="jstree"></div>
 
 </template>

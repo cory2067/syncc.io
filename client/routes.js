@@ -9,3 +9,15 @@ FlowRouter.route('/editor', {
         BlazeLayout.render('App', {main: 'EditorPage'})
     }
 });
+
+FlowRouter.route('/about', {
+    action: function(params) {
+        BlazeLayout.render('App', {main: 'AboutPage'})
+    }
+});
+
+FlowRouter.route('/projects', {
+    action: function(params) {
+        BlazeLayout.render('App', {main: 'ProjectsPage'})
+    }
+});
