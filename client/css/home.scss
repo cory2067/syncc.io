@@ -1,10 +1,23 @@
+//Fonts Import
+
+
+/***********************
+    SCSS Variables
+***********************/
+$white: #D5DEE6;
+$cloud: #BCC4CB;
+
+/**********************
+      Main Styling
+**********************/
 p {
   font: {
     family: "Comic Sans MS";
     weight: bold;
   };
-  color: orange;
+  color: $cloud;
 }
+
 body {
   background-color: yellow;
 }
