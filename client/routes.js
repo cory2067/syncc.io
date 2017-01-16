@@ -21,3 +21,9 @@ FlowRouter.route('/projects', {
         BlazeLayout.render('App', {main: 'ProjectsPage'})
     }
 });
+
+FlowRouter.route('/:editID', {
+    action: function(params) {
+        BlazeLayout.render('App', {main: 'EditorPage'})
+    }
+});

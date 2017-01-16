@@ -14,7 +14,18 @@ Template.hello.helpers({
   }
 });
 
+Template.Header.helpers({
+    newEditor() {
+      var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      return _.sample(possible, 8).join('');
+    }
+});
+
 Template.EditorPage.helpers({
+  editorID() {
+    return FlowRouter.getParam("editID");
+  },
+
   editorOptions() {
       return {
           lineNumbers: true,

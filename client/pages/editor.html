@@ -2,4 +2,8 @@
   {{> TreeProj}}
   {{> CodeMirror id="some-id" name="someName" options=editorOptions code=editorCode}}
   {{> hello}}
+
+  {{#if editorID}}
+    <p>You're using a fancy hash url for the editor: {{editorID}}</p>
+  {{/if}}
 </template>
