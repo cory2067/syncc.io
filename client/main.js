@@ -41,7 +41,8 @@ Template.HomePage.onRendered(function () {
       themes: {
         name: 'proton',
         dots: true,
-        icons: true
+        icons: true,
+        responsive: true
       },
       data: [{
         text: 'Root node', 'children': [{
