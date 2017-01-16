@@ -1,7 +1,4 @@
 <template name="EditorPage">
-  {{#if currentUser}}
-    User: {{currentUser.services.github.email}}
-  {{/if}}
   {{> CodeMirror id="some-id" name="someName" options=editorOptions code=editorCode}}
   {{> hello}}
 </template>
