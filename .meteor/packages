@@ -25,5 +25,5 @@ kadira:flow-router
 kadira:blaze-layout
 fourseven:scss
 accounts-ui
-accounts-github
 accounts-password
+accounts-base
