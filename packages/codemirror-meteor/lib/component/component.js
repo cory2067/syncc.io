@@ -18,6 +18,12 @@ Template.CodeMirror.rendered = function() {
 		}
 	});
 
+	for(var prop in this.data.events){
+		if(this.data.events.hasOwnProperty(prop)){
+			editor.on(prop, this.data.events[prop]);
+		}
+	}
+
 	if(this.data.reactiveVar) {
 		this.autorun(function () {
 			var val = Session.get(self.data.reactiveVar) || "";

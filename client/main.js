@@ -29,7 +29,7 @@ Template.EditorPage.helpers({
   editorOptions() {
       return {
           lineNumbers: true,
-          mode: "javascript",
+          mode: "python",
           theme: "night",
           //keyMap: "vim",
           indentUnit: 4,
@@ -39,7 +39,15 @@ Template.EditorPage.helpers({
           matchTags: true,
           autoCloseTags: true
       }
-  },
+    },
+
+    editorEvents() {
+       return {
+         "change": function(doc, change){
+            console.log(change);
+         }
+       }
+    },
 
   editorCode() {
       return "Code to show in editor";

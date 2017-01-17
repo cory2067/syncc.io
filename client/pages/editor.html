@@ -1,6 +1,6 @@
 <template name="EditorPage">
   {{> TreeProj}}
-  {{> CodeMirror id="some-id" name="someName" options=editorOptions code=editorCode}}
+  {{> CodeMirror id="some-id" name="someName" options=editorOptions code=editorCode events=editorEvents}}
   {{> hello}}
 
   {{#if editorID}}
