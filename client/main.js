@@ -1,5 +1,6 @@
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
+import { Changes } from '../collections/changes'
 import './main.html';
 
 Template.hello.onCreated(function helloOnCreated() {
@@ -21,6 +22,29 @@ Template.Header.helpers({
     }
 });
 
+var mongoId = null;
+Template.EditorPage.onRendered(() => {
+  //Meteor.setTimeout(() => {
+    var id = FlowRouter.getParam("editID");
+
+    if(!Changes.find({session:id}).fetch().length) {
+         Changes.insert({session:id, from:{}, to:{}, text:[], removed:[], origin:[]})
+    }
+    mongoId = Changes.find({session:id}).fetch()[0]['_id'];
+
+    Changes.find({session:id}).observeChanges({
+       added: function (i, fields) {
+        console.log("add"+fields);
+       },
+       changed: function (i, fields) {
+         console.log("chang"+Changes.find({session: id}));
+       },
+       removed: function (i) {
+      }
+    });
+
+});
+
 Template.EditorPage.helpers({
   editorID() {
     return FlowRouter.getParam("editID");
@@ -31,7 +55,7 @@ Template.EditorPage.helpers({
           lineNumbers: true,
           mode: "python",
           theme: "night",
-          //keyMap: "vim",
+          keyMap: "vim",
           indentUnit: 4,
           indentWithTabs: true,
           autoCloseBrackets: true,
@@ -44,7 +68,8 @@ Template.EditorPage.helpers({
     editorEvents() {
        return {
          "change": function(doc, change){
-            console.log(change);
+            //Changes.add(change);
+            Changes.update(mongoId, {$set: change});
          }
        }
     },
