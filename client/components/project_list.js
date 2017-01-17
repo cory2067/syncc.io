@@ -1,6 +1,6 @@
 Template.ProjectList.helpers({
     docs: function () {
-        return Documents.find();
+        return Documents.find({"metadata.owner": Meteor.userId()});
     }
 });
 
