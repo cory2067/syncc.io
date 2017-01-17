@@ -1,9 +1,3 @@
 <template name="UploadForm">
     <input type="file" id="files" name="files" multiple/>
-    {{#each docs}}
-        <p>{{key}}</p>
-        <input type="button" value="remove" class="btnRemove"/>
-        {{else}}
-            No files uploaded
-    {{/each}}
 </template>
