@@ -9,5 +9,9 @@ Template.UploadForm.events({
                 }
             });
         });
+    },
+    'click #submit_folder': function(event, template) {
+        var files = event.target.files;
+        console.log(files);
     }
 });
