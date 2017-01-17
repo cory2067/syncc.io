@@ -76,6 +76,29 @@ body {
 
     #login-buttons{
       line-height: inherit;
+
+      .login-close-text{
+        padding: 0 14px;
+        float: right;
+        padding-bottom: 0px;
+        line-height: normal;
+        text-transform: none;
+        font-size: 1em;
+        font-family: 'Open Sans', sans-serif;
+        a:hover{
+          background-color: none;
+          color: $accent;
+        }
+      }
+
+      .accounts-dialog{
+        top: 120%;
+        left: -100%;
+      }
+
+      .additional-link{
+        text-transform: none;
+      }
     }
   }
   
