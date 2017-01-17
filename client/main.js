@@ -1,6 +1,7 @@
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Changes } from '../collections/changes'
+import { Random } from 'meteor/random'
 import './main.html';
 
 Template.hello.onCreated(function helloOnCreated() {
@@ -23,21 +24,24 @@ Template.Header.helpers({
 });
 
 var mongoId = null;
+var userHash = Random.id();
 Template.EditorPage.onRendered(() => {
   //Meteor.setTimeout(() => {
     var id = FlowRouter.getParam("editID");
 
     if(!Changes.find({session:id}).fetch().length) {
-         Changes.insert({session:id, from:{}, to:{}, text:[], removed:[], origin:[]})
+         Changes.insert({session:id, from:{}, to:{}, text:[], removed:[], origin:[], user:userHash})
     }
     mongoId = Changes.find({session:id}).fetch()[0]['_id'];
 
-    Changes.find({session:id}).observeChanges({
-       added: function (i, fields) {
-        console.log("add"+fields);
+    Changes.find({session:id}).observe({
+       added: function (i) {
+        console.log("ADDED");
        },
-       changed: function (i, fields) {
-         console.log(Changes.find({session: id}).fetch());
+       changed: function (changes, old) {
+         if(changes['user'] != userHash) {
+           console.log(Changes.find({session: id}).fetch());
+         }
        },
        removed: function (i) {
       }
@@ -69,6 +73,7 @@ Template.EditorPage.helpers({
        return {
          "change": function(doc, change){
             //Changes.add(change);
+            change['user'] = userHash;
             if(change['origin'] != 'ignore') {
               Changes.update(mongoId, {$set: change});
             }
