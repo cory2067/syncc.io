@@ -1,7 +1,7 @@
 <template name="ProjectList">
     {{#each docs}}
         <div>
-            {{this.original.name}}
+            Name: {{this.original.name}} <br> Updated at: {{this.original.updatedAt}}
             <button type="button" id="remove" name="removeBtn">X</button>
         </div>
     {{/each}}
