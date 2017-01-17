@@ -1,23 +1,98 @@
-//Fonts Import
+/*Fonts imported on main.html. Refer with following:
+font-family: 'Open Sans', sans-serif;
+font-family: 'Fira Sans Extra Condensed', sans-serif;
+*/
 
 
 /***********************
     SCSS Variables
 ***********************/
-$white: #D5DEE6;
-$cloud: #BCC4CB;
+$accent: #1ABC9C;
+$cloud: #E2E5E9;
+$white: #EDEFF1;
+$chrome: #778899;
+$grey: #3C4956;
+$darkgrey: #313D4A;
+$charcoal: #465464;
 
 /**********************
       Main Styling
 **********************/
 p {
   font: {
-    family: "Comic Sans MS";
-    weight: bold;
+    family: "Open Sans";
   };
-  color: $cloud;
+  color: $charcoal;
 }
 
+a {
+  color: $charcoal;
+  text-decoration: none;
+  &:hover {
+    text-decoration: none;
+    color: $accent;
+  };
+};
+
 body {
-  background-color: yellow;
+  background-color: $white;
+}
+
+/***********************
+      Header Styles
+************************/
+#header {
+  background-color: $cloud;
+  width: 100%; //increases to span top of page
+  display: inline-block; //spans the page
+
+  a {
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+  
+  ul{
+    list-style-type: none; //removes bullets
+    margin: 0;
+    //overflow: hidden; not hiding overflow lets the login pull down
+  }
+
+  li {
+    float: right;
+    height: 50px; //Sets a fixed height (this makes it so that different font sizes don't affect the size of navbar
+
+    a {
+    vertical-align: middle;
+    text-align: center;
+    display: inline-block;
+    padding: 0 14px;
+    line-height: 50px;
+    white-space: nowrap;
+      &:hover{
+        background-color: $accent;
+        color: $white;
+      }
+    }
+
+    #login-buttons{
+      line-height: inherit;
+    }
+  }
+  
+  //Responsive Navbar STILL BUGGY
+  @media screen and (max-width: 600px){
+    ul li {float: none;}
+  }
+};
+
+/**********************
+    Home Styles
+**********************/
+
+.home{
+  button{
+    text-transform: uppercase;
+    border: 2px;
+    border-radius: 5px;
+  }
 }

@@ -1,9 +1,15 @@
 <!--Top Header. Jessica plz make this horizontal -->
+
 <template name="Header">
-    <li><a href="/{{newEditor}}">editor (quickstart)</a></li>
-    <li><a href="/about">About</a></li>
-    {{#if currentUser}}
-        <li><a href="/projects">Projects</a></li>
-    {{/if}}
-    <li>{{> loginButtons}}</li>
+    <div id="header">
+        <ul>
+            <li style="float:left;"><a href="/" style="font-family: 'Fira Sans Condensed'; font-size: 1.3em;">Webapp</a></li>
+            <li><a href="/about">About</a></li>
+            {{#if currentUser}}
+                <li><a href="/projects">Projects</a></li>
+                <li><a href="/{{newEditor}}">editor (quickstart)</a></li>
+            {{/if}}
+            <li>{{> loginButtons}}</li>
+        </ul>
+    </div>
 </template>

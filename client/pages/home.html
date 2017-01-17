@@ -1,9 +1,12 @@
 <template name="HomePage">
   {{> Header}}
-  <p>welcome to the site thing</p>
-  {{#if currentUser}}
-    <p>You're logged in as </p>
-  {{/if}}
-  <div id="jstree"></div>
+  <div class="home">
+    <p>welcome to the site thing</p>
+    <a href="/{{newEditor}}" class="button">Demo</a>
+    {{#if currentUser}}
+      <p>You're logged in as </p>
+    {{/if}}
+    <div id="jstree"></div>
+  </div>
 
 </template>
