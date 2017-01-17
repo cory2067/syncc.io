@@ -3,3 +3,4 @@ Documents.allow({
         return true;
     }
 });
+
