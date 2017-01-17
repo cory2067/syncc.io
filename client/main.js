@@ -37,7 +37,7 @@ Template.EditorPage.onRendered(() => {
         console.log("add"+fields);
        },
        changed: function (i, fields) {
-         console.log("chang"+Changes.find({session: id}));
+         console.log(Changes.find({session: id}).fetch());
        },
        removed: function (i) {
       }
@@ -69,7 +69,9 @@ Template.EditorPage.helpers({
        return {
          "change": function(doc, change){
             //Changes.add(change);
-            Changes.update(mongoId, {$set: change});
+            if(change['origin'] != 'ignore') {
+              Changes.update(mongoId, {$set: change});
+            }
          }
        }
     },
@@ -103,7 +105,7 @@ Template.hello.events({
   'click button'(event, instance) {
     var editor = $('.CodeMirror')[0].CodeMirror;
     var line = editor.getLine(0);
-    editor.replaceRange("new stuff\n", {line:0,ch:0}, {line:0,ch:line.length});
+    editor.replaceRange("new stuff\n", {line:0,ch:0}, {line:0,ch:line.length}, origin="ignore");
     // increment the counter when button is clicked
     instance.counter.set(instance.counter.get() + 1);
   },
