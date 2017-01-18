@@ -1,8 +1,14 @@
 <template name="HomePage">
   {{> Header}}
-  <div class="home">
-    <p>welcome to the site thing</p>
-    <a href="/{{newEditor}}" class="button">Demo</a>
+  <div class="main">
+    <div class="home">
+      <h1>TITLE OF THE WEBAPP</h1>
+      <p style="font-size: 2em;">welcome to the site thing</p>
+      <a href="/{{newEditor}}" class="button">Demo</a>
+      <!--HELP THE ABOVE LINK DOESN'T ACTUALLY LINK-->
+      <a href="/" class="button">Button</a>
+    </div>
+
     {{#if currentUser}}
       <p>You're logged in</p>
     {{/if}}

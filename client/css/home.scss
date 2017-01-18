@@ -20,6 +20,14 @@ $charcoal: #465464;
 /**********************
       Main Styling
 **********************/
+h1{
+  font: {
+    family: 'Fira Sans Extra Condensed', sans-serif;
+    weight: bold;
+    size: 5em;
+  }
+}
+
 p {
   font: {
     family: "Open Sans";
@@ -27,14 +35,10 @@ p {
   color: $charcoal;
 }
 
-a {
+a { //the basic link has no underline EVER
   color: $charcoal;
-  text-decoration: none;
-  &:hover {
-    text-decoration: none;
-    color: $accent;
-  };
-};
+  text-decoration: none!important;
+}
 
 body {
   background-color: $white;
@@ -153,10 +157,32 @@ body {
       Home Styles
 **********************/
 
-.home{
-  button{
+.main{
+  padding: 15px 50px;
+
+  a.button{
+    display: inline-block;
+    font-size: 1.5em;
     text-transform: uppercase;
-    border: 2px;
+    background: none;
+    margin: 10px;
+    width: 180px;
+    padding: 8px 0;
+    border-style: solid;
+    border-color: $charcoal;
+    border-width: 2px;
     border-radius: 5px;
+
+    &:hover, &:focus{
+      color: $accent;
+      border-color: $accent;
+      text-decoration: none;
+    }
   }
+}
+
+.home{
+  padding-top: 18%;
+  text-align: center;
+  vertical-align: center;
 }
