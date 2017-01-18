@@ -15,10 +15,12 @@ $grey: #3C4956;
 $darkgrey: #313D4A;
 $charcoal: #465464;
 
+$shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.2);
+
 
 
 /**********************
-      Main Styling
+    Default Styling
 **********************/
 html{
   height: 100%; //so the page is height spans browser
@@ -48,6 +50,10 @@ p {
     family: "Open Sans";
   };
   color: $charcoal;
+
+  .sub{
+    font-size: 2em;
+  }
 }
 
 a { //the basic link has no underline EVER
@@ -55,20 +61,20 @@ a { //the basic link has no underline EVER
   text-decoration: none!important;
 }
 
+.padded{
+  padding: 15px 25px;
+}
+
 
 
 /***********************
       Header Styles
-************************/
+***********************/
 #header {
   background-color: $cloud;
   width: 100%; //increases to span top of page
   display: inline-block; //spans the page
-
-  a {
-    text-transform: uppercase;
-    text-decoration: none;
-  }
+  box-shadow: $shadow;
   
   ul{
     list-style-type: none; //removes bullets
@@ -81,6 +87,7 @@ a { //the basic link has no underline EVER
     height: 50px; //Sets a fixed height (this makes it so that different font sizes don't affect the size of navbar
 
     a {
+    text-transform: uppercase;
     vertical-align: middle;
     text-align: center;
     display: inline-block;
@@ -101,6 +108,7 @@ a { //the basic link has no underline EVER
       line-height: inherit;
 
       .login-close-text{ //changes the close button
+        color: $charcoal;
         padding: 0px;
         float: right;
         padding-bottom: 0px;
@@ -125,7 +133,7 @@ a { //the basic link has no underline EVER
 
       .accounts-dialog{ //moves box so it doesn't float off the screen
         top: 120%;
-        left: -100%;
+        left: -85px;
       }
 
       .additional-link-container{ //contains signup and forgot password
@@ -158,23 +166,32 @@ a { //the basic link has no underline EVER
   
   //Responsive Navbar STILL BUGGY
   @media screen and (max-width: 600px){
-    ul li {float: none;}
+    ul { padding: 0; }
+    ul li {
+      width: 100%;
+      display: block;
+    }
+    a {width: 100%;}
+    #login-buttons{
+      width: 100%;
+      .accounts-dialog{left: 25%!important;}
+    }
   }
 };
 
 
 
-/**********************
+/***********************
       Home Styles
-**********************/
+***********************/
 #homebgd{ //home background
-  background-image: url('/imgs/conputah.jpg');
+  background-image: url('/imgs/coded.jpg');
   background-position: center;
   background-size: cover;
   height: inherit;
 }
 
-.home{
+.home-wrapper{
   a.button{
     display: inline-block;
     font-size: 1.5em;
@@ -195,30 +212,111 @@ a { //the basic link has no underline EVER
     }
   }
 
-  width: 100%;
-  padding-top: 15%;
+  //wrapper part
+  max-width: 650px;
+  margin: 12% auto auto auto;
+  padding: 50px 30px;
   text-align: center;
+  background-color: $white;
+  border-radius: 5px;
+  box-shadow: $shadow;
 
   //responsive location
   @media screen and (max-width: 800px){
-    padding-top: 25%;
+    margin: 25% auto auto auto;
+    h1{
+      font-size: 3em;
+    }
+    p.sub{
+      font-size: 1.5em;
+    }
+    a.button{
+      font-size: 1.3em;
+    }
   }
 }
 
 
+
 /***********************
-      About style
+      About Styles
 ***********************/
 .about{
   text-align: center;
   padding: 10% 25px 15px;
 }
 
-.about-box{
+.about-wrapper{
   margin: auto;
   width: 595px;
   background-color: $white;
   padding: 8px 0;
   border-radius: 5px;
-  //box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: $shadow;
+}
+
+
+
+/***********************
+     Project Styles
+***********************/
+#projbgd{//project background
+  height: inherit;
+  background-color: white;
+}
+
+//PROJECTS QUICK NAV SIDEBAR IN PROGRESS//
+//Credit: http://bootsnipp.com/snippets/featured/side-menu-on-hover//
+.container-fluid{
+  padding: 0;
+
+  #sidebar-navbar-collapse{
+    padding: 0;
+  }
+
+  ul{
+    width: 100%;
+  }
+}
+
+@media (min-width: 800px){
+  /*.main{//the other content????
+    position: absolute;
+    width: calc(100%-40px);
+    margin-left: 40px;
+    float: right;
+  }
+
+  nav.sidebar:hover + .main{
+    margin-left: 200px;
+  }
+
+  nav.sidebar.navbar.sidebar>.container .navbar-brand, .navbar>.container-fluid .navbar-brand {
+    margin-left: 0;
+  }*/
+
+  nav.sidebar .navbar-brand, nav.sidebar .navbar-header{
+    text-align: center;
+    width: 100%;
+    margin-left: 0;
+  }
+
+  nav.sidebar { 
+    width: 200px;
+    height: inherit;
+    float: left;
+    margin-bottom: 0;
+
+    a{
+      padding-right: 13px;
+    }
+
+    li {
+      width: 100%;
+    }
+
+    .navbar-nav > li {//creates bottom line
+      border-bottom: 5px white solid;
+    }
+  }
 }
