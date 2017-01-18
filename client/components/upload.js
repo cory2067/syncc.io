@@ -10,8 +10,13 @@ Template.UploadForm.events({
             });
         });
     },
-    'click #submit_folder': function(event, template) {
+    'change #folder': function(event, template) {
         var files = event.target.files;
-        console.log(files);
+        for (var i = 0, ln = files.length; i < ln; i++) {
+            var currFile = new FS.File(files[i]);
+            currFile.metadata = {owner: Meteor.userId(), path: files[i].webkitRelativePath};
+            Documents.insert(currFile, function (err, fileObj) {
+            });
+        }
     }
 });
