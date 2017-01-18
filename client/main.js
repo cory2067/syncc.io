@@ -2,7 +2,23 @@ import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Changes } from '../collections/changes'
 import { Random } from 'meteor/random'
+import { EditUsers } from '../collections/editusers';
+import { Session } from 'meteor/session'
 import './main.html';
+
+Meteor.startup(function(){
+    $(window).bind('beforeunload', function() {
+        Session.set("editing", false)
+    });
+});
+
+Tracker.autorun(function (c) {
+  if(!Session.get("editing") && Session.get("userId")) {
+    EditUsers.remove({_id : Session.get("userId")});
+    //Meteor.call("logServer", "closed client " + Session.get("userId"));
+    Session.set("userId", null)
+  }
+});
 
 Template.hello.onCreated(function helloOnCreated() {
   // counter starts at 0

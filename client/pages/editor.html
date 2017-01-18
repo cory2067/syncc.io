@@ -1,7 +1,15 @@
 <template name="EditorPage">
+  <a href="/">home</a>
   {{> TreeProj}}
   {{> CodeMirror id="some-id" name="someName" options=editorOptions code=editorCode events=editorEvents}}
   {{> hello}}
+
+  <div>
+    <p>Currently, the following users are accessing this file:</p>
+    {{#each editingUsers}}
+      <p>{{username}} editing lines {{line}} (mongo id: {{_id}})</p>
+    {{/each}}
+  </div>
 
   {{#if editorID}}
     <p>You're using a fancy hash url for the editor: {{editorID}}</p>
