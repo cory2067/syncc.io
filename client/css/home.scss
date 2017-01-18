@@ -32,10 +32,13 @@ html{
   }
 }
 
-h1{
+h1, h2, h3{
   font: {
     family: 'Fira Sans Extra Condensed', sans-serif;
     weight: bold;
+  }
+
+  h1{
     size: 5em;
   }
 }
@@ -164,7 +167,7 @@ a { //the basic link has no underline EVER
 /**********************
       Home Styles
 **********************/
-#home{ //home background
+#homebgd{ //home background
   background-image: url('/imgs/conputah.jpg');
   background-position: center;
   background-size: cover;
@@ -200,4 +203,22 @@ a { //the basic link has no underline EVER
   @media screen and (max-width: 800px){
     padding-top: 25%;
   }
+}
+
+
+/***********************
+      About style
+***********************/
+.about{
+  text-align: center;
+  padding: 10% 25px 15px;
+}
+
+.about-box{
+  margin: auto;
+  width: 50%;
+  background-color: $white;
+  padding: 8px 0;
+  border-radius: 5px;
+  //box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
