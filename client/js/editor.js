@@ -10,6 +10,7 @@ var fileName = "meme.py";
 var username = "Guest"
 var mongoId = null;
 var userId = null ;
+var lockTimeout = null;
 
 Template.EditorPage.onRendered(() => {
     try {
@@ -76,8 +77,18 @@ Template.EditorPage.helpers({
             if(change['origin'] != 'ignore') {
               Changes.update(mongoId, {$set: change});
             }
-         }
-       }
+         },
+        "cursorActivity": function(doc) {
+            l = doc.getCursor()['line'];
+            EditUsers.update({_id:userId}, {$set: {line:[l,1]}});
+            if(lockTimeout) {
+              clearTimeout(lockTimeout)
+            }
+            lockTimeout = setTimeout(function() {
+                EditUsers.update({_id:userId}, {$set: {line:[-1,0]}});
+            }, 2000);
+        }
+      }
     },
 
   editorCode() {
