@@ -7,11 +7,15 @@ import { Session } from 'meteor/session'
 import { Tracker } from 'meteor/tracker'
 
 var fileName = "meme.py";
-var username = "Meme Man"
+var username = "Guest"
 var mongoId = null;
 var userId = null ;
 
 Template.EditorPage.onRendered(() => {
+    try {
+      username = Meteor.user()['emails'][0]['address'];
+    } catch(e) {} //tfw you're too lazy to be bothered with error handling
+
     var id = FlowRouter.getParam("editID");
 
     EditUsers.insert({name: username, editor: id, file: fileName, line: [-1, 0]}, function(err, _id) {
