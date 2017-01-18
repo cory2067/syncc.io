@@ -15,6 +15,8 @@ $grey: #3C4956;
 $darkgrey: #313D4A;
 $charcoal: #465464;
 
+
+
 /**********************
       Main Styling
 **********************/
@@ -37,6 +39,8 @@ a {
 body {
   background-color: $white;
 }
+
+
 
 /***********************
       Header Styles
@@ -74,30 +78,65 @@ body {
       }
     }
 
+    /************************
+          Login Popup
+    ************************/
+
     #login-buttons{
       line-height: inherit;
 
-      .login-close-text{
-        padding: 0 14px;
+      .login-close-text{ //changes the close button
+        padding: 0px;
         float: right;
         padding-bottom: 0px;
         line-height: normal;
         text-transform: none;
-        font-size: 1em;
+        font-size: .7em;
         font-family: 'Open Sans', sans-serif;
-        a:hover{
-          background-color: none;
+ 
+        &:hover{
+          background-color: white;
           color: $accent;
         }
       }
 
-      .accounts-dialog{
+      .login-button{
+        //sign in or create account big button
+        background: $chrome;
+        &:hover{
+          background: $accent;
+        }
+      }
+
+      .accounts-dialog{ //moves box so it doesn't float off the screen
         top: 120%;
         left: -100%;
       }
 
-      .additional-link{
+      .additional-link-container{ //contains signup and forgot password
+        display: inline; //allows to be on the same line
+      }
+
+      #signup-link{ //signup button 
+        float: left;
+      }
+
+      #forgot-password-link{ //forgot password button
+        float: right;
+      }
+
+      .additional-link{ //style type of both sign up and forgot password
         text-transform: none;
+        line-height: normal;
+        text-transform: none;
+        float: none;
+        padding: 0;
+        margin: 10px 0;
+
+        &:hover{
+          background-color: white;
+          color: $accent;
+        }
       }
     }
   }
@@ -108,8 +147,10 @@ body {
   }
 };
 
+
+
 /**********************
-    Home Styles
+      Home Styles
 **********************/
 
 .home{
