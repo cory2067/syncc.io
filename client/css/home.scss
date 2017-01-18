@@ -37,10 +37,10 @@ h1, h2, h3{
     family: 'Fira Sans Extra Condensed', sans-serif;
     weight: bold;
   }
+}
 
-  h1{
-    size: 5em;
-  }
+h1{
+  font-size: 5em;
 }
 
 p {
@@ -216,7 +216,7 @@ a { //the basic link has no underline EVER
 
 .about-box{
   margin: auto;
-  width: 50%;
+  width: 595px;
   background-color: $white;
   padding: 8px 0;
   border-radius: 5px;
