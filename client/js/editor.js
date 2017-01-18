@@ -11,6 +11,7 @@ var username = "Guest"
 var mongoId = null;
 var userId = null ;
 var lockTimeout = null;
+var compressTimeout = null;
 
 Template.EditorPage.onRendered(() => {
     try {
@@ -71,22 +72,29 @@ Template.EditorPage.helpers({
 
     editorEvents() {
        return {
-         "change": function(doc, change){
-            //Changes.add(change);
+         "beforeChange": function(doc, change){
+            //Changes.add(change)
+            lineObj = [change['from']['line'], change['text'].length];
             change['user'] = userId;
+
+            EditUsers.update({_id:userId}, {$set: {line:lineObj}});
+            clearTimeout(lockTimeout)
+            lockTimeout = setTimeout(function() {
+                EditUsers.update({_id:userId}, {$set: {line:[-1,0]}});
+            }, 1500);
+
+            clearTimeout(compressTimeout);
+            compressTimeout = setTimeout(function() {
+                l = EditUsers.find({_id:userId}).fetch()[0]['line'][0]
+                EditUsers.update({_id:userId}, {$set: {line:[l,1]}});
+            }, 500);
+
             if(change['origin'] != 'ignore') {
               Changes.update(mongoId, {$set: change});
             }
          },
         "cursorActivity": function(doc) {
-            l = doc.getCursor()['line'];
-            EditUsers.update({_id:userId}, {$set: {line:[l,1]}});
-            if(lockTimeout) {
-              clearTimeout(lockTimeout)
-            }
-            lockTimeout = setTimeout(function() {
-                EditUsers.update({_id:userId}, {$set: {line:[-1,0]}});
-            }, 2000);
+            //console.log("cursor moved");
         }
       }
     },
