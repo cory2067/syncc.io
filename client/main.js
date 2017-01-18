@@ -31,10 +31,15 @@ Template.hello.helpers({
   }
 });
 
+//gross repeating the same helper
 Template.Header.helpers({
     newEditor() {
-      var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-      return _.sample(possible, 8).join('');
+      return Random.id(8);
+    }
+});
+Template.HomePage.helpers({
+    newEditor() {
+      return Random.id(8);
     }
 });
 
