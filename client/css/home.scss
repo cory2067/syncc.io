@@ -17,8 +17,6 @@ $charcoal: #465464;
 
 $shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.2);
 
-$login: hidden;
-
 
 
 /**********************
@@ -142,7 +140,6 @@ a { //the basic link has no underline EVER
       .accounts-dialog{ //moves box so it doesn't float off the screen
         top: 120%;
         left: -85px;
-        display: $login;
       }
 
       .additional-link-container{ //contains signup and forgot password
@@ -317,7 +314,7 @@ nav.sidebar {
   }
 }
 
-.fileview{
+.projecthead{
   margin-left: 235px;
 
   .padded{
@@ -325,13 +322,14 @@ nav.sidebar {
   }
 
   .col-md-4{
+    padding: 0;
     height: 62.89px;
   }
 
   //FRICKING SEARCH BOX TOOK SO LONG ACTUALLY//
   .search-box{
     //Credit: http://codepen.io/ace-subido/pen/Echvr
-    width: 88%;
+    width: calc(100% - 60px);
     display: inline-block;
     background: $white;
     color: $charcoal;
@@ -363,8 +361,18 @@ nav.sidebar {
 
       &:hover{
         color: $white;
-        background-color: $accent;
+        background-color: $chrome;
       }
     }
+  }
+
+  button.newff{
+    font-family: 'Open Sans';
+    background-color: $accent;
+    color: $white;
+    border-radius: 5px;
+    border: none;
+    margin-top: -2px;
+    height: 33.78px;
   }
 }
