@@ -58,6 +58,21 @@ Template.EditorPage.onRendered(() => {
           if(changes['user'] != userId) {
             console.log(changes);
             doc.replaceRange(changes['text'], changes['from'], changes['to'], origin='ignore');
+
+            if(!changes['text'][0]) {
+              changes['text'].splice(0,1);
+              changes['from']['line']++;
+              changes['to']['line']++;
+            }
+
+            if(changes['text']) {
+              var mark = doc.markText({line: changes['from']['line'], ch:0}, {line: changes['to']['line']+changes['text'].length-1}, {className: "editing"});
+              console.log(mark);
+              userMarks[changes['_id']] = mark;
+              setTimeout(function() {
+                mark.clear();
+              }, 1000);
+            }
           }
         },
         changed: function (changes, old) {
@@ -78,9 +93,12 @@ Template.EditorPage.onRendered(() => {
             var b = changes['line'][1]+a-1 //to
             //console.log(changes['line'])
 
-            //var mark = doc.markText({line:a,ch:0}, {line:b,ch:doc.getLine(b).length}, {className: "locked"});
-            //console.log(mark);
-            //userMarks[changes['_id']] = mark;
+            /*var mark = doc.markText({line:a,ch:0}, {line:b,ch:doc.getLine(b).length}, {className: "locked"});
+            console.log(mark);
+            userMarks[changes['_id']] = mark;
+            setTimeout(function() {
+              mark.clear();
+            }, 1000);*/
          }
        },
        removed: function (i) {
