@@ -57,6 +57,9 @@ p {
 }
 
 a { //the basic link has no underline EVER
+  font: {
+    family: 'Open Sans', sans-serif;
+  }
   color: $charcoal;
   text-decoration: none!important;
 }
@@ -271,14 +274,16 @@ a { //the basic link has no underline EVER
 //Credit: http://bootsnipp.com/snippets/featured/side-menu-on-hover//
 nav.sidebar {
   background: $white;
+  width: 235px;
   height: 100%;
   float: left;
   margin-bottom: 0px;
   display: block; 
   box-sizing: border-box;
 
-  @media (max-width: 600px){
-    display: none;
+  ul{
+    width: 100%;
+    margin: 0;
   }
 
   li {
@@ -286,67 +291,22 @@ nav.sidebar {
     border-bottom: 5px white solid;
   }
 
-  ul{
-    width: 100%;
-    margin: 0;
-  }
-
   a{
     padding-right: 13px;
-  }
-}
-/*
 
-.container-fluid{
-  padding: 10;
-
-  #sidebar-navbar-collapse{
-    padding: 0;
-  }
-
-  ul{
-    width: 100%;
-  }
-}
-
-@media (min-width: 800px){
-  nav.sidebar{
-    text-align: center;
-    width: 100%;
-    margin-left: 0;
-  }
-
-  nav.sidebar { 
-    width: 200px;
-    height: inherit;
-    float: left;
-    margin-bottom: 0;
-
-    a{
-      padding-right: 13px;
+    &:hover{
+      background: $accent;
+      color: $white;
     }
 
-    li {
-      width: 100%;
-    }
-
-    .navbar-nav > li {//creates bottom line
-      border-bottom: 5px white solid;
+    .name{
+      font-size: 1.15em;
+      margin-bottom: 8px;
     }
   }
-}
 
-@media (min-width: 1330px){
-  nav.sidebar{
-    margin-left: 0;
-    float: left;
-
-    .forAnimate{
-      opacity: 1;
-    }
+  //Disappears when screen too small
+  @media (max-width: 600px){
+    display: none;
   }
 }
-
-section{
-  padding-left: 15px;
-}*/
