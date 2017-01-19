@@ -4,6 +4,7 @@ import { EditUsers } from '../../collections/editusers'
 import { Docs } from '../../collections/docs'
 import { Session } from 'meteor/session'
 import { Tracker } from 'meteor/tracker'
+import { Changes } from '../../collections/changes'
 
 var fileName = "meme.py";
 var username = "Guest"
@@ -40,7 +41,7 @@ Template.EditorPage.onRendered(() => {
       }
     }
 
-    Docs.find({editor:id}).observe({
+    /*Docs.find({editor:id}).observe({
        added: function (c) {
           makeEdit(c, true);
        },
@@ -50,7 +51,20 @@ Template.EditorPage.onRendered(() => {
        removed: function (c) {
          makeEdit(c, false)
       }
-    });
+    });*/
+
+    Changes.find({editor:id, file:fileName}).observe({
+        added: function (changes) {
+          if(changes['user'] != userId) {
+            console.log(changes);
+            doc.replaceRange(changes['text'], changes['from'], changes['to'], origin='ignore');
+          }
+        },
+        changed: function (changes, old) {
+        },
+        removed: function (i) {
+       }
+     });
 
     EditUsers.find({editor:id}).observe({
        added: function (i) {
@@ -102,6 +116,12 @@ Template.EditorPage.helpers({
        return {
          "change": function(doc, change){
            if(change['origin'] != 'ignore'){
+            change['editor'] = FlowRouter.getParam("editID");
+            change['file'] = fileName;
+            change['user'] = userId;
+            change['time'] = (new Date()).toJSON();
+            Changes.insert(change);
+
             //Changes.add(change)
             lineObj = [change['from']['line'], change['text'].length];
             change['user'] = userId;
