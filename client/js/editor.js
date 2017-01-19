@@ -13,9 +13,10 @@ var userId = null ;
 var lockTimeout = null;
 var compressTimeout = null;
 var userMarks = {};
+var doc = null;
 
 Template.EditorPage.onRendered(() => {
-    var doc = $('.CodeMirror')[0].CodeMirror;
+    doc = $('.CodeMirror')[0].CodeMirror;
 
     try {
       username = Meteor.user()['emails'][0]['address'];
@@ -47,23 +48,50 @@ Template.EditorPage.onRendered(() => {
       }
     });
 
+    function makeEdit(c, added) {
+      //console.log(c)
+      //console.log("edit detect");
+      if(c['user'] != userId){
+        //console.log(c['val']);
+        var line = doc.getLine(c['line']);
+        doc.replaceRange(c['val'], {line: c['line'], ch: 0}, {line: c['line'], ch: line.length}, origin='ignore');
+        //var mark = doc.markText({line:c['line'],ch:0}, {line:c['line'],ch:doc.getLine(c['line']).length}, {className: "locked", readOnly: false});
+        //console.log(mark);
+      }
+    }
+
+    Docs.find({editor:id}).observe({
+       added: function (c) {
+          makeEdit(c, true);
+       },
+       changed: function (c, old) {
+          makeEdit(c, true);
+       },
+       removed: function (c) {
+         makeEdit(c, false)
+      }
+    });
+
     EditUsers.find({editor:id}).observe({
        added: function (i) {
        },
        changed: function (changes, old) {
          if(userMarks[changes['_id']]) {
-           userMarks[changes['_id']].clear();
+           //userMarks[changes['_id']].clear();
          }
          if(changes['line'][0] != -1 && changes['_id'] != userId) {
             var a = changes['line'][0] //from
             var b = changes['line'][1]+a-1 //to
-            var mark = doc.markText({line:a, ch:0}, {line:b}, {className: "locked", readOnly: true});
-            userMarks[changes['_id']] = mark;
+            //console.log(changes['line'])
+
+            //var mark = doc.markText({line:a,ch:0}, {line:b,ch:doc.getLine(b).length}, {className: "locked"});
+            //console.log(mark);
+            //userMarks[changes['_id']] = mark;
          }
        },
        removed: function (i) {
-      }
-    });
+        }
+      });
 });
 
 Template.EditorPage.helpers({
@@ -93,11 +121,12 @@ Template.EditorPage.helpers({
     editorEvents() {
        return {
          "change": function(doc, change){
+           if(change['origin'] != 'ignore'){
             //Changes.add(change)
             lineObj = [change['from']['line'], change['text'].length];
             change['user'] = userId;
-
-            var hash = Random.id()
+            //console.log(change);
+            var hash = Random.id(3)
             var a = lineObj[0] //from
             var b = lineObj[1]+a-1 //to
             EditUsers.update({_id:userId}, {$set: {line:lineObj, revive:hash}});
@@ -123,9 +152,22 @@ Template.EditorPage.helpers({
               }, 500);
             }
 
-            if(change['origin'] != 'ignore') {
+            /*if(change['origin'] != 'ignore') {
               Changes.update(mongoId, {$set: change});
+            }*/
+
+            var editorId = FlowRouter.getParam("editID");
+            //console.log(change['origin']);
+            for(var q=0; q < lineObj[1]; q++) {
+              //console.log(a+q);
+              docs = Docs.find({line:a+q, file:fileName, editor:editorId}).fetch()
+              if(docs.length) {
+                Docs.update({_id: docs[0]['_id']}, {$set: {user: userId, val: doc.getLine(a+q)}});
+              } else {
+                Docs.insert({user: userId, val: doc.getLine(a+q), line: a+q, editor: editorId, file:fileName});
+              }
             }
+          }
          },
         "cursorActivity": function(doc) {
             //console.log("cursor moved");
@@ -134,7 +176,7 @@ Template.EditorPage.helpers({
     },
 
   editorCode() {
-      return 'for meme in range(6):\n\tbadmeme = meme + 1\n\tprint(badmeme)\n\tprint(meme)\n\tpass';
+      return '';
   }
 });
 
