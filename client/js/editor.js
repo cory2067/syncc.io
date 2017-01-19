@@ -1,4 +1,3 @@
-import { Changes } from '../../collections/changes'
 import { Template } from 'meteor/templating';
 import { Random } from 'meteor/random'
 import { EditUsers } from '../../collections/editusers'
@@ -8,7 +7,6 @@ import { Tracker } from 'meteor/tracker'
 
 var fileName = "meme.py";
 var username = "Guest"
-var mongoId = null;
 var userId = null ;
 var lockTimeout = null;
 var compressTimeout = null;
@@ -28,24 +26,6 @@ Template.EditorPage.onRendered(() => {
         userId = _id;
         Session.set("userId", _id);
         Session.set("editing", true)
-    });
-
-
-    if(!Changes.find({session:id}).fetch().length) {
-         Changes.insert({session:id, from:{}, to:{}, text:[], removed:[], origin:[], user:userId})
-    }
-    mongoId = Changes.find({session:id}).fetch()[0]['_id'];
-
-    Changes.find({session:id}).observe({
-       added: function (i) {
-       },
-       changed: function (changes, old) {
-         if(changes['user'] != userId) {
-           console.log(Changes.find({session: id}).fetch());
-         }
-       },
-       removed: function (i) {
-      }
     });
 
     function makeEdit(c, added) {
@@ -151,10 +131,6 @@ Template.EditorPage.helpers({
               //    mark.clear();
               }, 500);
             }
-
-            /*if(change['origin'] != 'ignore') {
-              Changes.update(mongoId, {$set: change});
-            }*/
 
             var editorId = FlowRouter.getParam("editID");
             //console.log(change['origin']);
