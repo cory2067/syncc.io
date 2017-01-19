@@ -65,6 +65,7 @@ a { //the basic link has no underline EVER
 }
 
 .padded{
+  display: inline-block;
   padding: 15px 25px;
 }
 
@@ -292,9 +293,14 @@ nav.sidebar {
   }
 
   a{
-    padding-right: 13px;
+    padding-right: 18px;
 
     &:hover{
+      background: $chrome;
+      color: $white;
+    }
+
+    &.active{
       background: $accent;
       color: $white;
     }
