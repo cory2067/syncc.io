@@ -16,6 +16,7 @@ Template.UploadForm.events({
             var currFile = new FS.File(files[i]);
             currFile.metadata = {owner: Meteor.userId()};
             Documents.insert(currFile, function (err, fileObj) {
+                Meteor.call('parseZip',[currFile.original.name]);
             });
         }
     }
