@@ -70,7 +70,7 @@ a { //the basic link has no underline EVER
 
 .padded{
   display: inline-block;
-  padding: 15px 25px;
+  padding: 15px 35px;
 }
 
 
@@ -319,4 +319,52 @@ nav.sidebar {
 
 .fileview{
   margin-left: 235px;
+
+  .padded{
+    width: calc(100vw - 235px);
+  }
+
+  .col-md-4{
+    height: 62.89px;
+  }
+
+  //FRICKING SEARCH BOX TOOK SO LONG ACTUALLY//
+  .search-box{
+    //Credit: http://codepen.io/ace-subido/pen/Echvr
+    width: 88%;
+    display: inline-block;
+    background: $white;
+    color: $charcoal;
+    border-radius: 5px;
+    position: relative;
+    margin-top: 20px;
+
+    .form-control{
+      background-color: inherit;
+    }
+
+    input[type=text]{
+      color: $charcoal;
+      font-family: 'Open Sans';
+      border: none;
+      box-shadow: none;
+      display: inline-block;
+    }
+
+    .search-btn{
+      position: absolute;
+      right: 0px;
+      top: 0px;
+      color: $charcoal;
+      border-bottom-right-radius: 5px;
+      border-top-right-radius: 5px;
+      font-size: 18px;
+      padding: 4px 7px 3px;
+
+      &:hover{
+        color: $white;
+        background-color: $accent;
+      }
+    }
+  }
 }
