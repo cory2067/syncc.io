@@ -1,28 +1,16 @@
 <template name="ProjectsPage">
   <div id="projbgd">
     {{> Header}}
+    {{> ProjectSidebar}}
 
-    <!--Jessica creating the nav bar-->
-    <nav class="nav-header sidebar" role="navigation">
-      <ul class="nav navbar-nav">
-        <!--FOR EACH PROJECT CREATE ONE OF THESE-->
-        <li >
-          <a href="/projects"><div class="name">Demo</div>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-          </a>
-        </li>
-        <li >
-          <a href="/projects"><div class="name">That Other Project</div>
-          Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...
-          </a>
-        </li>
-      </ul>
-    </nav>
+    <div class="fileview">
+      <div class="padded">
+        {{> ProjectHead}}
 
-    <div class="padded">
-      <p>Info about User Projects</p>
-      {{> UploadForm}}
-      {{> ProjectList}}
+        <p>Info about User Projects</p>
+        {{> UploadForm}}
+        {{> ProjectList}}
+      </div>
     </div>
   </div>
 </template>

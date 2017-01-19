@@ -3,8 +3,15 @@
   {{> Header}}
     <div class="home-wrapper">
       <h1>SYNCC</h1>
-      <p class="sub">welcome to the site thing</p>
-      <a href="/{{newEditor}}" class="button">Demo</a>
+      {{#if currentUser}}
+        <!--INSERT PROFILE PAGE HERE (or dashboard)-->
+        <p>you are logged in. welcome, {{currentUser}}.</p>
+      {{else}}
+        <p class="sub">welcome to the site thing</p>
+        <a href="/{{newEditor}}" class="button">Demo</a>
+        <!-- this is broken, don't know how to access the login popup-->
+        <a href="" class="button" id="signup">Log in</a>
+      {{/if}}
     </div>
 
     <!-- this tree doesn't need to be here -->

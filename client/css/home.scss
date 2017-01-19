@@ -17,6 +17,8 @@ $charcoal: #465464;
 
 $shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.2);
 
+$login: hidden;
+
 
 
 /**********************
@@ -42,7 +44,9 @@ h1, h2, h3{
 }
 
 h1{
-  font-size: 4.5em;
+  font-size: 5.6em;
+  color: $white;
+  margin-bottom: 5px;
 }
 
 p {
@@ -66,7 +70,7 @@ a { //the basic link has no underline EVER
 
 .padded{
   display: inline-block;
-  padding: 15px 25px;
+  padding: 15px 35px;
 }
 
 
@@ -138,6 +142,7 @@ a { //the basic link has no underline EVER
       .accounts-dialog{ //moves box so it doesn't float off the screen
         top: 120%;
         left: -85px;
+        display: $login;
       }
 
       .additional-link-container{ //contains signup and forgot password
@@ -196,24 +201,21 @@ a { //the basic link has no underline EVER
 }
 
 .home-wrapper{
-  p{font-size: 1.7em}
+  p{font-size: 1.7em; color: $cloud}
 
   a.button{
     display: inline-block;
     font-size: 1.5em;
     text-transform: uppercase;
-    background: none;
+    background: $cloud;
     margin: 10px;
     width: 180px;
     padding: 8px 0;
-    border-style: solid;
-    border-color: $charcoal;
-    border-width: 2px;
     border-radius: 5px;
-
+    
     &:hover, &:focus{
-      color: $accent;
-      border-color: $accent;
+      color: $cloud;
+      background: $accent;
       text-decoration: none;
     }
   }
@@ -223,9 +225,7 @@ a { //the basic link has no underline EVER
   margin: 11% auto auto auto;
   padding: 65px 30px;
   text-align: center;
-  background-color: $white;
   border-radius: 5px;
-  box-shadow: $shadow;
 
   //responsive location
   @media screen and (max-width: 800px){
@@ -276,7 +276,7 @@ a { //the basic link has no underline EVER
 nav.sidebar {
   background: $white;
   width: 235px;
-  height: 100%;
+  height: calc(100vh - 55px);
   float: left;
   margin-bottom: 0px;
   display: block; 
@@ -314,5 +314,57 @@ nav.sidebar {
   //Disappears when screen too small
   @media (max-width: 600px){
     display: none;
+  }
+}
+
+.fileview{
+  margin-left: 235px;
+
+  .padded{
+    width: calc(100vw - 235px);
+  }
+
+  .col-md-4{
+    height: 62.89px;
+  }
+
+  //FRICKING SEARCH BOX TOOK SO LONG ACTUALLY//
+  .search-box{
+    //Credit: http://codepen.io/ace-subido/pen/Echvr
+    width: 88%;
+    display: inline-block;
+    background: $white;
+    color: $charcoal;
+    border-radius: 5px;
+    position: relative;
+    margin-top: 20px;
+
+    .form-control{
+      background-color: inherit;
+    }
+
+    input[type=text]{
+      color: $charcoal;
+      font-family: 'Open Sans';
+      border: none;
+      box-shadow: none;
+      display: inline-block;
+    }
+
+    .search-btn{
+      position: absolute;
+      right: 0px;
+      top: 0px;
+      color: $charcoal;
+      border-bottom-right-radius: 5px;
+      border-top-right-radius: 5px;
+      font-size: 18px;
+      padding: 4px 7px 3px;
+
+      &:hover{
+        color: $white;
+        background-color: $accent;
+      }
+    }
   }
 }
