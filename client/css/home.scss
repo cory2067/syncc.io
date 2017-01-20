@@ -680,17 +680,18 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
         padding: 15px 10px;
 
         &:hover{
-          background: $darkgrey;
-
+          background: $darkgrey!important;
           label.back-circle{color: $darkgrey; background-color: $chrome;}
         }
 
-        &:focus, &.active{
-          background: $grey;
-
-          label.back-circle{color: $grey; background-color: $chrome;}
-        }
+        &:focus{background: none;}
       }
+    }
+
+    .activemini{
+      background: $grey!important;
+
+      label.back-circle{color: $grey; background-color: $chrome;}
     }
 
     label.back-circle{
@@ -711,12 +712,10 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
   }
 
   .pullout{
-    //z-index: 1000;
     position: fixed;
     left: 62px;
-    width: 0px; //265px;
+    width: 0px; //expands when toggled
     height: calc(100vh - 50px);
-    //margin-left: -327px;
     overflow-y: auto;
     background: $grey;
     -webkit-transition: all 0.5s ease;

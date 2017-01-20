@@ -107,6 +107,12 @@ Template.EditorHead.helpers({
   },
 });
 
+Template.EditorSidebar.helpers({
+  editingUsers() {
+    return EditUsers.find({editor: FlowRouter.getParam("editID")}).fetch();
+  }
+});
+
 Template.EditorPage.helpers({
   editingUsers() {
     return EditUsers.find({editor: FlowRouter.getParam("editID")}).fetch();

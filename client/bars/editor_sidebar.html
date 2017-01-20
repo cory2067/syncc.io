@@ -1,4 +1,4 @@
-<template name="EditSidebar">
+<template name="EditorSidebar">
     <div id="sidebar-wrapper">
         <div id="sidebar-mini">
             <nav class="nav-header sidebar" id="mini-editSidebar">
@@ -17,15 +17,91 @@
         </div>
 
         <div id="users-wrapper" class="pullout">
+            <p>Currently, the following users are accessing this file:</p>
+            {{#each editingUsers}}
+            <p>{{name}} <!--is editing lines {{line}} (mongo id: {{_id}})--></p>
+            {{/each}}
+        </div>
+
+        <div id="tree-wrapper" class="pullout">
             {{> TreeProj}}
+        </div>
+
+        <div id="settings-wrapper" class="pullout">
         </div>
     </div>
 
     <script>
+        //function that checks if a wrapper is open (and if so, makes sure main content is correctly padded)
+        function checkWrapper() {
+            if ($("#users-wrapper").hasClass("toggled") || $("#tree-wrapper").hasClass("toggled") || $("#settings-wrapper").hasClass("toggled")) {
+                console.log("Something is open");
+                $("#page-content-wrapper").addClass("toggled");
+            } else {
+                $("#page-content-wrapper").removeClass("toggled");
+                console.log('Nothing open');
+            };
+        };
+
         $("#users-toggle").click(function(e){
             e.preventDefault();
-            $("#users-wrapper").toggleClass("toggled");
-            $("#page-content-wrapper").toggleClass("toggled");
+            if ($("#users-wrapper").hasClass("toggled")) {
+                //if already turned on, turn off
+                $("#users-toggle").removeClass("activemini");
+                $("#users-wrapper").removeClass("toggled")
+            } else {
+                //else, turn on
+                $("#users-toggle").addClass("activemini");
+                $("#users-wrapper").addClass("toggled");
+                //turn off anything else on
+                $("#tree-wrapper").removeClass("toggled");
+                $("#tree-toggle").removeClass("activemini");
+                $("#settings-wrapper").removeClass("toggled");
+                $("#settings-toggle").removeClass("activemini");
+            };
+
+            checkWrapper();
         });
+
+        $("#tree-toggle").click(function(e){
+            e.preventDefault();
+            if ($("#tree-wrapper").hasClass("toggled")) {
+                //if already turned on, turn off
+                $("#tree-toggle").removeClass("activemini");
+                $("#tree-wrapper").removeClass("toggled")
+            } else {
+                //else, turn on
+                $("#tree-toggle").addClass("activemini");
+                $("#tree-wrapper").addClass("toggled");
+                //turn off anything else on
+                $("#users-wrapper").removeClass("toggled");
+                $("#users-toggle").removeClass("activemini");
+                $("#settings-wrapper").removeClass("toggled");
+                $("#settings-toggle").removeClass("activemini");
+            };
+
+            checkWrapper();
+        });
+
+        $("#settings-toggle").click(function(e){
+            if ($("#settings-wrapper").hasClass("toggled")) {
+                //if already turned on, turn off
+                $("#settings-toggle").removeClass("activemini");
+                $("#settings-wrapper").removeClass("toggled")
+            } else {
+                //else, turn on
+                $("#settings-toggle").addClass("activemini");
+                $("#settings-wrapper").addClass("toggled");
+                //turn off anything else on
+                $("#tree-wrapper").removeClass("toggled");
+                $("#tree-toggle").removeClass("activemini");
+                $("#users-wrapper").removeClass("toggled");
+                $("#users-toggle").removeClass("activemini");
+            };
+
+            checkWrapper();
+        });
+
+        
     </script>
 </template>
