@@ -1,7 +1,9 @@
 import { Meteor } from 'meteor/meteor';
 import { Changes } from '../collections/changes'
+import { CurrJSON } from '../collections/json'
 import fs from 'fs'
 import unzip from 'unzip'
+import DirectoryStructureJSON from 'directory-structure-json'
 
 Meteor.startup(() => {
 });
@@ -48,5 +50,18 @@ Meteor.methods({
             console.log("return" + csv);
             return csv;
         });
+    },
+    updateJSON: function() {
+        var basepath = Meteor.absolutePath + "/.meteor/local/cfs/files/docs";
+        var curr = CurrJSON.find().fetch();
+        DirectoryStructureJSON.getStructure(fs, basepath, Meteor.bindEnvironment(function (err, structure, total) {
+            if (err) {
+                console.log(err);
+            }
+            console.log("Total number of folders"+total.folders);
+            console.log("Total number of files"+total.files);
+            CurrJSON.update(curr[0]._id, {$set: {json: JSON.stringify(structure, null, 4)}});
+            //console.log("Structure in JSON format:" +newJSON);
+        }));
     }
 });

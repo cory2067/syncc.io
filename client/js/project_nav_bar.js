@@ -1,3 +1,7 @@
+import fs from 'fs'
+import DirectoryStructureJSON from 'directory-structure-json'
+import { CurrJSON } from '../../collections/json'
+
 Template.TreeProj.onRendered(function () {
     /*$("body").click(function() {
       if($('.login-close-text')[0]) {
@@ -5,22 +9,15 @@ Template.TreeProj.onRendered(function () {
       }
       //add exclude if in the accounts-dialog div
     });*/
+    
 
+  Meteor.call('updateJSON');
+  var tree = CurrJSON.findOne();
+  console.log(tree.json);
   this.$('#jstree').jstree({
-    core: {
-      themes: {
-        name: 'proton',
-        dots: true,
-        icons: true,
-        responsive: true
-      },
-      data: [{
-        text: 'Root node', 'children': [{
-          text: 'Child node 1'
-        }, {
-          text: 'Child node 2'
-        }]
-      }]
+    'core': {
+        'data': JSON.parse(tree.json)
     }
   });
 });
+
