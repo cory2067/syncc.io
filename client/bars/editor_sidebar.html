@@ -1,7 +1,7 @@
 <template name="EditSidebar">
     <div id="sidebar-wrapper">
         <div id="sidebar-mini">
-            <nav class="nav-header sidebar" id="editSidebar">
+            <nav class="nav-header sidebar" id="mini-editSidebar">
                 <ul class="nav navbar-nav">
                     <li><!--USERS-->
                         <a href="#users-toggle" id="users-toggle"><label class="back-circle"><i class="glyphicon glyphicon-user"></i></label></a>
@@ -15,5 +15,17 @@
                 </ul>
             </nav>
         </div>
+
+        <div id="users-wrapper" class="pullout">
+            {{> TreeProj}}
+        </div>
     </div>
+
+    <script>
+        $("#users-toggle").click(function(e){
+            e.preventDefault();
+            $("#users-wrapper").toggleClass("toggled");
+            $("#page-content-wrapper").toggleClass("toggled");
+        });
+    </script>
 </template>

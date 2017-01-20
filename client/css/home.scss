@@ -23,7 +23,7 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
 
 
 /**********************
-    Default Styling
+/   DEFAULT STYLING   /
 **********************/
   html{
     height: 100%; //so the page is height spans browser
@@ -278,7 +278,7 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
 
 
 /***********************
-       GEN SIDEBAR
+/      GEN SIDEBAR     /
 ***********************/
   nav.sidebar{
     float: left;
@@ -664,10 +664,13 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
 /**********************
     Editor Sidebar
 **********************/
-  #editSidebar{
+  #sidebar-wrapper{
+    margin: -5px 0;
+  }
+
+  #mini-editSidebar{
     width: 62px;
     background: $blacc;
-    margin-top: -5px;
     height: calc(100vh - 50px);
 
     li{
@@ -707,14 +710,38 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
     }
   }
 
+  .pullout{
+    //z-index: 1000;
+    position: fixed;
+    left: 62px;
+    width: 0px; //265px;
+    height: calc(100vh - 50px);
+    //margin-left: -327px;
+    overflow-y: auto;
+    background: $grey;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+
+    &.toggled{
+      width: 265px;
+    }
+  }
 
 
-/********************
+
+/**********************
     Editor Styles
-********************/
-  .editBgd{
+**********************/
+  #editBgd{
     background-color: $blacc;
     height: inherit;
+
+    //used for the moving sidebar
+    padding-left: 0;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    transition: all 0.5s ease;
 
     //DEFAULTS
     p{
@@ -724,7 +751,14 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
     a{color: $white;}
   }
 
-  //NEED TO MAKE THIS AN ACTUAL THEME
-  .CodeMirror{
-    background: $darkgrey!important;
+  #page-content-wrapper{
+    display: block;
+    padding-left: 62px;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+
+    &.toggled{
+      padding-left: 327px;
+    }
   }
