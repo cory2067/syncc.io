@@ -85,9 +85,12 @@ Template.EditorPage.onRendered(() => {
 });
 
 Template.EditorHead.helpers({
-  //I can't tell if this is working
   getFileName() {
     return fileName;
+  },
+
+  getURL(){
+    return FlowRouter.getParam("editID");
   },
 });
 

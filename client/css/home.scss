@@ -391,7 +391,7 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
         }
       }
 
-      //New Button
+      //New Button//
       button.newff{
         font-family: 'Open Sans';
         background-color: $accent;
@@ -410,7 +410,7 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
         }
       }
 
-      //Modal
+      //Modal//
       .modal{
         position: relative;
         right: 0;
@@ -521,6 +521,7 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
     a{color: $white;}
   }
 
+  //actual editor header
   #editHead{
     width: 100%; //increases to span top of page
     display: inline-block; //spans the page
@@ -564,11 +565,91 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
       }
     }
 
+    .shareBtn{
+      height: 2.3em;
+      margin: 9px 10px 0 0;
+      padding: 0 35px;
+      background-color: $accent;
+      color: $white;
+      text-transform: uppercase;
+      text-align: center;
+      display: inline-block;
+
+      &:hover{
+        background-color: $accent;
+        color: $white;
+      }
+      &:focus{
+        background-color: $accented;
+      }
+    }
+
     .editLeft{
       float: left;
     }
 
     .editRight{
       float: right;
+    }
+  }
+
+  //shareURL modal
+  #shareURL{
+    width: 500px;
+    margin: 15% auto;
+
+    .modal-content .modal-dialog{
+      padding: 15px;
+      width: inherit;
+      margin: 0;
+
+      .modal-header{
+        padding: 0;
+        border: none;
+      }
+
+      .modal-body{
+        padding: 0 10px 10px;
+
+        .form-control{
+          border: none!important;
+          box-shadow: none!important;
+        }
+
+        .URL{
+          padding: 5px 10px;
+          font-style: italic;
+          background-color: $cloud;
+          border-radius: 5px;
+        }
+      }
+
+      .modal-footer{
+        padding-bottom: 0;
+
+        .btn-default{
+          background-color: $chrome;
+          color: $cloud;
+          border: none;
+
+          &:hover{
+            background-color: $charcoal;
+          }
+        }
+
+        .btn-copy{
+          background-color: $accent;
+          color: $cloud;
+          border: none;
+
+          &:hover{
+            background-color: $accents;
+          }
+
+          &:focus{
+            background-color: $accented;
+          }
+        }
+      }
     }
   }
