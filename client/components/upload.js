@@ -12,12 +12,14 @@ Template.ProjectHead.events({
     },
     'change #zip': function(event, template) {
         var files = event.target.files;
-        for (var i = 0, ln = files.length; i < ln; i++) {
-            var currFile = new FS.File(files[i]);
-            currFile.metadata = {owner: Meteor.userId()};
-            Documents.insert(currFile, function (err, fileObj) {
-                Meteor.call('parseZip',[currFile.original.name]);
-            });
-        }
+        var currFile = new FS.File(files[0]);
+        currFile.metadata = {owner: Meteor.userId()};
+        Documents.insert(currFile, function (err, fileObj) {
+            console.log(fileObj);
+            fileName = fileObj.original.name;
+            fileId = fileObj._id;
+            console.log(fileId);
+            Meteor.call('parseZip',[fileObj,fileName, fileId]);
+        });
     }
 });

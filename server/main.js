@@ -1,5 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Changes } from '../collections/changes'
+import fs from 'fs'
+import unzip from 'unzip'
 
 Meteor.startup(() => {
 });
@@ -9,7 +11,16 @@ Meteor.methods({
         console.log(msg);
     },
     parseZip: function(file) {
-        console.log("Unzipping zip"+file);
+        console.log("Unzipping zip"+file[1]);
+        
+        var fileName = file[1];
+        var fileId = file[2];
+        console.log(fileId);
+        var filePath = Meteor.absolutePath + "/.meteor/local/cfs/files/docs/docs-"+fileId+"-"+fileName;
+        var outPath = Meteor.absolutePath + "/.meteor/local/cfs/files/docs";
+        console.log(filePath);
+        fs.createReadStream(filePath).pipe(unzip.Extract({path: outPath}));
+    
     },
     deleteChanges: function(editor, file){
         Changes.remove({editor: editor, file: file});
