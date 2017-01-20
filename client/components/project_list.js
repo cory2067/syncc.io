@@ -1,6 +1,10 @@
 Template.ProjectList.helpers({
     docs: function () {
-        return Documents.find({"metadata.owner": Meteor.userId()});
+        var a = Documents.find({"metadata.owner": Meteor.userId()}).fetch();
+        for(var entry=0; entry<a.length; entry++) {
+          a[entry]['date'] = a[entry].original.updatedAt.toString().substring(0, 15);
+        }
+        return a;
     }
 });
 

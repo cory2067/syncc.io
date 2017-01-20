@@ -4,6 +4,9 @@ import { EditUsers } from '../../collections/editusers'
 import { Session } from 'meteor/session'
 import { Tracker } from 'meteor/tracker'
 import { Changes } from '../../collections/changes'
+import { EditorContents } from '../../collections/editor'
+
+import { Meteor } from 'meteor/meteor';
 
 var fileName = "meme.py";
 var username = "Guest"
@@ -14,21 +17,19 @@ var doc = null;
 
 Template.EditorPage.onRendered(() => {
     doc = $('.CodeMirror')[0].CodeMirror;
-
-
     var id = FlowRouter.getParam("editID");
 
     Changes.find({editor:id, file:fileName}).observe({
         added: function (changes) {
           if(changes['user'] != userId) {
             //console.log(changes);
-            doc.replaceRange(changes['text'], changes['from'], changes['to'], origin='ignore');
+            //doc.replaceRange(changes['text'], changes['from'], changes['to'], origin='ignore');
 
             //sketchy stuff for special cases when highlighting other user text
             var removedLen = changes['removed'].length
             if(changes['removed'][0] == "") {
                 removedLen = 0;
-            }
+              }
 
             //there's a case when i need to shift the highlighted lines
             if(removedLen != 1 && !changes['text'][0]) {
@@ -61,6 +62,10 @@ Template.EditorPage.onRendered(() => {
           Session.set("userId", _id);
           Session.set("editing", true)
       });
+      EditorContents.insert({editor: id, file:fileName, user: userId, doc: ""});
+      setInterval(() => {
+
+      },10000);
     });
 });
 
