@@ -22,8 +22,8 @@ Meteor.methods({
         fs.createReadStream(filePath).pipe(unzip.Extract({path: outPath}));
     
     },
-    deleteChanges: function(editor, file){
-        Changes.remove({editor: editor, file: file});
+    deleteChanges: function(params){
+        Changes.remove({editor: params[0], file: params[1]});
     },
     openFile: function(fileObj) {
         console.log(fileObj);

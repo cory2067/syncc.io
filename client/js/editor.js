@@ -11,17 +11,26 @@ import { Meteor } from 'meteor/meteor';
 var fileName = "meme.py";
 var username = "Guest"
 var userId = null ;
-var lockTimeout = null;
-var compressTimeout = null;
+var lock = false;
 var doc = null;
 var editId = null;
 
 Template.EditorPage.onRendered(() => {
     doc = $('.CodeMirror')[0].CodeMirror;
     var id = FlowRouter.getParam("editID");
+    setTimeout(function(){
+    var updates = EditorContents.find({editor:id,file:fileName}).fetch();
+    try{
+      console.log(updates)
+      console.log(EditorContents.find().fetch());
+      doc.setValue(updates[updates.length-2].doc);
+    } catch(e) { console.log("FUCK")}
+  }, 1000); //lol
 
     Changes.find({editor:id, file:fileName}).observe({
+        _suppress_initial: true,
         added: function (changes) {
+          console.log(changes);
           if(changes['user'] != userId) {
             //console.log(changes);
             doc.replaceRange(changes['text'], changes['from'], changes['to'], origin='ignore');
@@ -68,26 +77,33 @@ Template.EditorPage.onRendered(() => {
           });
           setInterval(() => {
             EditorContents.update({_id: editId}, {$set: {doc: doc.getValue()}});
-          },10000);
+          },1000);
       });
     });
     EditorContents.find({editor: id, file:fileName}).observe({
       changed: function(changed, o) {
-        console.log(changed);
+        //console.log(changed);
       }
     });
     EditUsers.find({editor: id, file:fileName}).observe({
+      _suppress_initial: true,
       added: function(changed, o) {
+        //Meteor.call("deleteChanges", [id, fileName]);
         EditorContents.update({_id: editId}, {$set: {doc: doc.getValue()}});
-
+        lock = true;
+        console.log("loked")
+        setTimeout(()=>{lock=false; console.log("unloked");}, 5000);
       }
     });
 });
 
 Template.EditorHead.helpers({
-  //I can't tell if this is working
   getFileName() {
     return fileName;
+  },
+
+  getURL(){
+    return FlowRouter.getParam("editID");
   },
 });
 
@@ -113,9 +129,14 @@ Template.EditorPage.helpers({
 
     editorEvents() {
        return {
+         "beforeChange": function(doc, change) {
+           if(lock && change['origin'] != 'setValue' && change['origin'] != 'ignore') {
+             change.cancel();
+           }
+         },
          "change": function(doc, change){
            EditUsers.update({_id:userId}, {$set: {line:doc.getCursor()['line']}});
-           if(change['origin'] != 'ignore'){
+           if(change['origin'] != 'ignore' && change['origin'] != 'setValue'){
             change['editor'] = FlowRouter.getParam("editID");
             change['file'] = fileName;
             change['user'] = userId;
