@@ -1,0 +1,15 @@
+<template name="EditorHead">
+    <div id="editHead">
+        <ul>
+            <div class="editLeft">
+                <li><a href="" class="title">{{#if currentUser}}{{getFileName}}{{else}}Demo{{/if}}</a></li>
+                <li>{{#if currentUser}}
+                        <a href="/projects"><i class="glyphicon glyphicon-chevron-left"></i></a>
+                    {{else}}
+                        <a href="/"><i class="glyphicon glyphicon-chevron-left"></i></a>
+                    {{/if}}
+                </li>
+            </div>
+        </ul>
+    </div>
+</template>

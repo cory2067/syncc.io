@@ -69,6 +69,13 @@ Template.EditorPage.onRendered(() => {
     });
 });
 
+Template.EditorHead.helpers({
+  //I can't tell if this is working
+  getFileName() {
+    return fileName;
+  },
+});
+
 Template.EditorPage.helpers({
   editingUsers() {
     return EditUsers.find({editor: FlowRouter.getParam("editID")}).fetch();

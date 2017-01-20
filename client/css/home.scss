@@ -7,228 +7,231 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
 /***********************
     SCSS Variables
 ***********************/
-$accent: #1ABC9C;
-$accents: #49C9B0;
-$accented: #16a085;
-$cloud: #E2E5E9;
-$white: #EDEFF1;
-$chrome: #778899;
-$grey: #3C4956;
-$darkgrey: #313D4A;
-$charcoal: #465464;
+  $accent: #1ABC9C;
+  $accents: #49C9B0;
+  $accented: #16a085;
+  $cloud: #E2E5E9;
+  $white: #EDEFF1;
+  $chrome: #778899;
+  $grey: #3C4956;
+  $darkgrey: #313D4A;
+  $charcoal: #465464;
 
-$shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.2);
+  $shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.2);
 
 
 
 /**********************
     Default Styling
 **********************/
-html{
-  height: 100%; //so the page is height spans browser
+  html{
+    height: 100%; //so the page is height spans browser
 
-  body {
-    height: inherit;
-
-    #__blaze-root{
+    body {
       height: inherit;
+
+      #__blaze-root{
+        height: inherit;
+      }
     }
   }
-}
 
-h1, h2, h3{
-  font: {
-    family: 'Fira Sans Extra Condensed', sans-serif;
-    weight: bold;
+  h1, h2, h3{
+    font: {
+      family: 'Fira Sans Extra Condensed', sans-serif;
+      weight: bold;
+    }
   }
-}
 
-h1{
-  font-size: 5.6em;
-  color: $white;
-  margin-bottom: 5px;
-}
-
-p {
-  font: {
-    family: "Open Sans";
-  };
-  color: $charcoal;
-
-  .sub{
-    font-size: 2em;
+  h1{
+    font-size: 5.6em;
+    color: $white;
+    margin-bottom: 5px;
   }
-}
 
-a { //the basic link has no underline EVER
-  font: {
-    family: 'Open Sans', sans-serif;
+  p {
+    font: {
+      family: "Open Sans";
+    };
+    color: $charcoal;
+
+    .sub{
+      font-size: 2em;
+    }
   }
-  color: $charcoal;
-  text-decoration: none!important;
-}
 
-.padded{
-  display: inline-block;
-  padding: 15px 35px;
-}
+  a { //the basic link has no underline EVER
+    font: {
+      family: 'Open Sans', sans-serif;
+    }
+    color: $charcoal;
+    text-decoration: none!important;
+  }
+
+  .padded{
+    display: inline-block;
+    padding: 15px 35px;
+  }
 
 
 
 /***********************
       Header Styles
 ***********************/
-#header {
-  background-color: $cloud;
-  width: 100%; //increases to span top of page
-  display: inline-block; //spans the page
-  box-shadow: $shadow;
-  
-  ul{
-    list-style-type: none; //removes bullets
-    margin: 0;
-    //overflow: hidden; not hiding overflow lets the login pull down
-  }
-
-  li {
-    float: right;
-    height: 50px; //Sets a fixed height (this makes it so that different font sizes don't affect the size of navbar
-
-    a {
-    text-transform: uppercase;
-    vertical-align: middle;
-    text-align: center;
-    display: inline-block;
-    padding: 0 14px;
-    line-height: 50px;
-    white-space: nowrap;
-      &:hover{
-        background-color: $accent;
-        color: $white;
-      }
-      &:focus{
-        background-color: $accented;
-        color: $white;
-      }
+  #header {
+    background-color: $cloud;
+    width: 100%; //increases to span top of page
+    display: inline-block; //spans the page
+    box-shadow: $shadow;
+    
+    ul{
+      list-style-type: none; //removes bullets
+      margin: 0;
+      //overflow: hidden; not hiding overflow lets the login pull down
     }
 
-    /************************
-          Login Popup
-    ************************/
+    li {
+      float: right;
+      height: 50px; //Sets a fixed height (this makes it so that different font sizes don't affect the size of navbar
 
-    #login-buttons{
-      line-height: inherit;
-
-      .login-link-text{//login button
-        &:active{
+      a {
+      text-transform: uppercase;
+      vertical-align: middle;
+      text-align: center;
+      display: inline-block;
+      padding: 0 14px;
+      line-height: 50px;
+      white-space: nowrap;
+        &:hover{
+          background-color: $accent;
+          color: $white;
+        }
+        &:focus{
           background-color: $accented;
           color: $white;
         }
       }
 
-      .login-close-text{ //changes the close button
-        color: $charcoal;
-        padding: 0px;
-        float: right;
-        padding-bottom: 0px;
-        line-height: normal;
-        text-transform: none;
-        font-size: .7em;
-        font-family: 'Open Sans', sans-serif;
- 
-        &:hover{
-          background-color: white;
-          color: $accent;
+      /************************
+            Login Popup
+      ************************/
+
+      #login-buttons{
+        line-height: inherit;
+
+        .login-link-text{//login button
+          &:active{
+            background-color: $accented;
+            color: $white;
+          }
         }
-      }
 
-      .login-button{
-        //sign in or create account big button
-        background: $chrome;
-        &:hover{
-          background: $accent;
-        }
-      }
-
-      .accounts-dialog{ //moves box so it doesn't float off the screen
-        top: 120%;
-        left: -85px;
-      }
-
-      .additional-link-container{ //contains signup and forgot password
-        display: inline; //allows to be on the same line
-      }
-
-      #signup-link{ //signup button 
-        float: left;
-      }
-
-      #forgot-password-link{ //forgot password button
-        float: right;
-      }
-
-      .additional-link{ //style type of both sign up and forgot password
-        text-transform: none;
-        line-height: normal;
-        text-transform: none;
-        float: none;
-        padding: 0;
-        margin: 10px 0;
-
-        &:hover{
-          background-color: white;
-          color: $accent;
-        }
-      }
-    }
-  }
+        .login-close-text{ //changes the close button
+          color: $charcoal;
+          padding: 0px;
+          float: right;
+          padding-bottom: 0px;
+          line-height: normal;
+          text-transform: none;
+          font-size: .7em;
+          font-family: 'Open Sans', sans-serif;
   
-  //Responsive Navbar {fixed}
-  @media screen and (max-width: 600px){
-    ul { padding: 0; }
-    ul li {
-      width: 100%;
-      display: block;
+          &:hover{
+            background-color: white;
+            color: $accent;
+          }
+        }
+
+        .login-button{
+          //sign in or create account big button
+          background: $chrome;
+          &:hover{
+            background: $accent;
+          }
+        }
+
+        .accounts-dialog{ //moves box so it doesn't float off the screen
+          top: 120%;
+          left: -85px;
+        }
+
+        .additional-link-container{ //contains signup and forgot password
+          display: inline; //allows to be on the same line
+        }
+
+        #signup-link{ //signup button 
+          float: left;
+        }
+
+        #forgot-password-link{ //forgot password button
+          float: right;
+        }
+
+        .additional-link{ //style type of both sign up and forgot password
+          text-transform: none;
+          line-height: normal;
+          text-transform: none;
+          float: none;
+          padding: 0;
+          margin: 10px 0;
+
+          &:hover{
+            background-color: white;
+            color: $accent;
+          }
+        }
+      }
     }
-    a {width: 100%;}
-    #login-buttons{
-      width: 100%;
-      .accounts-dialog{left: 25%!important;}
+    
+    //Responsive Navbar {fixed}
+    @media screen and (max-width: 600px){
+      ul { padding: 0; }
+      ul li {
+        width: 100%;
+        display: block;
+      }
+      a {width: 100%;}
+      #login-buttons{
+        width: 100%;
+        .accounts-dialog{left: 25%!important;}
+      }
     }
-  }
-};
+  };
 
 
 
 /***********************
       Home Styles
 ***********************/
-#homebgd{ //home background
-  background-image: url('/imgs/coded.jpg');
-  background-position: center;
-  background-size: cover;
-  height: inherit;
-}
-
-.home-wrapper{
-  p{font-size: 1.7em; color: $cloud}
-
-  a.button{
-    display: inline-block;
-    font-size: 1.5em;
-    text-transform: uppercase;
-    background: $cloud;
-    margin: 10px;
-    width: 180px;
-    padding: 8px 0;
-    border-radius: 5px;
-    
-    &:hover, &:focus{
-      color: $cloud;
-      background: $accent;
-      text-decoration: none;
-    }
+  #homebgd{ //home background
+    background-image: url('/imgs/coded.jpg');
+    background-position: center;
+    background-size: cover;
+    height: inherit;
   }
+
+  .home-wrapper{
+    p{font-size: 1.7em; color: $cloud}
+
+    a.button{
+      display: inline-block;
+      font-size: 1.5em;
+      text-transform: uppercase;
+      background: $cloud;
+      margin: 10px;
+      width: 180px;
+      padding: 8px 0;
+      border-radius: 5px;
+      
+      &:hover{
+        color: $cloud;
+        background: $accent;
+      }
+      &:focus{
+        color: $cloud;
+        background: $accented;
+      }
+    }
 
   //wrapper part
   max-width: 650px;
@@ -236,267 +239,336 @@ a { //the basic link has no underline EVER
   padding: 65px 30px;
   text-align: center;
   border-radius: 5px;
-
-  //responsive location
-  @media screen and (max-width: 800px){
-    margin: 25% auto auto auto;
-    h1{
-      font-size: 3em;
-    }
-    p.sub{
-      font-size: 1.5em;
-    }
-    a.button{
-      font-size: 1.3em;
+    
+    //responsive location
+    @media screen and (max-width: 800px){
+      margin: 25% auto auto auto;
+      h1{
+        font-size: 3em;
+      }
+      p.sub{
+        font-size: 1.5em;
+      }
+      a.button{
+        font-size: 1.3em;
+      }
     }
   }
-}
 
 
 
 /***********************
       About Styles
 ***********************/
-.about{
-  text-align: center;
-  padding: 10% 25px 15px;
-}
+  .about{
+    text-align: center;
+    padding: 10% 25px 15px;
+  }
 
-.about-wrapper{
-  margin: auto;
-  width: 595px;
-  background-color: $white;
-  padding: 8px 0;
-  border-radius: 5px;
-  box-shadow: $shadow;
-}
+  .about-wrapper{
+    margin: auto;
+    width: 595px;
+    background-color: $white;
+    padding: 8px 0;
+    border-radius: 5px;
+    box-shadow: $shadow;
+  }
 
 
 
 /***********************
      Project Styles
 ***********************/
-#projbgd{//project background
-  height: inherit;
-  background-color: white;
-}
-
-//*******PROJECTS SIDEBAR********//
-//Credit: http://bootsnipp.com/snippets/featured/side-menu-on-hover//
-nav.sidebar {
-  background: $white;
-  width: 235px;
-  height: calc(100vh - 55px);
-  float: left;
-  margin-bottom: 0px;
-  display: block; 
-  box-sizing: border-box;
-
-  ul{
-    width: 100%;
-    margin: 0;
+  #projbgd{//project background
+    height: inherit;
+    background-color: white;
   }
 
-  li {
-    width: 100%;
-    border-bottom: 5px white solid;
-  }
+  //*******PROJECTS SIDEBAR********//
+  //Credit: http://bootsnipp.com/snippets/featured/side-menu-on-hover//
+    nav.sidebar {
+      background: $white;
+      width: 235px;
+      height: calc(100vh - 55px);
+      float: left;
+      margin-bottom: 0px;
+      display: block; 
+      box-sizing: border-box;
 
-  a{
-    padding-right: 18px;
-
-    &:hover{
-      background: $chrome;
-      color: $white;
-    }
-
-    &.active{
-      background: $accent;
-      color: $white;
-    }
-
-    .name{
-      font-size: 1.15em;
-      margin-bottom: 8px;
-    }
-  }
-
-  //Disappears when screen too small
-  @media (max-width: 600px){
-    display: none;
-  }
-}
-
-//*******PROJECTS HEADER*********//
-.projecthead{
-  margin-left: 235px;
-
-  .padded{//pads the content not in the sidebar
-    width: calc(100vw - 235px);
-
-    .col-md-4{//column on the right side
-      padding: 0 2% 0 0;
-      height: 62.89px;
-    }
-  }
-
-  //floats the stuff on the right
-  .floater{
-    float: right;
-    max-width: 300px;
-    width: 100%;
-  }
-
-  //Search Box//
-  //Credit: http://codepen.io/ace-subido/pen/Echvr
-  .search-box{
-    //max-width: 400px;
-    width: calc(100% - 70px);
-    display: inline-block;
-    background: $white;
-    color: $charcoal;
-    border-radius: 5px;
-    position: relative;
-    margin: 28px 8px 0 0;
-
-    .form-control{
-      background-color: inherit;
-    }
-
-    input[type=text]{
-      color: $charcoal;
-      font-family: 'Open Sans';
-      border: none;
-      box-shadow: none;
-      display: inline-block;
-    }
-
-    .search-btn{
-      position: absolute;
-      right: 0px;
-      top: 0px;
-      color: $charcoal;
-      border-bottom-right-radius: 5px;
-      border-top-right-radius: 5px;
-      font-size: 18px;
-      padding: 4px 7px 3px;
-
-      &:hover{
-        color: $white;
-        background-color: $chrome;
-      }
-    }
-  }
-
-  //New Button
-  button.newff{
-    font-family: 'Open Sans';
-    background-color: $accent;
-    color: $white;
-    border-radius: 5px;
-    border: none;
-    margin-top: -3.5px;
-    height: 33.78px;
-
-    &:hover{
-      background-color: $accents;
-    }
-
-    &:focus{
-      background-color: $accented;
-    }
-  }
-
-  //Modal
-  .modal{
-    position: relative;
-    right: 0;
-    width: inherit;
-
-    .modal-content .modal-dialog{
-      margin: 0;
-      width: inherit;
-
-      .modal-header{
-        padding: 5px 5px 0 0;
-        border: none;
+      ul{
+        width: 100%;
+        margin: 0;
       }
 
-      .modal-body{
-        padding: 0 10px 10px;
+      li {
+        width: 100%;
+        border-bottom: 5px white solid;
+      }
 
-        .btn-default{
-          border-radius: 0;
-          border: none;
-          width: 100%;
-          text-align: left;
-          padding: 5px;
+      a{
+        padding-right: 18px;
+
+        &:hover{
+          background: $chrome;
+          color: $white;
+        }
+
+        &.active{
+          background: $accent;
+          color: $white;
+        }
+
+        .name{
+          font-size: 1.15em;
+          margin-bottom: 8px;
+        }
+      }
+
+      //Disappears when screen too small
+      @media (max-width: 600px){
+        display: none;
+      }
+    }
+
+  //*******PROJECTS HEADER*********//
+    .projecthead{
+      margin-left: 235px;
+
+      .padded{//pads the content not in the sidebar
+        width: calc(100vw - 235px);
+
+        .col-md-4{//column on the right side
+          padding: 0 2% 0 0;
+          height: 62.89px;
+        }
+      }
+
+      //floats the stuff on the right
+      .floater{
+        float: right;
+        max-width: 300px;
+        width: 100%;
+      }
+
+      //Search Box//
+      //Credit: http://codepen.io/ace-subido/pen/Echvr
+      .search-box{
+        //max-width: 400px;
+        width: calc(100% - 70px);
+        display: inline-block;
+        background: $white;
+        color: $charcoal;
+        border-radius: 5px;
+        position: relative;
+        margin: 28px 8px 0 0;
+
+        .form-control{
+          background-color: inherit;
+        }
+
+        input[type=text]{
+          color: $charcoal;
           font-family: 'Open Sans';
-          font-size: 1.1em;
-          color: $chrome;
+          border: none;
+          box-shadow: none;
+          display: inline-block;
+        }
 
-          .glyphicon{
-            color: $chrome;
-          }
+        .search-btn{
+          position: absolute;
+          right: 0px;
+          top: 0px;
+          color: $charcoal;
+          border-bottom-right-radius: 5px;
+          border-top-right-radius: 5px;
+          font-size: 18px;
+          padding: 4px 7px 3px;
 
           &:hover{
-            background: none;
-            color: $accents;
-            .glyphicon{color: $accents}
-          }
-
-          &:focus{
-            background: none;
-            color: $accented;
-            .glyphicon{color: $accented}
+            color: $white;
+            background-color: $chrome;
           }
         }
+      }
 
-        .dividing{
-          border-bottom: 1px solid $cloud;
+      //New Button
+      button.newff{
+        font-family: 'Open Sans';
+        background-color: $accent;
+        color: $white;
+        border-radius: 5px;
+        border: none;
+        margin-top: -3.5px;
+        height: 33.78px;
+
+        &:hover{
+          background-color: $accents;
         }
 
-        input#files{
-          display: none;
+        &:focus{
+          background-color: $accented;
+        }
+      }
+
+      //Modal
+      .modal{
+        position: relative;
+        right: 0;
+        width: inherit;
+
+        .modal-content .modal-dialog{
+          margin: 0;
+          width: inherit;
+
+          .modal-header{
+            padding: 5px 5px 0 0;
+            border: none;
+          }
+
+          .modal-body{
+            padding: 0 10px 10px;
+
+            .btn-default{
+              border-radius: 0;
+              border: none;
+              width: 100%;
+              text-align: left;
+              padding: 5px;
+              font-family: 'Open Sans';
+              font-size: 1.1em;
+              color: $chrome;
+
+              .glyphicon{
+                color: $chrome;
+              }
+
+              &:hover{
+                background: none;
+                color: $accents;
+                .glyphicon{color: $accents}
+              }
+
+              &:focus{
+                background: none;
+                color: $accented;
+                .glyphicon{color: $accented}
+              }
+            }
+
+            .dividing{
+              border-bottom: 1px solid $cloud;
+            }
+
+            input#files{
+              display: none;
+            }
+
+            input#zip{
+              display: none;
+            }
+          }
+        }
+      }
+
+      //Responsive Header Bit
+      @media screen and (max-width: 600px){
+          margin: 0;
+          .padded{width:100vw}
+          .floater{
+            float:left; 
+            width: 100%;
+            .search-box{margin:0;}
+          }
+      }
+    }
+
+  //******PROJECTS MAIN LIST*******//
+    #ProjectList{
+      .subrow{
+        background: $white;
+        color: $chrome;
+      }
+
+      .docsrow{
+        padding: 5px 0;
+        border-bottom: 1px solid $cloud;
+      }
+
+      .col-md-6{
+        padding: 5px 10px;
+        height: 2em;
+      }
+
+      button.close{
+        padding-right: 12px;
+      }
+    }
+
+
+
+/***********************
+  Editor Header Styles
+***********************/
+  .editBgd{
+    background-color: $darkgrey;
+    height: inherit;
+
+    //DEFAULTS
+    p{
+      color: $chrome;
+    }
+
+    a{color: $white;}
+  }
+
+  #editHead{
+    width: 100%; //increases to span top of page
+    display: inline-block; //spans the page
+    background: $charcoal;
+
+    ul{
+      list-style-type: none; //removes bullets
+      margin: 0;
+    }
+
+    li {
+      float: right;
+      height: 50px; //Sets a fixed height (this makes it so that different font sizes don't affect the size of navbar
+
+      .glyphicon{
+        color: $accent;
+      }
+
+      a {
+      text-transform: uppercase;
+      vertical-align: middle;
+      text-align: center;
+      display: inline-block;
+      padding: 0 14px;
+      line-height: 50px;
+      white-space: nowrap;
+        &:hover{
+          background-color: $accent;
+          color: $white;
+
+          .glyphicon{color:$white;}
+        }
+        &:focus{
+          background-color: $accented;
         }
 
-        input#zip{
-          display: none;
+        .title{
+          color: $white;
+          font-size: 1.5em;
         }
       }
     }
-  }
 
-  //Responsive Header Bit
-  @media screen and (max-width: 600px){
-      margin: 0;
-      .padded{width:100vw}
-      .floater{
-        float:left; 
-        width: 100%;
-        .search-box{margin:0;}
-      }
-  }
-}
+    .editLeft{
+      float: left;
+    }
 
-//******PROJECTS MAIN LIST*******//
-#ProjectList{
-  .subrow{
-    background: $white;
-    color: $chrome;
+    .editRight{
+      float: right;
+    }
   }
-
-  .docsrow{
-    padding: 5px 0;
-    border-bottom: 1px solid $cloud;
-  }
-
-  .col-md-6{
-    padding: 5px 10px;
-    height: 2em;
-  }
-
-  button.close{
-    padding-right: 12px;
-  }
-}

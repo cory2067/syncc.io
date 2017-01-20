@@ -18,4 +18,12 @@
     <!-- <div id="jstree"></div> -->
   </div>
 
+  <script>
+    //acts as if the sign in link in the header was clicked
+    $(function(){
+      $("#signup").on("click", function(){
+        $("#login-sign-in-link").click()
+      })
+    });
+  </script>
 </template>
