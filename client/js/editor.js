@@ -112,10 +112,6 @@ Template.EditorPage.onRendered(() => {
 });
 
 Template.EditorPage.helpers({
-  editorID() {
-    return FlowRouter.getParam("editID");
-  },
-
   editingUsers() {
     return EditUsers.find({editor: FlowRouter.getParam("editID")}).fetch();
   },
