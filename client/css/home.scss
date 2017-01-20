@@ -486,6 +486,11 @@ nav.sidebar {
     color: $chrome;
   }
 
+  .docsrow{
+    padding: 5px 0;
+    border-bottom: 1px solid $cloud;
+  }
+
   .col-md-6{
     padding: 5px 10px;
     height: 2em;
