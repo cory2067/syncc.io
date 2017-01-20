@@ -5,7 +5,7 @@
       <h1>SYNCC</h1>
       {{#if currentUser}}
         <!--INSERT PROFILE PAGE HERE (or dashboard)-->
-        <p>you are logged in. welcome, {{currentUser}}.</p>
+        <p>you are logged in. welcome, {{currentUser.emails}}.</p>
       {{else}}
         <p class="sub">welcome to the site thing</p>
         <a href="/{{newEditor}}" class="button">Demo</a>
