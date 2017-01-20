@@ -97,6 +97,16 @@ Template.EditorPage.onRendered(() => {
     });
 });
 
+Template.EditorHead.helpers({
+  getFileName() {
+    return fileName;
+  },
+
+  getURL(){
+    return FlowRouter.getParam("editID");
+  },
+});
+
 Template.EditorPage.helpers({
   editingUsers() {
     return EditUsers.find({editor: FlowRouter.getParam("editID")}).fetch();

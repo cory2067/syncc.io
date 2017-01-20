@@ -1,0 +1,85 @@
+<template name="EditorHead">
+    <div id="editHead">
+        <ul>
+            <div class="editLeft">
+                <li><a href="" class="title">{{#if currentUser}}{{getFileName}}{{else}}Demo{{/if}}</a></li>
+                <li>{{#if currentUser}}
+                        <a href="/projects"><i class="glyphicon glyphicon-chevron-left"></i></a>
+                    {{else}}
+                        <a href="/"><i class="glyphicon glyphicon-chevron-left"></i></a>
+                    {{/if}}
+                </li>
+            </div>
+            <div class="editRight">
+                <li><button id="shareBtn" class="btn shareBtn" data-toggle="modal" data-target="#shareURL">Share</button></li>
+            </div>
+        </ul>
+    </div>
+
+    <!--POPUP-->
+    <div id="shareURL" class="modal fade" role="dialog">
+        <div class="modal-content">
+            <div class="modal-dialog">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p>Share your code to collaborators with this URL:</p>
+                    <input class="form-control URL" id="theURL" value="localhost:3000/{{getURL}}" readonly>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default btn-copy" data-copytarget="#theURL">Copy</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    /*
+    Copy text from any appropriate field to the clipboard
+    By Craig Buckler, @craigbuckler
+    use it, abuse it, do whatever you like with it!
+    */
+        (function() {
+
+            'use strict';
+        
+        // click events
+        document.body.addEventListener('click', copy, true);
+
+            // event handler
+            function copy(e) {
+
+            // find target element
+            var 
+            t = e.target,
+            c = t.dataset.copytarget,
+            inp = (c ? document.querySelector(c) : null);
+            
+            // is element selectable?
+            if (inp && inp.select) {
+            
+            // select text
+            inp.select();
+
+            try {
+                // copy text
+                document.execCommand('copy');
+                inp.blur();
+                
+                // copied animation
+                t.classList.add('copied');
+                setTimeout(function() { t.classList.remove('copied'); }, 1500);
+            }
+            catch (err) {
+                alert('please press Ctrl/Cmd+C to copy');
+            }
+            
+            }
+            
+            }
+
+        })();
+    </script>
+</template>

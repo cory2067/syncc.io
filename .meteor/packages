@@ -31,3 +31,4 @@ jss:jstree-proton-theme
 accounts-base
 cfs:standard-packages
 cfs:filesystem
+ostrio:meteor-root
