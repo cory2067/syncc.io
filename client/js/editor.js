@@ -15,18 +15,8 @@ var doc = null;
 Template.EditorPage.onRendered(() => {
     doc = $('.CodeMirror')[0].CodeMirror;
 
-    try {
-      console.log(Meteor.user());
-      username = Meteor.user()['emails'][0]['address'];
-    } catch(e) {} //tfw you're too lazy to be bothered with error handling
 
     var id = FlowRouter.getParam("editID");
-
-    EditUsers.insert({name: username, editor: id, file: fileName, line: 0}, function(err, _id) {
-        userId = _id;
-        Session.set("userId", _id);
-        Session.set("editing", true)
-    });
 
     Changes.find({editor:id, file:fileName}).observe({
         added: function (changes) {
@@ -60,6 +50,18 @@ Template.EditorPage.onRendered(() => {
         removed: function (i) {
        }
      });
+
+    Tracker.autorun(function (c) {
+      if(!Meteor.user()) {
+        return;
+      }
+      username = Meteor.user()['emails'][0]['address'];
+      EditUsers.insert({name: username, editor: id, file: fileName, line: 0}, function(err, _id) {
+          userId = _id;
+          Session.set("userId", _id);
+          Session.set("editing", true)
+      });
+    });
 });
 
 Template.EditorPage.helpers({
