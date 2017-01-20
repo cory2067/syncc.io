@@ -13,7 +13,7 @@ Meteor.methods({
     },
     deleteChanges: function(editor, file){
         Changes.remove({editor: editor, file: file});
-    }
+    },
     openFile: function(fileObj) {
         console.log(fileObj);
         var fileName = fileObj.original.name;
