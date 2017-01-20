@@ -27,6 +27,12 @@ Template.Header.helpers({
 Template.HomePage.helpers({
     newEditor() {
       return Random.id(8);
+    },
+    getUser() {
+      a= Meteor.user();
+      a['email'] = a['emails'][0]['address']
+      a['name'] = a['email'].split("@")[0]
+      return a;
     }
 });
 
