@@ -608,6 +608,8 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
       width: inherit;
       margin: 0;
 
+      p{color: $chrome;}
+
       .modal-header{
         padding: 0;
         border: none;
@@ -725,6 +727,10 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
     &.toggled{
       width: 265px;
     }
+
+    .wrapper-content{
+      padding: 10px 20px;
+    }
   }
 
 
@@ -742,15 +748,13 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
     -moz-transition: all 0.5s ease;
     transition: all 0.5s ease;
 
-    //DEFAULTS
-    p{
-      color: $chrome;
-    }
-
+    h3{color: $cloud;}
+    p{color: $cloud;}
     a{color: $white;}
   }
 
   #page-content-wrapper{
+    height: calc(100vh - 50px);
     display: block;
     padding-left: 62px;
     -webkit-transition: all 0.5s ease;
@@ -760,4 +764,12 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
     &.toggled{
       padding-left: 327px;
     }
+  }
+
+  .CodeMirror{
+    height: calc(100vh - 50px);
+
+    //personal theme//
+    background-color: $darkgrey!important;
+    .CodeMirror-gutters{background-color: $darkgrey!important;}
   }

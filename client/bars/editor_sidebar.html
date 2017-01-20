@@ -17,17 +17,26 @@
         </div>
 
         <div id="users-wrapper" class="pullout">
-            <p>Currently, the following users are accessing this file:</p>
-            {{#each editingUsers}}
-            <p>{{name}} <!--is editing lines {{line}} (mongo id: {{_id}})--></p>
-            {{/each}}
+            <div class="wrapper-content">
+                <h3>Users</h3>
+                <p>Currently, the following users are accessing this file:</p>
+                {{#each editingUsers}}
+                <p>{{name}} <!--is editing lines {{line}} (mongo id: {{_id}})--></p>
+                {{/each}}
+            </div>
         </div>
 
         <div id="tree-wrapper" class="pullout">
-            {{> TreeProj}}
+            <div class="wrapper-content">
+                <h3>File Directory</h3>
+                {{> TreeProj}}
+            </div>
         </div>
 
         <div id="settings-wrapper" class="pullout">
+            <div class="wrapper-content">
+                <h3>Settings</h3>
+            </div>
         </div>
     </div>
 
