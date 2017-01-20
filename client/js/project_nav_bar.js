@@ -11,7 +11,6 @@ Template.TreeProj.onRendered(function () {
     });*/
 
 
-  setTimeout(function() {
     var tree = JSON.parse(CurrJSON.findOne().json)
     for(var q=0; q<tree.length; q++){
       console.log('tes')
@@ -29,5 +28,4 @@ Template.TreeProj.onRendered(function () {
       data: (tree)
     }
     });
-  }, 1000);
 });
