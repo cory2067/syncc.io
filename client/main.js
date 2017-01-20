@@ -14,7 +14,6 @@ Meteor.startup(function(){
 Tracker.autorun(function (c) {
   if(!Session.get("editing") && Session.get("userId")) {
     EditUsers.remove({_id : Session.get("userId")});
-    //Meteor.call("logServer", "closed client " + Session.get("userId"));
     Session.set("userId", null)
   }
 });
