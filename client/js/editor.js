@@ -21,9 +21,10 @@ Template.EditorPage.onRendered(() => {
 
     Changes.find({editor:id, file:fileName}).observe({
         added: function (changes) {
+          console.log("changes");
           if(changes['user'] != userId) {
             //console.log(changes);
-            //doc.replaceRange(changes['text'], changes['from'], changes['to'], origin='ignore');
+            doc.replaceRange(changes['text'], changes['from'], changes['to'], origin='ignore');
 
             //sketchy stuff for special cases when highlighting other user text
             var removedLen = changes['removed'].length
