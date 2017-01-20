@@ -11,7 +11,7 @@ Meteor.methods({
     parseZip: function(file) {
         console.log("Unzipping zip"+file);
     },
-    deleteChanges: function(editor, file){
-        Changes.remove({editor: editor, file: file});
+    deleteChanges: function(params){
+        Changes.remove({editor: params[0], file: params[1]});
     }
 });
