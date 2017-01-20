@@ -487,11 +487,19 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
       .subrow{
         background: $white;
         color: $chrome;
+
+        &:hover{
+          background: $cloud;
+        }
       }
 
       .docsrow{
         padding: 5px 0;
         border-bottom: 1px solid $cloud;
+
+        &:hover{
+          background-color: $white;
+        }
       }
 
       .col-md-6{
