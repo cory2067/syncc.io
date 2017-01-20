@@ -331,15 +331,16 @@ nav.sidebar {
 .projecthead{
   margin-left: 235px;
 
-  .padded{
+  .padded{//pads the content not in the sidebar
     width: calc(100vw - 235px);
 
-    .col-md-4{
+    .col-md-4{//column on the right side
       padding: 0 2% 0 0;
       height: 62.89px;
     }
   }
 
+  //floats the stuff on the right
   .floater{
     float: right;
     max-width: 300px;
