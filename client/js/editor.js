@@ -14,6 +14,7 @@ var userId = null ;
 var lockTimeout = null;
 var compressTimeout = null;
 var doc = null;
+var editId = null;
 
 Template.EditorPage.onRendered(() => {
     doc = $('.CodeMirror')[0].CodeMirror;
@@ -21,7 +22,6 @@ Template.EditorPage.onRendered(() => {
 
     Changes.find({editor:id, file:fileName}).observe({
         added: function (changes) {
-          console.log("changes");
           if(changes['user'] != userId) {
             //console.log(changes);
             doc.replaceRange(changes['text'], changes['from'], changes['to'], origin='ignore');
@@ -62,11 +62,25 @@ Template.EditorPage.onRendered(() => {
           userId = _id;
           Session.set("userId", _id);
           Session.set("editing", true)
-      });
-      EditorContents.insert({editor: id, file:fileName, user: userId, doc: ""});
-      setInterval(() => {
 
-      },10000);
+          EditorContents.insert({editor: id, file:fileName, user: userId, doc: ""}, function(err, _id) {
+            editId = _id;
+          });
+          setInterval(() => {
+            EditorContents.update({_id: editId}, {$set: {doc: doc.getValue()}});
+          },10000);
+      });
+    });
+    EditorContents.find({editor: id, file:fileName}).observe({
+      changed: function(changed, o) {
+        console.log(changed);
+      }
+    });
+    EditUsers.find({editor: id, file:fileName}).observe({
+      added: function(changed, o) {
+        EditorContents.update({_id: editId}, {$set: {doc: doc.getValue()}});
+
+      }
     });
 });
 
