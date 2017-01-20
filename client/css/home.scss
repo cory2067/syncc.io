@@ -342,6 +342,8 @@ nav.sidebar {
 
   .floater{
     float: right;
+    max-width: 300px;
+    width: 100%;
   }
 
   //Search Box//
@@ -408,7 +410,7 @@ nav.sidebar {
   .modal{
     position: relative;
     right: 0;
-    width: 100%;
+    width: inherit;
 
     .modal-content .modal-dialog{
       margin: 0;
@@ -441,10 +443,24 @@ nav.sidebar {
             color: $accents;
             .glyphicon{color: $accents}
           }
+
+          &:focus{
+            background: none;
+            color: $accented;
+            .glyphicon{color: $accented}
+          }
         }
 
         .dividing{
           border-bottom: 1px solid $cloud;
+        }
+
+        input#files{
+          display: none;
+        }
+
+        input#zip{
+          display: none;
         }
       }
     }

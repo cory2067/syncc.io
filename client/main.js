@@ -35,6 +35,7 @@ Template.HomePage.onRendered(function () {
       if($('.login-close-text')[0]) {
         $(".login-close-text")[0].click();
       }
+      //add exclude if in the accounts-dialog div
     });
 
   this.$('#jstree').jstree({
