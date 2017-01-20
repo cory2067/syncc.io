@@ -4,6 +4,7 @@ import { EditUsers } from '../../collections/editusers'
 import { Docs } from '../../collections/docs'
 import { Session } from 'meteor/session'
 import { Tracker } from 'meteor/tracker'
+import { Changes } from '../../collections/changes'
 
 var fileName = "meme.py";
 var username = "Guest"
@@ -40,7 +41,7 @@ Template.EditorPage.onRendered(() => {
       }
     }
 
-    Docs.find({editor:id}).observe({
+    /*Docs.find({editor:id}).observe({
        added: function (c) {
           makeEdit(c, true);
        },
@@ -50,7 +51,40 @@ Template.EditorPage.onRendered(() => {
        removed: function (c) {
          makeEdit(c, false)
       }
-    });
+    });*/
+
+    Changes.find({editor:id, file:fileName}).observe({
+        added: function (changes) {
+          if(changes['user'] != userId) {
+            //console.log(changes);
+            doc.replaceRange(changes['text'], changes['from'], changes['to'], origin='ignore');
+
+            //sketchy stuff for special cases when highlighting other user text
+            var removedLen = changes['removed'].length
+            if(changes['removed'][0] == "") {
+                removedLen = 0;
+            }
+
+            //there's a case when i need to shift the highlighted lines
+            if(removedLen != 1 && !changes['text'][0]) {
+              changes['text'].splice(0,1);
+              changes['from']['line']++;
+              changes['to']['line']++;
+            }
+
+            if(changes['text'].length || removedLen==1) {
+              var mark = doc.markText({line: changes['from']['line'], ch:0}, {line: changes['to']['line']+changes['text'].length-1}, {className: "editing"});
+              setTimeout(function() {
+                mark.clear();
+              }, 1000);
+            }
+          }
+        },
+        changed: function (changes, old) {
+        },
+        removed: function (i) {
+       }
+     });
 
     EditUsers.find({editor:id}).observe({
        added: function (i) {
@@ -64,9 +98,12 @@ Template.EditorPage.onRendered(() => {
             var b = changes['line'][1]+a-1 //to
             //console.log(changes['line'])
 
-            //var mark = doc.markText({line:a,ch:0}, {line:b,ch:doc.getLine(b).length}, {className: "locked"});
-            //console.log(mark);
-            //userMarks[changes['_id']] = mark;
+            /*var mark = doc.markText({line:a,ch:0}, {line:b,ch:doc.getLine(b).length}, {className: "locked"});
+            console.log(mark);
+            userMarks[changes['_id']] = mark;
+            setTimeout(function() {
+              mark.clear();
+            }, 1000);*/
          }
        },
        removed: function (i) {
@@ -75,10 +112,6 @@ Template.EditorPage.onRendered(() => {
 });
 
 Template.EditorPage.helpers({
-  editorID() {
-    return FlowRouter.getParam("editID");
-  },
-
   editingUsers() {
     return EditUsers.find({editor: FlowRouter.getParam("editID")}).fetch();
   },
@@ -102,6 +135,12 @@ Template.EditorPage.helpers({
        return {
          "change": function(doc, change){
            if(change['origin'] != 'ignore'){
+            change['editor'] = FlowRouter.getParam("editID");
+            change['file'] = fileName;
+            change['user'] = userId;
+            change['time'] = (new Date()).toJSON();
+            Changes.insert(change);
+
             //Changes.add(change)
             lineObj = [change['from']['line'], change['text'].length];
             change['user'] = userId;

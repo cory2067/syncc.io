@@ -19,17 +19,6 @@ Tracker.autorun(function (c) {
   }
 });
 
-Template.hello.onCreated(function helloOnCreated() {
-  // counter starts at 0
-  this.counter = new ReactiveVar(0);
-});
-
-Template.hello.helpers({
-  counter() {
-    return Template.instance().counter.get();
-  }
-});
-
 //gross repeating the same helper
 Template.Header.helpers({
     newEditor() {
@@ -60,14 +49,4 @@ Template.HomePage.onRendered(function () {
       }]
     }
   });
-});
-
-Template.hello.events({
-  'click button'(event, instance) {
-    var editor = $('.CodeMirror')[0].CodeMirror;
-    var line = editor.getLine(0);
-    editor.replaceRange("new stuff\n", {line:0,ch:0}, {line:0,ch:line.length}, origin="ignore");
-    // increment the counter when button is clicked
-    instance.counter.set(instance.counter.get() + 1);
-  },
 });
