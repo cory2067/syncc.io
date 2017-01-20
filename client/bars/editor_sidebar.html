@@ -1,8 +1,17 @@
 <template name="EditSidebar">
     <div id="sidebar-wrapper">
         <div id="sidebar-mini">
-            <nav class="nav-header sidebar">
+            <nav class="nav-header sidebar" id="editSidebar">
                 <ul class="nav navbar-nav">
+                    <li><!--USERS-->
+                        <a href="#users-toggle" id="users-toggle"><label class="back-circle"><i class="glyphicon glyphicon-user"></i></label></a>
+                    </li>
+                    <li>
+                        <a href="#tree-toggle" id="tree-toggle"><label class="back-circle"><i class="glyphicon glyphicon-list"></i></label></a>
+                    </li>
+                    <li>
+                        <a href="#settings-toggle" id="settings-toggle"><label class="back-circle"><i class="glyphicon glyphicon-cog"></i></label></a>
+                    </li>
                 </ul>
             </nav>
         </div>

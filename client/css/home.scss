@@ -16,6 +16,7 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
   $grey: #3C4956;
   $darkgrey: #313D4A;
   $charcoal: #465464;
+  $blacc: #283038;
 
   $shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.2);
 
@@ -277,6 +278,27 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
 
 
 /***********************
+       GEN SIDEBAR
+***********************/
+  nav.sidebar{
+    float: left;
+    margin-bottom: 0;
+    display: block;
+    box-sizing: border-box;
+
+    ul{
+      width: 100%;
+      margin: 0;
+    }
+
+    li {
+      width: 100%;
+    }
+  }
+
+
+
+/***********************
      Project Styles
 ***********************/
   #projbgd{//project background
@@ -286,24 +308,17 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
 
   //*******PROJECTS SIDEBAR********//
   //Credit: http://bootsnipp.com/snippets/featured/side-menu-on-hover//
-    nav.sidebar {
+    #projectSidebar{
       background: $white;
       width: 235px;
       height: calc(100vh - 55px);
-      float: left;
-      margin-bottom: 0px;
-      display: block; 
-      box-sizing: border-box;
 
-      ul{
-        width: 100%;
-        margin: 0;
+      //Disappears when screen too small
+      @media (max-width: 600px){
+        display: none;
       }
 
-      li {
-        width: 100%;
-        border-bottom: 5px white solid;
-      }
+      li{border-bottom: 5px white solid;}
 
       a{
         padding-right: 18px;
@@ -322,11 +337,6 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
           font-size: 1.15em;
           margin-bottom: 8px;
         }
-      }
-
-      //Disappears when screen too small
-      @media (max-width: 600px){
-        display: none;
       }
     }
 
@@ -517,19 +527,6 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
 /***********************
   Editor Header Styles
 ***********************/
-  .editBgd{
-    background-color: $darkgrey;
-    height: inherit;
-
-    //DEFAULTS
-    p{
-      color: $chrome;
-    }
-
-    a{color: $white;}
-  }
-
-  //actual editor header
   #editHead{
     width: 100%; //increases to span top of page
     display: inline-block; //spans the page
@@ -660,4 +657,74 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
         }
       }
     }
+  }
+
+
+
+/**********************
+    Editor Sidebar
+**********************/
+  #editSidebar{
+    width: 62px;
+    background: $blacc;
+    margin-top: -5px;
+    height: calc(100vh - 50px);
+
+    li{
+      a{
+        height: inherit;
+        text-align: center;
+        padding: 15px 10px;
+
+        &:hover{
+          background: $darkgrey;
+
+          label.back-circle{color: $darkgrey; background-color: $chrome;}
+        }
+
+        &:focus, &.active{
+          background: $grey;
+
+          label.back-circle{color: $grey; background-color: $chrome;}
+        }
+      }
+    }
+
+    label.back-circle{
+      background-color: $grey;
+      color: $blacc;
+
+      //make it a circle
+      height: 42px;
+      width: 42px;
+      border-radius: 50%;
+
+      line-height: 42px; //centers
+      font-size: 1.2em;
+      margin: 0;
+
+      cursor: pointer;
+    }
+  }
+
+
+
+/********************
+    Editor Styles
+********************/
+  .editBgd{
+    background-color: $blacc;
+    height: inherit;
+
+    //DEFAULTS
+    p{
+      color: $chrome;
+    }
+
+    a{color: $white;}
+  }
+
+  //NEED TO MAKE THIS AN ACTUAL THEME
+  .CodeMirror{
+    background: $darkgrey!important;
   }
