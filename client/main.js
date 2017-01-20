@@ -31,6 +31,12 @@ Template.HomePage.helpers({
 });
 
 Template.HomePage.onRendered(function () {
+    $("body").click(function() {
+      if($('.login-close-text')[0]) {
+        $(".login-close-text")[0].click();
+      }
+    });
+
   this.$('#jstree').jstree({
     core: {
       themes: {
