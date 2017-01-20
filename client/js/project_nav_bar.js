@@ -9,15 +9,25 @@ Template.TreeProj.onRendered(function () {
       }
       //add exclude if in the accounts-dialog div
     });*/
-    
 
-  Meteor.call('updateJSON');
-  var tree = CurrJSON.findOne();
-  console.log(tree.json);
-  this.$('#jstree').jstree({
-    'core': {
-        'data': JSON.parse(tree.json)
+
+  setTimeout(function() {
+    var tree = JSON.parse(CurrJSON.findOne().json)
+    for(var q=0; q<tree.length; q++){
+      console.log('tes')
+      tree[q]['text'] = tree[q]['name'];
     }
-  });
+    console.log(tree);
+    this.$('#jstree').jstree({
+    core: {
+      themes: {
+        name: 'proton',
+        dots: true,
+        icons: true,
+        responsive: true
+      },
+      data: (tree)
+    }
+    });
+  }, 1000);
 });
-

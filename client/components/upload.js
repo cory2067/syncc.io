@@ -8,6 +8,7 @@ Template.ProjectHead.events({
                     console.log("there was an error", err);
                 }
             });
+  Meteor.call('updateJSON');
         });
     },
     'change #zip': function(event, template) {
@@ -21,5 +22,7 @@ Template.ProjectHead.events({
             console.log(fileId);
             Meteor.call('parseZip',[fileObj,fileName, fileId]);
         });
+
+  Meteor.call('updateJSON');
     }
 });
