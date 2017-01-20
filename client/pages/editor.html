@@ -1,15 +1,18 @@
 <template name="EditorPage">
   <div class="editBgd">
     {{> EditorHead}}
+    {{> EditSidebar}}
     
-    {{> TreeProj}}
-    {{> CodeMirror id="some-id" name="someName" options=editorOptions code=editorCode events=editorEvents}}
+    <div id="page-content-wrapper">
+      {{> TreeProj}}
+      {{> CodeMirror id="some-id" name="someName" options=editorOptions code=editorCode events=editorEvents}}
 
-    <div>
-      <p>Currently, the following users are accessing this file:</p>
-      {{#each editingUsers}}
-        <p>{{name}} is editing lines {{line}} (mongo id: {{_id}})</p>
-      {{/each}}
+      <div>
+        <p>Currently, the following users are accessing this file:</p>
+        {{#each editingUsers}}
+          <p>{{name}} is editing lines {{line}} (mongo id: {{_id}})</p>
+        {{/each}}
+      </div>
     </div>
   </div>
 </template>
