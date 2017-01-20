@@ -1,8 +1,42 @@
 <template name="ProjectList">
+    <div id="ProjectList">
+
+    <div class="row subrow">
+        <div class="col-md-6">
+            Name
+        </div>
+        <div class="col-md-6">
+            <div class="col-md-4">
+                Date
+            </div>
+            <div class="col-md-4">
+                Shared With
+            </div>
+            <div class="col-md-4" style="text-align: right;">
+                Delete
+            </div>
+        </div>
+    </div>
+
     {{#each docs}}
-        <div>
-            Name: {{this.original.name}}
-            <button type="button" id="remove" name="removeBtn">X</button>
+        <div class="row">
+            <div class="col-md-6">
+                <p>{{this.original.name}}</p>
+            </div>
+            <div class="col-md-6">
+                <div class="col-md-4">
+                    <!--write helper to make this not weird date-->
+                    <p>{{this.original.updatedAt}}</p>
+                </div>
+                <div class="col-md-4">
+                    <p>{{this.metadata.owner</p>
+                </div>
+                <div class="col-md-4">
+                    <button class="close" type="button" id="remove" name="removeBtn">&times;</button>
+                </div>
+            </div>
         </div>
     {{/each}}
+
+    </div>
 </template>

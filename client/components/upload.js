@@ -1,4 +1,4 @@
-Template.UploadForm.events({
+Template.ProjectHead.events({
     'change #files': function(event, template) {
         FS.Utility.eachFile(event, function(file) {
             var myFile = new FS.File(file);

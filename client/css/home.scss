@@ -478,3 +478,20 @@ nav.sidebar {
       }
   }
 }
+
+//******PROJECTS MAIN LIST*******//
+#ProjectList{
+  .subrow{
+    background: $white;
+    color: $chrome;
+  }
+
+  .col-md-6{
+    padding: 5px 10px;
+    height: 2em;
+  }
+
+  button.close{
+    padding-right: 12px;
+  }
+}
