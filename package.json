@@ -8,6 +8,7 @@
     "babel-runtime": "^6.22.0",
     "bcrypt": "^1.0.2",
     "bootstrap": "^3.3.7",
+    "directory-structure-json": "^1.0.0",
     "meteor-node-stubs": "~0.2.0",
     "unzip": "^0.1.11"
   }
