@@ -8,6 +8,8 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
     SCSS Variables
 ***********************/
 $accent: #1ABC9C;
+$accents: #49C9B0;
+$accented: #16a085;
 $cloud: #E2E5E9;
 $white: #EDEFF1;
 $chrome: #778899;
@@ -104,6 +106,10 @@ a { //the basic link has no underline EVER
         background-color: $accent;
         color: $white;
       }
+      &:focus{
+        background-color: $accented;
+        color: $white;
+      }
     }
 
     /************************
@@ -112,6 +118,13 @@ a { //the basic link has no underline EVER
 
     #login-buttons{
       line-height: inherit;
+
+      .login-link-text{//login button
+        &:active{
+          background-color: $accented;
+          color: $white;
+        }
+      }
 
       .login-close-text{ //changes the close button
         color: $charcoal;
@@ -268,7 +281,7 @@ a { //the basic link has no underline EVER
   background-color: white;
 }
 
-//PROJECTS QUICK NAV SIDEBAR IN PROGRESS//
+//*******PROJECTS SIDEBAR********//
 //Credit: http://bootsnipp.com/snippets/featured/side-menu-on-hover//
 nav.sidebar {
   background: $white;
@@ -314,28 +327,29 @@ nav.sidebar {
   }
 }
 
+//*******PROJECTS HEADER*********//
 .projecthead{
   margin-left: 235px;
-
   .padded{
     width: calc(100vw - 235px);
+
+    .col-md-4{
+      padding: 0 3% 0 0;
+      height: 62.89px;
+    }
   }
 
-  .col-md-4{
-    padding: 0;
-    height: 62.89px;
-  }
-
-  //FRICKING SEARCH BOX TOOK SO LONG ACTUALLY//
+  //Search Box//
+  //Credit: http://codepen.io/ace-subido/pen/Echvr
   .search-box{
-    //Credit: http://codepen.io/ace-subido/pen/Echvr
+    max-width: 300px;
     width: calc(100% - 60px);
     display: inline-block;
     background: $white;
     color: $charcoal;
     border-radius: 5px;
     position: relative;
-    margin-top: 20px;
+    margin-top: 28px;
 
     .form-control{
       background-color: inherit;
@@ -366,13 +380,34 @@ nav.sidebar {
     }
   }
 
+  //New Button
   button.newff{
     font-family: 'Open Sans';
     background-color: $accent;
     color: $white;
     border-radius: 5px;
     border: none;
-    margin-top: -2px;
+    margin-top: -3.5px;
     height: 33.78px;
+
+    &:hover{
+      background-color: $accents;
+    }
+
+    &:focus{
+      background-color: $accented;
+    }
+  }
+
+  //Modal
+  .modal{
+    //position: relative;
+    float: right;
+    //width: 200px;
+
+    .modal-content .modal-dialog{
+      margin: 0;
+      width: inherit;
+    }
   }
 }
