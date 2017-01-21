@@ -1,3 +1,4 @@
+import { Tracker } from 'meteor/tracker'
 Template.ProjectHead.events({
     'change #files': function(event, template) {
         FS.Utility.eachFile(event, function(file) {
@@ -8,16 +9,16 @@ Template.ProjectHead.events({
                     console.log("there was an error", err);
                 }
             });
-            console.log(myFile.hasStored('docs'));
-            while (!myFile.hasStored('docs'))
-            {
-                var fileName = myFile.original.name;
-                var fileId = myFile._id;
-                console.log("calling update");
-                Meteor.call('parseFile',[fileName, fileId]);
-                break;
-
-            }
+            var fileName = myFile.original.name;
+            var fileId = myFile._id;
+            Tracker.autorun(function (c) {
+                var fileObj = Documents.findOne(fileId);
+                if (fileObj.hasStored('docs')) {
+                    console.log(fileId);
+                    console.log("calling update file");
+                    Meteor.call('parseFile',[fileName, fileId]);
+                }
+            });
             //Meteor.call('updateJSON');
         });
     },
@@ -28,17 +29,17 @@ Template.ProjectHead.events({
         Documents.insert(currFile, function (err, fileObj) {
             console.log(fileObj);
         });
-        console.log(currFile.hasStored('docs'));
-        while (!currFile.hasStored('docs'))
-        {
-            var fileName = currFile.original.name;
-            var fileId = currFile._id;
-            console.log(fileId);
-            console.log("calling update");
-            Meteor.call('parseZip',[currFile,fileName, fileId]);
-            break;
+        var fileName = currFile.original.name;
+        var fileId = currFile._id;
+        Tracker.autorun(function (c) {
+            var fileObj = Documents.findOne(fileId);
+            if (fileObj.hasStored('docs')) {
+                console.log(fileId);
+                console.log("calling update");
+                Meteor.call('parseZip',[currFile,fileName, fileId]);
+            }
+        });
 
-        }
         //Meteor.call('updateJSON');
 
     }
