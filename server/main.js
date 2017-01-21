@@ -25,7 +25,14 @@ Meteor.methods({
         var filePath = Meteor.absolutePath + "/.meteor/local/cfs/files/docs/docs-"+fileId+"-"+fileName;
         var outPath = Meteor.absolutePath + "/.meteor/local/cfs/files/docs";
         console.log(filePath);
-        fs.createReadStream(filePath).pipe(unzip.Extract({path: outPath}));
+        readStream = fs.createReadStream(filePath);
+        readStream.pipe(unzip.Extract({path: outPath}));
+
+        readStream.on('close', function() {
+            console.log("unlinking "+filePath);
+            fs.unlink(filePath);
+        });
+
 
     },
     parseFile: function(file) {
