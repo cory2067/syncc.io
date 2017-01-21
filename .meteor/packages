@@ -33,3 +33,4 @@ cfs:standard-packages
 cfs:filesystem
 ostrio:meteor-root
 cfs:ejson-file
+sacha:spin

@@ -2,7 +2,7 @@
   <div id="editBgd">
     {{> EditorHead}}
     {{> EditorSidebar}}
-    
+
     <div id="page-content-wrapper">
       <div class="row" style="height: 37px;">
         {{> FileTabs}}
@@ -13,6 +13,9 @@
     </div>
   </div>
 
+  {{#if lockUser}}
+    <div style="position: absolute; width: 20%; left: 40%; top:40%; height:20%; background-color: white; text-align: center; font-size: 18px;">{{lockUser}} is joining{{>spinner}}</div>
+  {{/if}}
   <script>
     //Script to choose/make tabs active would go here.
   </script>

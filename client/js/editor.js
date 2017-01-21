@@ -17,6 +17,8 @@ var editId = null;
 var init = true;
 
 Template.EditorPage.onRendered(() => {
+    lock = ['self'];
+    Session.set("lock", ['self']);
     doc = $('.CodeMirror')[0].CodeMirror;
     var id = FlowRouter.getParam("editID");
     /*etTimeout(function(){
@@ -83,6 +85,7 @@ Template.EditorPage.onRendered(() => {
                   init = false;
                   EditUsers.update({_id: userId}, {$set: {init: false}});
                   lock.splice(0,1);//remove self from lock
+                  Session.set("lock", lock);
                 }
               }
             });
@@ -90,6 +93,7 @@ Template.EditorPage.onRendered(() => {
             init = false;
             EditUsers.update({_id: userId}, {$set: {init: false}});
             lock.splice(0,1); //this is gross, but just delet lock if you're the first to join
+            Session.set("lock", lock);
           }
 
           EditorContents.insert({editor: id, file:fileName, user: userId, doc: "", refresh:""}, function(err, _id) {
@@ -107,6 +111,7 @@ Template.EditorPage.onRendered(() => {
           //Meteor.call("deleteChanges", [id, fileName]);
           EditorContents.update({_id: editId}, {$set: {doc: doc.getValue(), refresh:Random.id()}});
           lock.push(changed['name']);
+          Session.set("lock", lock);
           console.log("loked thanks to " + changed['name'])
           //setTimeout(()=>{lock--; console.log("unloked");}, 5000);
         }
@@ -117,13 +122,14 @@ Template.EditorPage.onRendered(() => {
           if(index > -1) {
             console.log("unlocked!");
             lock.splice(index, 1);
+            Session.set("lock", lock);
           }
         }
       }
     });
 
     Tracker.autorun(function (c) {
-      console.log("Tracker fired! Lock is now " + lock);
+      console.log("Tracker fired! Lock is now " + Session.get("lock"));
     });
 });
 
@@ -150,6 +156,16 @@ Template.FileTabs.helpers({
 });
 
 Template.EditorPage.helpers({
+  lockUser() {
+    var l = Session.get("lock");
+    if(l.length) {
+      return l[0];
+    }
+    else {
+      return null;
+    }
+  },
+
   editingUsers() {
     return EditUsers.find({editor: FlowRouter.getParam("editID")}).fetch();
   },
