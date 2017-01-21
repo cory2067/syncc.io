@@ -11,6 +11,7 @@ Template.TreeProj.onRendered(function () {
     });*/
 
 
+    Meteor.call('updateJSON');
     var str_JSON = CurrJSON.findOne().json;
     str_JSON = str_JSON.replace(/name/g, 'text');
     console.log(str_JSON);

@@ -18,7 +18,7 @@ Template.ProjectHead.events({
                 break;
 
             }
-            Meteor.call('updateJSON');
+            //Meteor.call('updateJSON');
         });
     },
     'change #zip': function(event, template) {
@@ -27,19 +27,19 @@ Template.ProjectHead.events({
         currFile.metadata = {owner: Meteor.userId()};
         Documents.insert(currFile, function (err, fileObj) {
             console.log(fileObj);
-            fileName = fileObj.original.name;
-            fileId = fileObj._id;
-            console.log(fileId);
         });
         console.log(currFile.hasStored('docs'));
         while (!currFile.hasStored('docs'))
         {
+            var fileName = currFile.original.name;
+            var fileId = currFile._id;
+            console.log(fileId);
             console.log("calling update");
             Meteor.call('parseZip',[currFile,fileName, fileId]);
             break;
 
         }
-        Meteor.call('updateJSON');
+        //Meteor.call('updateJSON');
 
     }
 });
