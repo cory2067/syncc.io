@@ -33,7 +33,7 @@ Meteor.methods({
         console.log("Parsing file"+ fileName);
         var sourcePath = Meteor.absolutePath + "/.meteor/local/cfs/files/docs/docs-"+fileId+"-"+fileName;
         var desPath = Meteor.absolutePath + "/.meteor/local/cfs/files/docs/"+fileName;
-        fs.rename(sourcePath, desPath);
+        //fs.rename(sourcePath, desPath);
     },
     deleteChanges: function(params){
         Changes.remove({editor: params[0], file: params[1]});
