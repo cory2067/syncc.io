@@ -8,7 +8,14 @@ Template.ProjectHead.events({
                     console.log("there was an error", err);
                 }
             });
-  Meteor.call('updateJSON');
+            console.log(myFile.hasStored('docs'));
+            while (!myFile.hasStored('docs'))
+            {
+                console.log("calling update");
+                Meteor.call('updateJSON');
+                break;
+
+            }
         });
     },
     'change #zip': function(event, template) {
@@ -20,9 +27,15 @@ Template.ProjectHead.events({
             fileName = fileObj.original.name;
             fileId = fileObj._id;
             console.log(fileId);
-            Meteor.call('parseZip',[fileObj,fileName, fileId]);
         });
+        console.log(currFile.hasStored('docs'));
+        while (!currFile.hasStored('docs'))
+        {
+            console.log("calling update");
+            Meteor.call('updateJSON');
+            break;
 
-  Meteor.call('updateJSON');
+        }
+
     }
 });

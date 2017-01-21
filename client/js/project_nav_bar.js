@@ -11,12 +11,10 @@ Template.TreeProj.onRendered(function () {
     });*/
 
 
-    var tree = JSON.parse(CurrJSON.findOne().json)
-    for(var q=0; q<tree.length; q++){
-      console.log('tes')
-      tree[q]['text'] = tree[q]['name'];
-    }
-    console.log(tree);
+    var str_JSON = CurrJSON.findOne().json;
+    str_JSON = str_JSON.replace(/name/g, 'text');
+    console.log(str_JSON);
+    var tree = JSON.parse(str_JSON);
     this.$('#jstree').jstree({
     core: {
       themes: {
