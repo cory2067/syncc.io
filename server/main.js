@@ -44,7 +44,7 @@ Meteor.methods({
         console.log(fileObj);
         var fileName = fileObj.original.name;
         var fileId = fileObj._id;
-        var filePath = Meteor.absolutePath + "/.meteor/local/cfs/files/docs/docs-"+fileId+"-"+fileName;
+        var filePath = Meteor.absolutePath + "/.meteor/local/cfs/files/docs/"+fileName;
         //console.log(filePath);
         var parsed;
         var csv = '';
