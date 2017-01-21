@@ -9,6 +9,9 @@ Meteor.startup(() => {
 });
 
 Meteor.methods({
+    injectFile: function(params) {
+      EditorContents.insert({editor: params['editor'], file:params['file'], user:'system', doc: "", refresh:""});
+    },
     logServer: function(msg) {
         console.log(msg);
     },
@@ -50,6 +53,8 @@ Meteor.methods({
             console.log("return" + csv);
             return csv;
         });
+
+        EditorContents.insert({editor: 'idk', file:"meme.py", user:'system', doc: csv, refresh:""});
     },
     updateJSON: function() {
         var basepath = Meteor.absolutePath + "/.meteor/local/cfs/files/docs";

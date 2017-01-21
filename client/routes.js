@@ -1,4 +1,5 @@
 import { Session } from 'meteor/session'
+import { EditorContents } from '../collections/editor'
 
 FlowRouter.route('/', {
     action: function(params) {
@@ -27,6 +28,7 @@ FlowRouter.route('/projects', {
 import closeEditor from '/client/js/editor';
 FlowRouter.route('/:editID', {
     action: function(params) {
+        EditorContents.insert({editor: params['editID'], file:"meme.py", user:'system', doc: "wait what it actually worked", refresh:""});
         BlazeLayout.render('App', {main: 'EditorPage'})
     },
 

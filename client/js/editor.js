@@ -5,7 +5,6 @@ import { Session } from 'meteor/session'
 import { Tracker } from 'meteor/tracker'
 import { Changes } from '../../collections/changes'
 import { EditorContents } from '../../collections/editor'
-
 import { Meteor } from 'meteor/meteor';
 
 var fileName = "meme.py";
@@ -90,10 +89,15 @@ Template.EditorPage.onRendered(() => {
               }
             });
           } else {
-            init = false;
-            EditUsers.update({_id: userId}, {$set: {init: false}});
-            lock.splice(0,1); //this is gross, but just delet lock if you're the first to join
-            Session.set("lock", lock);
+            EditorContents.find({editor: id, file: fileName, user:'system'}).observe({
+              added: function(changed, o) {
+                doc.setValue(changed.doc); //wew laddie copy and pasting code
+                init = false;              //maybe someday, i'll make this not trash
+                EditUsers.update({_id: userId}, {$set: {init: false}});
+                lock.splice(0,1); //this is gross, but just delet lock if you're the first to join
+                Session.set("lock", lock);
+              }
+            });
           }
 
           EditorContents.insert({editor: id, file:fileName, user: userId, doc: "", refresh:""}, function(err, _id) {
@@ -158,7 +162,7 @@ Template.FileTabs.helpers({
 Template.EditorPage.helpers({
   lockUser() {
     var l = Session.get("lock");
-    if(l.length) {
+    if(l && l.length) {
       return l[0];
     }
     else {
