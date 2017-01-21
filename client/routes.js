@@ -1,5 +1,6 @@
 import { Session } from 'meteor/session'
 import { EditorContents } from '../collections/editor'
+import { EditUsers } from '../collections/editusers'
 
 FlowRouter.route('/', {
     action: function(params) {
@@ -28,7 +29,11 @@ FlowRouter.route('/projects', {
 import closeEditor from '/client/js/editor';
 FlowRouter.route('/:editID', {
     action: function(params) {
-        EditorContents.insert({editor: params['editID'], file:"meme.py", user:'system', doc: "wait what it actually worked", refresh:""});
+        /*let a = EditUsers.find({}).fetch();
+        console.log(a);
+        if(!EditUsers.find({editor: params['editID']}).fetch().length) {
+          Meteor.call("openFile", params['editID']);
+        }*/
         BlazeLayout.render('App', {main: 'EditorPage'})
     },
 

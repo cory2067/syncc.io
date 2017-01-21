@@ -75,9 +75,12 @@ Template.EditorPage.onRendered(() => {
           userId = _id;
           Session.set("userId", _id);
           Session.set("editing", true);
+          console.log("addd user");
           if(current.length) {
+            console.log("ur not the first one");
             EditorContents.find({editor: id, file:fileName}).observe({
               changed: function(changed, o) {
+                console.log("here's what i found:")
                 console.log(changed)
                 if(init){
                   doc.setValue(changed.doc);
@@ -89,6 +92,9 @@ Template.EditorPage.onRendered(() => {
               }
             });
           } else {
+            console.log("ur apparently the first");
+            console.log(FlowRouter.getParam("editID"));
+            Meteor.call("openFile", FlowRouter.getParam("editID"));
             EditorContents.find({editor: id, file: fileName, user:'system'}).observe({
               added: function(changed, o) {
                 doc.setValue(changed.doc); //wew laddie copy and pasting code

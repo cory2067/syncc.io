@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
-import { Changes } from '../collections/changes'
-import { CurrJSON } from '../collections/json'
+import { Changes } from '../collections/changes';
+import { CurrJSON } from '../collections/json';
+import { EditorContents } from '../collections/editor';
 import fs from 'fs'
 import unzip from 'unzip'
 import DirectoryStructureJSON from 'directory-structure-json'
@@ -38,7 +39,8 @@ Meteor.methods({
     deleteChanges: function(params){
         Changes.remove({editor: params[0], file: params[1]});
     },
-    openFile: function(fileObj) {
+    openFile: function(fileId) {
+        fileObj = Documents.find({_id: fileId}).fetch()[0];
         console.log(fileObj);
         var fileName = fileObj.original.name;
         var fileId = fileObj._id;
@@ -54,15 +56,22 @@ Meteor.methods({
             csv += chunk.toString();
         });
 
-        stream.on('end', function() {
+        stream.on('end', Meteor.bindEnvironment(function() {
             //parsed = Baby.parse(csv);
             //rows = parsed.data;
             //console.log(rows);
             console.log("return" + csv);
+            send(csv);
             return csv;
-        });
+        }));
 
-        EditorContents.insert({editor: 'idk', file:"meme.py", user:'system', doc: csv, refresh:""});
+        function send(csv) {
+          EditorContents.insert({editor: fileId, file:"meme.py", user:'system', doc: csv, refresh:""}, function(err, id) {
+            console.log(err);
+            console.log(id);
+          });
+        }
+        //EditorContents.insert({editor: 'idk', file:"meme.py", user:'system', doc: csv, refresh:""});
     },
     updateJSON: function() {
         var basepath = Meteor.absolutePath + "/.meteor/local/cfs/files/docs";
