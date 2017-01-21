@@ -62,9 +62,11 @@ Meteor.methods({
             console.log("Total number of folders"+total.folders);
             console.log("Total number of files"+total.files);
             if(!curr.length) {
+              console.log("Nothing in JSON yet, inserting...");
               CurrJSON.insert({json:JSON.stringify(structure, null, 4)})
             }
             else {
+              console.log("Updating existing JSON");
               CurrJSON.update(curr[0]._id, {$set: {json: JSON.stringify(structure, null, 4)}});
             }
             //console.log("Structure in JSON format:" +newJSON);

@@ -143,6 +143,12 @@ Template.EditorSidebar.helpers({
   }
 });
 
+Template.FileTabs.helpers({
+  getFileName() {
+    return fileName;
+  }
+});
+
 Template.EditorPage.helpers({
   editingUsers() {
     return EditUsers.find({editor: FlowRouter.getParam("editID")}).fetch();

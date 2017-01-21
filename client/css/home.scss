@@ -751,10 +751,34 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
     h3{color: $cloud;}
     p{color: $cloud;}
     a{color: $white;}
+
+    ul.nav-tabs{
+      height: 38px;
+      border: none;
+    }
+
+    .file-tabs{
+      background-color: $darkgrey;
+      border: none; 
+      border-left: 2px solid $accent;
+      color: $cloud;
+      margin: 7px 0 0 0; //creates top margin
+      padding: 0 45px; //spacing around text
+      height: 30px;
+
+      //centers text on tab
+      line-height: 30px;
+      text-align: center;
+    }
+
+    li.active{
+      //make the blue thing later here
+      font-style: italic;
+    }
   }
 
   #page-content-wrapper{
-    height: calc(100vh - 50px);
+    height: calc(100vh - 80px);
     display: block;
     padding-left: 62px;
     -webkit-transition: all 0.5s ease;
@@ -764,10 +788,12 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
     &.toggled{
       padding-left: 327px;
     }
+
+    .row{margin: 0; height: inherit;}
   }
 
   .CodeMirror{
-    height: calc(100vh - 50px);
+    height: calc(100vh - 87px);
 
     //personal theme//
     background-color: $darkgrey!important;
