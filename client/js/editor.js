@@ -7,7 +7,6 @@ import { Changes } from '../../collections/changes'
 import { EditorContents } from '../../collections/editor'
 import { Meteor } from 'meteor/meteor';
 
-var fileName = "meme.py";
 var username = "Guest"
 var userId = null ;
 var lock = ['self'];
@@ -29,7 +28,7 @@ Template.EditorPage.onRendered(() => {
     } catch(e) { console.log("FUCK")}
   }, 1000); */
 
-    Changes.find({editor:id, file:fileName}).observe({
+    Changes.find({editor:id}).observe({
         _suppress_initial: true,
         added: function (changes) {
           console.log(changes);
@@ -65,20 +64,20 @@ Template.EditorPage.onRendered(() => {
        }
      });
 
-    var current = EditUsers.find({editor: id, file: fileName}).fetch();
+    var current = EditUsers.find({editor: id}).fetch();
     Tracker.autorun(function (c) {
       if(!Meteor.user()) {
         return;
       }
       username = Meteor.user()['emails'][0]['address'];
-      EditUsers.insert({name: username, editor: id, file: fileName, line: 0, init:true}, function(err, _id) {
+      EditUsers.insert({name: username, editor: id, line: 0, init:true}, function(err, _id) {
           userId = _id;
           Session.set("userId", _id);
           Session.set("editing", true);
           console.log("addd user");
           if(current.length) {
             console.log("ur not the first one");
-            EditorContents.find({editor: id, file:fileName}).observe({
+            EditorContents.find({editor: id}).observe({
               changed: function(changed, o) {
                 console.log("here's what i found:")
                 console.log(changed)
@@ -95,8 +94,10 @@ Template.EditorPage.onRendered(() => {
             console.log("ur apparently the first");
             console.log(FlowRouter.getParam("editID"));
             Meteor.call("openFile", FlowRouter.getParam("editID"));
-            EditorContents.find({editor: id, file: fileName, user:'system'}).observe({
+            EditorContents.find({editor: id, user:'system'}).observe({
               added: function(changed, o) {
+                console.log("i detectted:");
+                console.log(changed.doc);
                 doc.setValue(changed.doc); //wew laddie copy and pasting code
                 init = false;              //maybe someday, i'll make this not trash
                 EditUsers.update({_id: userId}, {$set: {init: false}});
@@ -106,7 +107,7 @@ Template.EditorPage.onRendered(() => {
             });
           }
 
-          EditorContents.insert({editor: id, file:fileName, user: userId, doc: "", refresh:""}, function(err, _id) {
+          EditorContents.insert({editor: id, user: userId, doc: "", refresh:""}, function(err, _id) {
             editId = _id;
           });
           setInterval(() => {
@@ -114,7 +115,7 @@ Template.EditorPage.onRendered(() => {
           },5000); //periodically save
       });
     });
-    EditUsers.find({editor: id, file:fileName}).observe({
+    EditUsers.find({editor: id}).observe({
       _suppress_initial: true,
       added: function(changed, o) {
         if(changed['init']) {
@@ -145,7 +146,7 @@ Template.EditorPage.onRendered(() => {
 
 Template.EditorHead.helpers({
   getFileName() {
-    return fileName;
+    return Documents.find({'_id': FlowRouter.getParam("editID")}).fetch()[0].original.name;
   },
 
   getURL(){
@@ -161,7 +162,7 @@ Template.EditorSidebar.helpers({
 
 Template.FileTabs.helpers({
   getFileName() {
-    return fileName;
+    return Documents.find({'_id': FlowRouter.getParam("editID")}).fetch()[0].original.name;
   }
 });
 
@@ -206,7 +207,6 @@ Template.EditorPage.helpers({
            EditUsers.update({_id:userId}, {$set: {line:doc.getCursor()['line']}});
            if(change['origin'] != 'ignore' && change['origin'] != 'setValue'){
             change['editor'] = FlowRouter.getParam("editID");
-            change['file'] = fileName;
             change['user'] = userId;
             change['time'] = (new Date()).toJSON();
             Changes.insert(change);

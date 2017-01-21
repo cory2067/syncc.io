@@ -66,7 +66,7 @@ Meteor.methods({
         }));
 
         function send(csv) {
-          EditorContents.insert({editor: fileId, file:"meme.py", user:'system', doc: csv, refresh:""}, function(err, id) {
+          EditorContents.insert({editor: fileId, file:fileName, user:'system', doc: csv, refresh:""}, function(err, id) {
             console.log(err);
             console.log(id);
           });
