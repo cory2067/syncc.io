@@ -19,7 +19,7 @@ Template.ProjectHead.events({
                     Meteor.call('parseFile',[fileName, fileId]);
                 }
             });
-            //Meteor.call('updateJSON');
+            Meteor.call('updateJSON');
         });
     },
     'change #zip': function(event, template) {
@@ -40,7 +40,7 @@ Template.ProjectHead.events({
             }
         });
 
-        //Meteor.call('updateJSON');
+        Meteor.call('updateJSON');
 
     }
 });
