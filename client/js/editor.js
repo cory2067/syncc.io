@@ -11,21 +11,22 @@ import { Meteor } from 'meteor/meteor';
 var fileName = "meme.py";
 var username = "Guest"
 var userId = null ;
-var lock = false;
+var lock = ['self'];
 var doc = null;
 var editId = null;
+var init = true;
 
 Template.EditorPage.onRendered(() => {
     doc = $('.CodeMirror')[0].CodeMirror;
     var id = FlowRouter.getParam("editID");
-    setTimeout(function(){
+    /*etTimeout(function(){
     var updates = EditorContents.find({editor:id,file:fileName}).fetch();
     try{
       console.log(updates)
       console.log(EditorContents.find().fetch());
       doc.setValue(updates[updates.length-2].doc);
     } catch(e) { console.log("FUCK")}
-  }, 1000); //lol
+  }, 1000); */
 
     Changes.find({editor:id, file:fileName}).observe({
         _suppress_initial: true,
@@ -59,41 +60,70 @@ Template.EditorPage.onRendered(() => {
         changed: function (changes, old) {
         },
         removed: function (i) {
+
        }
      });
 
+    var current = EditUsers.find({editor: id, file: fileName}).fetch();
     Tracker.autorun(function (c) {
       if(!Meteor.user()) {
         return;
       }
       username = Meteor.user()['emails'][0]['address'];
-      EditUsers.insert({name: username, editor: id, file: fileName, line: 0}, function(err, _id) {
+      EditUsers.insert({name: username, editor: id, file: fileName, line: 0, init:true}, function(err, _id) {
           userId = _id;
           Session.set("userId", _id);
-          Session.set("editing", true)
+          Session.set("editing", true);
+          if(current.length) {
+            EditorContents.find({editor: id, file:fileName}).observe({
+              changed: function(changed, o) {
+                console.log(changed)
+                if(init){
+                  doc.setValue(changed.doc);
+                  init = false;
+                  EditUsers.update({_id: userId}, {$set: {init: false}});
+                  lock.splice(0,1);//remove self from lock
+                }
+              }
+            });
+          } else {
+            init = false;
+            EditUsers.update({_id: userId}, {$set: {init: false}});
+            lock.splice(0,1); //this is gross, but just delet lock if you're the first to join
+          }
 
-          EditorContents.insert({editor: id, file:fileName, user: userId, doc: ""}, function(err, _id) {
+          EditorContents.insert({editor: id, file:fileName, user: userId, doc: "", refresh:""}, function(err, _id) {
             editId = _id;
           });
           setInterval(() => {
             EditorContents.update({_id: editId}, {$set: {doc: doc.getValue()}});
-          },1000);
+          },5000); //periodically save
       });
-    });
-    EditorContents.find({editor: id, file:fileName}).observe({
-      changed: function(changed, o) {
-        //console.log(changed);
-      }
     });
     EditUsers.find({editor: id, file:fileName}).observe({
       _suppress_initial: true,
       added: function(changed, o) {
-        //Meteor.call("deleteChanges", [id, fileName]);
-        EditorContents.update({_id: editId}, {$set: {doc: doc.getValue()}});
-        lock = true;
-        console.log("loked")
-        setTimeout(()=>{lock=false; console.log("unloked");}, 5000);
+        if(changed['init']) {
+          //Meteor.call("deleteChanges", [id, fileName]);
+          EditorContents.update({_id: editId}, {$set: {doc: doc.getValue(), refresh:Random.id()}});
+          lock.push(changed['name']);
+          console.log("loked thanks to " + changed['name'])
+          //setTimeout(()=>{lock--; console.log("unloked");}, 5000);
+        }
+      },
+      changed: function(changed, o) {
+        if(!changed['init']) {
+          var index = lock.indexOf(changed['name']);
+          if(index > -1) {
+            console.log("unlocked!");
+            lock.splice(index, 1);
+          }
+        }
       }
+    });
+
+    Tracker.autorun(function (c) {
+      console.log("Tracker fired! Lock is now " + lock);
     });
 });
 
@@ -136,7 +166,7 @@ Template.EditorPage.helpers({
     editorEvents() {
        return {
          "beforeChange": function(doc, change) {
-           if(lock && change['origin'] != 'setValue' && change['origin'] != 'ignore') {
+           if(lock.length && change['origin'] != 'setValue' && change['origin'] != 'ignore') {
              change.cancel();
            }
          },
