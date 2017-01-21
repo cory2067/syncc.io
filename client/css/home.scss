@@ -37,7 +37,7 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
     }
   }
 
-  h1, h2, h3{
+  h1, h2{
     font: {
       family: 'Fira Sans Extra Condensed', sans-serif;
       weight: bold;
@@ -48,6 +48,13 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
     font-size: 5.6em;
     color: $white;
     margin-bottom: 5px;
+  }
+
+  h3, h4, h5, h6{
+    font: {
+      family: 'Open Sans', sans-serif;
+      weight: 300;
+    }
   }
 
   p {
@@ -728,10 +735,92 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
       width: 265px;
     }
 
+    h3{
+      padding-bottom: 10px;
+      border-bottom: 1px solid $chrome;
+      color: $cloud;
+    }
+
     .wrapper-content{
       padding: 10px 20px;
+
+      h4{color: $cloud; margin-bottom: 7px;}
+      p{color: $cloud;}
+      p.settings-descript{color: $chrome;}
+
+      .setting-section{
+        margin-bottom: 15px;
+
+        .form-control{
+          height: 30px;
+          background-color: $darkgrey;
+          color: $chrome;
+          border: none;
+          border-radius: 5px;
+
+          &:focus{
+            box-shadow: none;
+          }
+        }
+      }
     }
-  }
+
+    //The fricking checkbox
+    //Thanks https://codepen.io/bbodine1/pen/novBm
+    input[type=checkbox] {
+      width: 20px;
+      height: 20px;
+      display: none;
+    }
+
+    .checkbox { //divclass that confines the label
+      width: 20px;
+      position: relative;
+      margin: 20px auto;
+
+      label {
+        //general label settings
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+        position: absolute;
+        top: 0;
+        left: 0;
+        border-radius: 5px;
+        line-height: 20px;
+        background-color: $accent;
+
+        &:hover{background-color: $accents;}
+        &:focus{background-color: $accented;}
+
+        //when unclicked
+        &:after {//this is the checkmark
+          content: '';
+          width: 9px;
+          height: 5px;
+          position: absolute;
+          top: 7px;
+          left: 5px;
+          border: 3px solid $cloud;
+          border-top: none;
+          border-right: none;
+          background: transparent;
+          opacity: 0;
+          transform: rotate(-45deg);
+        }
+
+        &:hover::after {//when hoevering
+          opacity: 0.3;
+        }
+      }
+      input[type=checkbox] {
+        visibility: hidden;
+        &:checked + label:after {
+          opacity: 1;
+        }    
+      }
+    }
+  }  
 
 
 
@@ -748,10 +837,9 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
     -moz-transition: all 0.5s ease;
     transition: all 0.5s ease;
 
-    h3{color: $cloud;}
-    p{color: $cloud;}
     a{color: $white;}
 
+    //TABS FOR EDITOR STYLED HERE//
     ul.nav-tabs{
       height: 38px;
       border: none;
@@ -762,7 +850,7 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
       border: none; 
       border-left: 2px solid $accent;
       color: $cloud;
-      margin: 7px 0 0 0; //creates top margin
+      margin: 7px 0 0 7px; //creates top+left margin
       padding: 0 45px; //spacing around text
       height: 30px;
 

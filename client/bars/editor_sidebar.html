@@ -38,81 +38,126 @@
         <div id="settings-wrapper" class="pullout">
             <div class="wrapper-content">
                 <h3>Settings</h3>
+                <div class="setting-section">
+                    <h4>Modes:</h4>
+                    <p class="settings-descript">use keymaps from other sources</p>
+                    <div class="form-group">
+                        <select class="form-control" id="modes">
+                            <option>vim</option>
+                            <option>emacs</option>
+                            <option>sublime</option>
+                            <option>[none]</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="setting-section">
+                    <h4>Indent:</h4>
+                    <p class="settings-descript">choose spacing for indentation</p>
+                    <div class="form-group">
+                        <select class="form-control" id="indent">
+                            <option>tabs</option>
+                            <option>1 spaces</option>
+                            <option>2 spaces</option>
+                            <option>3 spaces</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row setting-section" style="width: 225px; margin: 0 15px 15px 0">
+                    <div class="col-md-4" style="width: 15px; margin-top: 10px; padding: 0 5px;">
+                        <div class="checkbox" style="margin:0;">
+                            <input type="checkbox" value="None" id="autobracket" name="check" checked />
+                            <label id="autobtn" for="autobracket"></label>
+                        </div>
+                    </div>
+                    <div class="col-md-8" style="width: calc(100% - 20px);">
+                        <h4>Auto Brackets</h4>
+                        <p class="settings-descript" style="margin: 0;">autocompletes typed brackets</p>
+                    </div>
+                </div>
+                
+                <div class="setting-section">
+                    <h4>Themes:</h4>
+                    <div class="form-group">
+                        <select class="form-control" id="modes">
+                            <option>syncc</option>
+                            <option>night</option>
+                            <option>light</option>
+                        </select>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
         //function that checks if a wrapper is open (and if so, makes sure main content is correctly padded)
-        function checkWrapper() {
-            if ($("#users-wrapper").hasClass("toggled") || $("#tree-wrapper").hasClass("toggled") || $("#settings-wrapper").hasClass("toggled")) {
-                console.log("Something is open");
-                $("#page-content-wrapper").addClass("toggled");
-            } else {
-                $("#page-content-wrapper").removeClass("toggled");
-                console.log('Nothing open');
-            };
-        };
-
-        $("#users-toggle").click(function(e){
-            e.preventDefault();
-            if ($("#users-wrapper").hasClass("toggled")) {
-                //if already turned on, turn off
-                $("#users-toggle").removeClass("activemini");
-                $("#users-wrapper").removeClass("toggled")
-            } else {
-                //else, turn on
-                $("#users-toggle").addClass("activemini");
-                $("#users-wrapper").addClass("toggled");
-                //turn off anything else on
-                $("#tree-wrapper").removeClass("toggled");
-                $("#tree-toggle").removeClass("activemini");
-                $("#settings-wrapper").removeClass("toggled");
-                $("#settings-toggle").removeClass("activemini");
+            function checkWrapper() {
+                if ($("#users-wrapper").hasClass("toggled") || $("#tree-wrapper").hasClass("toggled") || $("#settings-wrapper").hasClass("toggled")) {
+                    console.log("Something is open");
+                    $("#page-content-wrapper").addClass("toggled");
+                } else {
+                    $("#page-content-wrapper").removeClass("toggled");
+                    console.log('Nothing open');
+                };
             };
 
-            checkWrapper();
-        });
+            $("#users-toggle").click(function(e){
+                e.preventDefault();
+                if ($("#users-wrapper").hasClass("toggled")) {
+                    //if already turned on, turn off
+                    $("#users-toggle").removeClass("activemini");
+                    $("#users-wrapper").removeClass("toggled")
+                } else {
+                    //else, turn on
+                    $("#users-toggle").addClass("activemini");
+                    $("#users-wrapper").addClass("toggled");
+                    //turn off anything else on
+                    $("#tree-wrapper").removeClass("toggled");
+                    $("#tree-toggle").removeClass("activemini");
+                    $("#settings-wrapper").removeClass("toggled");
+                    $("#settings-toggle").removeClass("activemini");
+                };
 
-        $("#tree-toggle").click(function(e){
-            e.preventDefault();
-            if ($("#tree-wrapper").hasClass("toggled")) {
-                //if already turned on, turn off
-                $("#tree-toggle").removeClass("activemini");
-                $("#tree-wrapper").removeClass("toggled")
-            } else {
-                //else, turn on
-                $("#tree-toggle").addClass("activemini");
-                $("#tree-wrapper").addClass("toggled");
-                //turn off anything else on
-                $("#users-wrapper").removeClass("toggled");
-                $("#users-toggle").removeClass("activemini");
-                $("#settings-wrapper").removeClass("toggled");
-                $("#settings-toggle").removeClass("activemini");
-            };
+                checkWrapper();
+            });
 
-            checkWrapper();
-        });
+            $("#tree-toggle").click(function(e){
+                e.preventDefault();
+                if ($("#tree-wrapper").hasClass("toggled")) {
+                    //if already turned on, turn off
+                    $("#tree-toggle").removeClass("activemini");
+                    $("#tree-wrapper").removeClass("toggled")
+                } else {
+                    //else, turn on
+                    $("#tree-toggle").addClass("activemini");
+                    $("#tree-wrapper").addClass("toggled");
+                    //turn off anything else on
+                    $("#users-wrapper").removeClass("toggled");
+                    $("#users-toggle").removeClass("activemini");
+                    $("#settings-wrapper").removeClass("toggled");
+                    $("#settings-toggle").removeClass("activemini");
+                };
 
-        $("#settings-toggle").click(function(e){
-            if ($("#settings-wrapper").hasClass("toggled")) {
-                //if already turned on, turn off
-                $("#settings-toggle").removeClass("activemini");
-                $("#settings-wrapper").removeClass("toggled")
-            } else {
-                //else, turn on
-                $("#settings-toggle").addClass("activemini");
-                $("#settings-wrapper").addClass("toggled");
-                //turn off anything else on
-                $("#tree-wrapper").removeClass("toggled");
-                $("#tree-toggle").removeClass("activemini");
-                $("#users-wrapper").removeClass("toggled");
-                $("#users-toggle").removeClass("activemini");
-            };
+                checkWrapper();
+            });
 
-            checkWrapper();
-        });
+            $("#settings-toggle").click(function(e){
+                if ($("#settings-wrapper").hasClass("toggled")) {
+                    //if already turned on, turn off
+                    $("#settings-toggle").removeClass("activemini");
+                    $("#settings-wrapper").removeClass("toggled")
+                } else {
+                    //else, turn on
+                    $("#settings-toggle").addClass("activemini");
+                    $("#settings-wrapper").addClass("toggled");
+                    //turn off anything else on
+                    $("#tree-wrapper").removeClass("toggled");
+                    $("#tree-toggle").removeClass("activemini");
+                    $("#users-wrapper").removeClass("toggled");
+                    $("#users-toggle").removeClass("activemini");
+                };
 
-        
+                checkWrapper();
+            });
     </script>
 </template>
