@@ -12,10 +12,11 @@ Template.ProjectHead.events({
             while (!myFile.hasStored('docs'))
             {
                 console.log("calling update");
-                Meteor.call('updateJSON');
+                Meteor.call('parseFile',[fileName, fileId]);
                 break;
 
             }
+            Meteor.call('updateJSON');
         });
     },
     'change #zip': function(event, template) {
@@ -32,10 +33,11 @@ Template.ProjectHead.events({
         while (!currFile.hasStored('docs'))
         {
             console.log("calling update");
-            Meteor.call('updateJSON');
+            Meteor.call('parseZip',[currFile,fileName, fileId]);
             break;
 
         }
+        Meteor.call('updateJSON');
 
     }
 });
