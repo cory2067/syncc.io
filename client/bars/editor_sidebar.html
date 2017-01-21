@@ -1,5 +1,6 @@
 <template name="EditorSidebar">
     <div id="sidebar-wrapper">
+
         <div id="sidebar-mini">
             <nav class="nav-header sidebar" id="mini-editSidebar">
                 <ul class="nav navbar-nav">
@@ -21,7 +22,8 @@
                 <h3>Users</h3>
                 <p>Currently, the following users are accessing this file:</p>
                 {{#each editingUsers}}
-                <p>{{name}} <!--is editing lines {{line}} (mongo id: {{_id}})--></p>
+                <p style="margin-bottom: 5px;">{{name}}<!--(mongo id: {{_id}})--></p>
+                <p style="color: #778899; font-style: italic;">currently editing line {{line}}</p>
                 {{/each}}
             </div>
         </div>
