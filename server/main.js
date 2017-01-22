@@ -16,32 +16,20 @@ Meteor.methods({
     logServer: function(msg) {
         console.log(msg);
     },
-    storeZip: function(file) {
-        console.log("Unzipping zip"+file);
-
-        var fileName = file[0];
-        var data = file[1];
+    unzip: function(file) {
+        var fileName = file;
         var filePath = Meteor.absolutePath + "/files/"+fileName;
         var outPath = Meteor.absolutePath + "/files";
-        fs.writeFile(filePath, data);
         console.log(filePath + " -> " + outPath);
         readStream = fs.createReadStream(filePath);
         readStream.pipe(unzip.Extract({path: outPath}));
 
         readStream.on('close', function() {
             console.log("unlinking "+filePath);
-            //fs.unlink(filePath);
+            fs.unlink(filePath);
         });
 
 
-    },
-    storeFile: function(file) {
-        var info = file[0];
-        var data = file[1];
-        console.log("received file " + info + "file: " + data);
-        var path = Meteor.absolutePath + '/files/'+info;
-        fs.writeFile(path, data);
-        
     },
     deleteChanges: function(params){
         Changes.remove({editor: params[0], file: params[1]});
