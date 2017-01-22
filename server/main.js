@@ -20,15 +20,34 @@ Meteor.methods({
         var fileName = file;
         var filePath = Meteor.absolutePath + "/files/"+fileName;
         var outPath = Meteor.absolutePath + "/files";
-        console.log(filePath + " -> " + outPath);
+        //console.log(filePath + " -> " + outPath);
         readStream = fs.createReadStream(filePath);
         readStream.pipe(unzip.Extract({path: outPath}));
-
+        
+        //Remove the zip file
         readStream.on('close', function() {
             console.log("unlinking "+filePath);
             fs.unlink(filePath);
         });
-
+        
+        //Add unzipped files to Documents collection
+        var structure=[];
+        var basepath = outPath + '/' + fileName.substr(0, fileName.indexOf('.'));
+        console.log(basepath+ "    basepath");
+        DirectoryStructureJSON.getStructure(fs, basepath, Meteor.bindEnvironment(function (err, structure, total) {
+            if (err) console.log(err);
+            console.log("structure" + structure);
+            structure = structure;
+        }));
+        
+        console.log("starting");
+        DirectoryStructureJSON.traverseStructure(structure, basepath, 
+        function (folder, path) {
+            console.log('folder found: ', folder.name, 'at path: ', path);
+        }, 
+        function (file, path) {
+            console.log('file found: ', file.name, 'at path: ', path);
+        });
 
     },
     deleteChanges: function(params){
@@ -69,9 +88,8 @@ Meteor.methods({
         //EditorContents.insert({editor: 'idk', file:"meme.py", user:'system', doc: csv, refresh:""});
     },
     updateJSON: function() {
-        var basepath = Meteor.absolutePath + "/.meteor/local/cfs/files/docs";
+        var basepath = Meteor.absolutePath + "/files";
         var curr = CurrJSON.find().fetch();
-        console.log(curr);
         DirectoryStructureJSON.getStructure(fs, basepath, Meteor.bindEnvironment(function (err, structure, total) {
             if (err) {
                 console.log(err);

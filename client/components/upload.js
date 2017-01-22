@@ -15,6 +15,7 @@ Template.ProjectHead.events({
                     console.log("error uploading");
                 } else{
                     console.log("File " + fileObj.name + " successfully uploaded");
+                    Meteor.call("updateJSON");
                 }
             });
             uploadInstance.start();
@@ -29,19 +30,13 @@ Template.ProjectHead.events({
                 streams: 'dynamic',
                 chunkSize: 'dynamic',
             }, false);
-            uploadInstance.on('end', function(error, fileObj) {
-                if (error) {
-                    console.log("error uploading");
-                } else{
-                    console.log("File " + fileObj.name + " successfully uploaded");
-                }
-            });
             uploadInstance.on('end', function (error, fileObj) {
                 if (error) {
                     console.log("Error uploading" + error);
                 } else {
                     console.log("Successfully uploaded" + fileObj.name);
                     Meteor.call('unzip', fileObj.name);
+                    Meteor.call("updateJSON");
                 }
             });
             uploadInstance.start();

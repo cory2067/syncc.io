@@ -1,5 +1,5 @@
 this.Documents = new Meteor.Files({
-    debug: true,
+    debug: false,
     collectionName: 'Documents',
     storagePath: Meteor.absolutePath + '/files',
     namingFunction: function(file){
