@@ -35,13 +35,13 @@ Meteor.methods({
 
 
     },
-    parseFile: function(file) {
-        var fileName = file[0];
-        var fileId = file[1];
-        console.log("Parsing file"+ fileName);
-        var sourcePath = Meteor.absolutePath + "/.meteor/local/cfs/files/docs/docs-"+fileId+"-"+fileName;
-        var desPath = Meteor.absolutePath + "/.meteor/local/cfs/files/docs/"+fileName;
-        fs.rename(sourcePath, desPath);
+    storeFile: function(file) {
+        var info = file[0];
+        var data = file[1];
+        console.log("received file " + info + "file: " + data);
+        var path = Meteor.absolutePath + '/files/'+info;
+        fs.writeFile(path, data);
+        
     },
     deleteChanges: function(params){
         Changes.remove({editor: params[0], file: params[1]});
