@@ -32,7 +32,7 @@ Meteor.methods({
         
         //Add unzipped files to Documents collection
         var structure=[];
-        var basepath = outPath + '/' + fileName.substr(0, fileName.indexOf('.'));
+        /*var basepath = outPath + '/' + fileName.substr(0, fileName.indexOf('.'));
         console.log(basepath+ "    basepath");
         DirectoryStructureJSON.getStructure(fs, basepath, Meteor.bindEnvironment(function (err, structure, total) {
             if (err) console.log(err);
@@ -47,7 +47,7 @@ Meteor.methods({
         }, 
         function (file, path) {
             console.log('file found: ', file.name, 'at path: ', path);
-        });
+        });*/
 
     },
     deleteChanges: function(params){
@@ -56,9 +56,9 @@ Meteor.methods({
     openFile: function(fileId) {
         fileObj = Documents.find({_id: fileId}).fetch()[0];
         console.log(fileObj);
-        var fileName = fileObj.original.name;
+        var fileName = fileObj.name;
         var fileId = fileObj._id;
-        var filePath = Meteor.absolutePath + "/.meteor/local/cfs/files/docs/"+fileName;
+        var filePath = Meteor.absolutePath + "/files/"+fileName;
         //console.log(filePath);
         var parsed;
         var csv = '';
