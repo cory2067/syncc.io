@@ -206,5 +206,8 @@ Package.onUse(function (api) {
 	api.add_files('lib/codemirror/keymap/sublime.js', "client");
 	api.add_files('lib/codemirror/keymap/vim.js', "client");
 
+	//meta files
+	api.add_files('lib/codemirror/mode/meta.js', "client");
+
 	api.export('CodeMirrors', "client");
 });

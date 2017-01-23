@@ -86,11 +86,9 @@
         //function that checks if a wrapper is open (and if so, makes sure main content is correctly padded)
             function checkWrapper() {
                 if ($("#users-wrapper").hasClass("toggled") || $("#tree-wrapper").hasClass("toggled") || $("#settings-wrapper").hasClass("toggled")) {
-                    console.log("Something is open");
                     $("#page-content-wrapper").addClass("toggled");
                 } else {
                     $("#page-content-wrapper").removeClass("toggled");
-                    console.log('Nothing open');
                 };
             };
 
@@ -151,10 +149,7 @@
                 };
 
                 checkWrapper();
-            });
-
-        
-        
+            });       
         
         
         //select functions

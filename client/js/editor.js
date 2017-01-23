@@ -38,6 +38,7 @@ Template.EditorPage.onRendered(() => {
 
     $(".file-tabs").css("background-color", $(".CodeMirror").css("background-color"));
     $(".file-tabs").css("color", $(".CodeMirror").css("color"));
+
     /*etTimeout(function(){
     var updates = EditorContents.find({editor:id,file:fileName}).fetch();
     try{
@@ -46,7 +47,6 @@ Template.EditorPage.onRendered(() => {
       doc.setValue(updates[updates.length-2].doc);
     } catch(e) { console.log("FUCK")}
   }, 1000); */
-
 
     Tracker.autorun(function (c) {
       if(!Meteor.user()) {
@@ -101,6 +101,7 @@ Template.EditorPage.onRendered(() => {
           EditorContents.insert({editor: id, user: userId, doc: "", refresh:""}, function(err, _id) {
             editId = _id;
           });
+
           setInterval(() => {
             EditorContents.update({_id: editId}, {$set: {doc: doc.getValue()}});
           },5000); //periodically save
@@ -168,7 +169,37 @@ Template.EditorPage.onRendered(() => {
     });
 
     Tracker.autorun(function (c) {
-      console.log("Tracker fired! Lock is now " + Session.get("lock"));
+      //console.log("ready bois, time to detect")
+      //auto detect file mode
+      //https://github.com/codemirror/CodeMirror/edit/master/demo/loadmode.html
+      var modeInput = Documents.find({'_id': FlowRouter.getParam("editID")}).fetch();
+      if(modeInput.length==0) {
+        return;
+      }
+      //console.log(modeInput);
+      var val = modeInput[0].name, m, mode, spec;
+      if (m = /.+\.([^.]+)$/.exec(val)) {
+        var info = CodeMirror.findModeByExtension(m[1]);
+        if (info) {
+          mode = info.mode;
+          spec = info.mime;
+        }
+      } else if (/\//.test(val)) {
+        var info = CodeMirror.findModeByMIME(val);
+        if (info) {
+          mode = info.mode;
+          spec = val;
+        }
+      } else {
+        mode = spec = val;
+      }
+      if (mode) {
+        doc.setOption("mode", spec);
+        //CodeMirror.autoLoadMode(doc, mode);
+        //document.getElementById("modeinfo").textContent = spec;
+      } else {
+        alert("Could not find a mode corresponding to " + val);
+      }
     });
 });
 
@@ -259,6 +290,15 @@ Template.EditorPage.helpers({
 
   editorCode() {
       return '';
+  },
+
+  getFileName() {
+    var file = Documents.find({'_id': FlowRouter.getParam("editID")}).fetch();
+    console.log(file);
+    if(file.length) {
+      return file[0].name;
+    }
+    return "Loading...";
   }
 });
 
