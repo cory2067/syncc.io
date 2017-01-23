@@ -17,14 +17,14 @@ Template.TreeProj.onRendered(function () {
     console.log(str_JSON);
     var tree = JSON.parse(str_JSON);
     this.$('#jstree').jstree({
-    core: {
-      themes: {
-        name: 'proton',
-        dots: true,
-        icons: true,
-        responsive: true
-      },
-      data: (tree)
-    }
+        core: {
+            themes: {
+                name: 'proton',
+                dots: true,
+                icons: true,
+                responsive: true
+            },
+            data: (tree)
+        }
     });
 });
