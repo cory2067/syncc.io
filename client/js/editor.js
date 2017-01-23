@@ -146,7 +146,7 @@ Template.EditorPage.onRendered(() => {
 
 Template.EditorHead.helpers({
   getFileName() {
-    return Documents.find({'_id': FlowRouter.getParam("editID")}).fetch()[0].original.name;
+    return Documents.find({'_id': FlowRouter.getParam("editID")}).fetch()[0].name;
   },
 
   getURL(){
@@ -162,7 +162,7 @@ Template.EditorSidebar.helpers({
 
 Template.FileTabs.helpers({
   getFileName() {
-    return Documents.find({'_id': FlowRouter.getParam("editID")}).fetch()[0].original.name;
+    return Documents.find({'_id': FlowRouter.getParam("editID")}).fetch()[0].name;
   }
 });
 
