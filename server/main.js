@@ -65,37 +65,39 @@ Meteor.methods({
     },
     openFile: function(fileId) {
         fileObj = Documents.find({_id: fileId}).fetch()[0];
-        console.log(fileObj);
-        var fileName = fileObj.name;
-        var fileId = fileObj._id;
-        var filePath = Meteor.absolutePath + "/files/"+fileName;
-        //console.log(filePath);
-        var parsed;
-        var csv = '';
+        if (fileObj) {
+            console.log(fileObj);
+            var fileName = fileObj.name;
+            var fileId = fileObj._id;
+            var filePath = Meteor.absolutePath + "/files/"+fileName;
+            //console.log(filePath);
+            var parsed;
+            var csv = '';
 
-        var stream = fs.createReadStream(filePath);
-        console.log("initialized stream");
-        // read stream
-        stream.on('data', function(chunk) {
-            csv += chunk.toString();
-        });
+            var stream = fs.createReadStream(filePath);
+            console.log("initialized stream");
+            // read stream
+            stream.on('data', function(chunk) {
+                csv += chunk.toString();
+            });
 
-        stream.on('end', Meteor.bindEnvironment(function() {
-            //parsed = Baby.parse(csv);
-            //rows = parsed.data;
-            //console.log(rows);
-            console.log("return" + csv);
-            send(csv);
-            return csv;
-        }));
+            stream.on('end', Meteor.bindEnvironment(function() {
+                //parsed = Baby.parse(csv);
+                //rows = parsed.data;
+                //console.log(rows);
+                console.log("return" + csv);
+                send(csv);
+                return csv;
+            }));
 
-        function send(csv) {
-          EditorContents.insert({editor: fileId, file:fileName, user:'system', doc: csv, refresh:""}, function(err, id) {
-            console.log(err);
-            console.log(id);
-          });
+            function send(csv) {
+                EditorContents.insert({editor: fileId, file:fileName, user:'system', doc: csv, refresh:""}, function(err, id) {
+                    console.log(err);
+                    console.log(id);
+                });
+            }
+            //EditorContents.insert({editor: 'idk', file:"meme.py", user:'system', doc: csv, refresh:""});
         }
-        //EditorContents.insert({editor: 'idk', file:"meme.py", user:'system', doc: csv, refresh:""});
     },
     updateJSON: function() {
         var basepath = Meteor.absolutePath + "/files";
