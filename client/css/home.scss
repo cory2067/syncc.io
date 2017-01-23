@@ -602,7 +602,26 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
       margin: 9px 10px 0 0;
       padding: 0 35px;
       text-transform: uppercase;
-      display: inline-block;
+    }
+
+    .newBtn{
+      border: 1px solid $cloud;
+      background: none;
+      color: $cloud;
+      text-transform: uppercase;
+      height: 2.3em;
+      margin: 9px 10px 0 0;
+      padding: 0 20px;
+      border-radius: 5px;
+      
+      &:hover{
+        color: $cloud;
+        background: $chrome;
+      }
+      &:focus{
+        color: $cloud;
+        background: $darkgrey;
+      }
     }
 
     .editLeft{
