@@ -81,6 +81,26 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
     padding: 15px 35px;
   }
 
+  .btn-blue{
+    background-color: $accent;
+    color: $cloud;
+    border: none;
+
+    &:hover{background-color: $accents; color: $white;}
+    &:focus, &:active{background-color: $accented!important; color: $cloud!important;}
+  }
+
+  .btn-grey{
+    background-color: $chrome;
+    color: $cloud;
+    border: none;
+
+    &:hover{
+      background-color: $charcoal;
+      color: $cloud;
+    }
+  }
+
 
 
 /***********************
@@ -581,19 +601,8 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
       height: 2.3em;
       margin: 9px 10px 0 0;
       padding: 0 35px;
-      background-color: $accent;
-      color: $white;
       text-transform: uppercase;
-      text-align: center;
       display: inline-block;
-
-      &:hover{
-        background-color: $accent;
-        color: $white;
-      }
-      &:focus{
-        background-color: $accented;
-      }
     }
 
     .editLeft{
@@ -640,30 +649,6 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
 
       .modal-footer{
         padding-bottom: 0;
-
-        .btn-default{
-          background-color: $chrome;
-          color: $cloud;
-          border: none;
-
-          &:hover{
-            background-color: $charcoal;
-          }
-        }
-
-        .btn-copy{
-          background-color: $accent;
-          color: $cloud;
-          border: none;
-
-          &:hover{
-            background-color: $accents;
-          }
-
-          &:focus{
-            background-color: $accented;
-          }
-        }
       }
     }
   }
@@ -763,63 +748,54 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
           }
         }
       }
+
+      .btn-blue{float: right;}
     }
 
-    //The fricking checkbox
-    //Thanks https://codepen.io/bbodine1/pen/novBm
-    input[type=checkbox] {
-      width: 20px;
-      height: 20px;
-      display: none;
-    }
-
-    .checkbox { //divclass that confines the label
-      width: 20px;
+    //Slider code, thanks W3Schools
+    .switch {
       position: relative;
-      margin: 20px auto;
+      display: inline-block;
+      width: 42px;
+      height: 26px;
+      margin: 0 5px 0 0;
 
-      label {
-        //general label settings
-        width: 20px;
-        height: 20px;
-        cursor: pointer;
+      input{display: none;} //hides dafault html checkbox
+    }
+    .slider{
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      -webkit-transition: .4s;
+      transition: .4s;
+
+      &:before{
         position: absolute;
-        top: 0;
-        left: 0;
-        border-radius: 5px;
-        line-height: 20px;
-        background-color: $accent;
-
-        &:hover{background-color: $accents;}
-        &:focus{background-color: $accented;}
-
-        //when unclicked
-        &:after {//this is the checkmark
-          content: '';
-          width: 9px;
-          height: 5px;
-          position: absolute;
-          top: 7px;
-          left: 5px;
-          border: 3px solid $cloud;
-          border-top: none;
-          border-right: none;
-          background: transparent;
-          opacity: 0;
-          transform: rotate(-45deg);
-        }
-
-        &:hover::after {//when hoevering
-          opacity: 0.3;
-        }
+        content: "";
+        height: 18px;
+        width: 18px;
+        left: 4px;
+        bottom: 4px;
+        background-color: $cloud;
+        -webkit-transition: .4s;
+        transition: .4s;
       }
-      input[type=checkbox] {
-        visibility: hidden;
-        &:checked + label:after {
-          opacity: 1;
-        }    
+
+      &.round {
+        border-radius: 34px;
+
+        &:before{border-radius: 50%;}
       }
     }
+    input:checked + .slider{
+      background-color: $accent;
+    }
+    input:focus + .slider{ box-shadow: 0 0 1px $accent; }
+    input:checked + .slider:before{ transform: translateX(16px); }
   }  
 
 
@@ -884,6 +860,6 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
     height: calc(100vh - 87px);
 
     //personal theme//
-    background-color: $darkgrey!important;
-    .CodeMirror-gutters{background-color: $darkgrey!important;}
+    //background-color: $darkgrey!important;
+    //.CodeMirror-gutters{background-color: $darkgrey!important;}
   }

@@ -8,7 +8,9 @@
         {{> FileTabs}}
       </div>
       <div class="row" style="height: calc(100vh - 87px);">
-        {{> CodeMirror id="some-id" name="someName" options=editorOptions code=editorCode events=editorEvents}}
+        <form>
+        {{> CodeMirror id="code" name="codeName" code=editorCode options=editorOptions events=editorEvents}}
+        </form>
       </div>
     </div>
   </div>

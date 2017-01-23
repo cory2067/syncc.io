@@ -198,6 +198,7 @@ Package.onUse(function (api) {
 	api.add_files('lib/codemirror/theme/vibrant-ink.css', "client");
 	api.add_files('lib/codemirror/theme/xq-dark.css', "client");
 	api.add_files('lib/codemirror/theme/xq-light.css', "client");
+	api.add_files('lib/codemirror/theme/sinusoids.css', "client");
 
 
 	// key bindings

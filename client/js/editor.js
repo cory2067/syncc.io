@@ -35,6 +35,9 @@ Template.EditorPage.onRendered(() => {
     Session.set("lock", ['self']);
     doc = $('.CodeMirror')[0].CodeMirror;
     var id = FlowRouter.getParam("editID");
+
+    $(".file-tabs").css("background-color", $(".CodeMirror").css("background-color"));
+    $(".file-tabs").css("color", $(".CodeMirror").css("color"));
     /*etTimeout(function(){
     var updates = EditorContents.find({editor:id,file:fileName}).fetch();
     try{
@@ -220,14 +223,15 @@ Template.EditorPage.helpers({
       return {
           lineNumbers: true,
           mode: "python",
-          theme: "night",
+          theme: "sinusoids",
           keyMap: "vim",
           indentUnit: 4,
           indentWithTabs: true,
           autoCloseBrackets: true,
           matchBrackets: true,
           matchTags: true,
-          autoCloseTags: true
+          autoCloseTags: true,
+          lineWrapping: true
       }
     },
 

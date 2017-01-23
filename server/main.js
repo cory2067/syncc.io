@@ -6,6 +6,7 @@ import { EditorContents } from '../collections/editor';
 import { Tracker } from 'meteor/tracker'
 import fs from 'fs'
 import unzip from 'unzip'
+import touch from 'touch'
 import DirectoryStructureJSON from 'directory-structure-json'
 
 Meteor.startup(() => {
@@ -67,7 +68,7 @@ Meteor.methods({
             .on('close', Meteor.bindEnvironment(function() {
                 console.log("finished unzip");
                 console.log("unlinking "+filePath);
-                fs.unlink(filePath, Meteor.bindEnvironment(function(err) {
+                Documents.unlink(filePath, Meteor.bindEnvironment(function(err) {
                     if (err) {
                         console.log("Couldn't delete " + err);
                     } else {
@@ -85,9 +86,15 @@ Meteor.methods({
                             },
                             function (file, path) {
                                 console.log('file found: ', file.name, 'at path: ', path);
-                                Documents.addFile(path, {
+                                Documents.addFile(path+'/'+file.name, {
                                     fileName: file.name,
                                     storagePath: path
+                                }, function(err) {
+                                    if (err) {
+                                        console.log("error adding" + err);
+                                    } else {
+                                        console.log("added successfully");
+                                    }
                                 });
                             });
                         }));
@@ -154,5 +161,18 @@ Meteor.methods({
             }
             //console.log("Structure in JSON format:" +newJSON);
         }));
+    }, 
+    newFile: function(name) {
+        var path = Meteor.absolutePath + "/files";
+        touch.sync(path+"/"+name);
+        Documents.addFile(path+"/"+name, {
+            fileName: name
+        }, function(err) {
+            if (err) {
+                console.log("error making new file" + err);
+            } else {
+                Meteor.call('updateJSON');
+            }
+        });
     }
 });
