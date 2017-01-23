@@ -39,54 +39,45 @@
             <div class="wrapper-content">
                 <h3>Settings</h3>
                 <div class="setting-section">
-                    <h4>Modes:</h4>
+                    <h4>Key Maps:</h4>
                     <p class="settings-descript">use keymaps from other sources</p>
                     <div class="form-group">
-                        <select class="form-control" id="modes">
-                            <option value="vim" selected>vim</option>
+                        <select class="form-control" id="modes" onchange="selectMode()">
+                            <option selected>vim</option>
                             <option>emacs</option>
                             <option>sublime</option>
-                            <option>[none]</option>
+                            <option>default</option>
                         </select>
                     </div>
                 </div>
                 <div class="setting-section">
-                    <h4>Indent:</h4>
-                    <p class="settings-descript">choose spacing for indentation</p>
-                    <div class="form-group">
-                        <select class="form-control" id="indent">
-                            <option>tabs</option>
-                            <option>1 spaces</option>
-                            <option>2 spaces</option>
-                            <option>3 spaces</option>
-                        </select>
-                    </div>
+                    <label class="switch">
+                        <input type="checkbox" id="brackets" onchange="selectBrackets()" checked>
+                        <div class="slider round"></div>
+                    </label>
+                    <h4 style="display: inline-block">Auto Brackets</h4>
+                    <p class="settings-descript" style="margin: 0;">autocompletes typed brackets</p>
                 </div>
-                <div class="row setting-section" style="width: 225px; margin: 0 15px 15px 0">
-                    <div class="col-md-4" style="width: 15px; margin-top: 10px; padding: 0 5px;">
-                        <div class="checkbox" style="margin:0;">
-                            <input type="checkbox" value="None" id="autobracket" name="check" checked />
-                            <label id="autobtn" for="autobracket"></label>
-                        </div>
-                    </div>
-                    <div class="col-md-8" style="width: calc(100% - 20px);">
-                        <h4>Auto Brackets</h4>
-                        <p class="settings-descript" style="margin: 0;">autocompletes typed brackets</p>
-                    </div>
-                </div>
-                
                 <div class="setting-section">
                     <h4>Themes:</h4>
                     <div class="form-group">
-                        <select class="form-control" id="themes">
-                            <option>syncc</option>
+                        <select class="form-control" id="themes" onchange="selectTheme()">
+                            <option>sinusoids</option>
+                            <option>ambiance</option>
+                            <option>base16-dark</option>
+                            <option>base16-light</option>
+                            <option>cobalt</option>
+                            <option>eclipse</option>
+                            <option>lesser-dark</option>
+                            <option>mbo</option>
+                            <option>monokai</option>
                             <option>night</option>
-                            <option>light</option>
+                            <option>solarized</option>
+                            <option>tomorrow-night-eighties</option>
+                            <option>vibrant-ink</option>
                         </select>
                     </div>
                 </div>
-
-                <button id="submitChanges" onclick="submitChange()" class="btn btn-default btn-blue">Save</button>
             </div>
         </div>
     </div>
@@ -161,24 +152,35 @@
 
                 checkWrapper();
             });
+
+        
+        
+        
         
         //select functions
-        function selectTheme() {
-            var theme = input.options[input.selectedIndex].innerHTML;
-            editor.setOption("theme", theme);
-        }
+            function selectTheme() {
+                var editor = $('.CodeMirror')[0].CodeMirror;
 
-        //immediately submit when clicked
-        function submitChange(){
-            $("#myForm").submit();
-        }
+                editor.setOption("theme", $('#themes').find(":selected").text());
 
-        $(function() {
-            $('#changetheme').click(toggletheme);
+                $(".file-tabs").css("background-color", $(".CodeMirror").css("background-color"));
+                $(".file-tabs").css("color", $(".CodeMirror").css("color"));
+            };
 
-            function toggletheme() {
-                $("#select").val(8).trigger('change');
-            }
-        });
+            function selectBrackets() {
+                var editor = $('.CodeMirror')[0].CodeMirror;
+
+                if ($("#brackets").is(":checked")){
+                    editor.setOption("autoCloseBrackets", true);
+                } else {
+                    editor.setOption("autoCloseBrackets", false);
+                }
+            };
+
+            function selectMode() {
+                var editor = $('.CodeMirror')[0].CodeMirror;
+
+                editor.setOption("keyMap", $('#modes').find(":selected").text());
+            };
     </script>
 </template>

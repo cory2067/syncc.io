@@ -1,0 +1,32 @@
+/* Custom theme for the application Syncc
+    Templated off of Monokai and base16-dark */
+
+.cm-s-sinusoids.CodeMirror {background: #313D4A; color: #E2E5E9;}
+.cm-s-sinusoids div.CodeMirror-selected {background: #3C4956 !important;}
+.cm-s-sinusoids .CodeMirror-gutters {background: #313D4A; border-right: 0px;}
+.cm-s-sinusoids .CodeMirror-guttermarker { color: white; }
+.cm-s-sinusoids .CodeMirror-guttermarker-subtle { color: #d0d0d0; }
+.cm-s-sinusoids .CodeMirror-linenumber {color: #778899;}
+.cm-s-sinusoids .CodeMirror-cursor {border-left: 1px solid #f8f8f0 !important;}
+
+.cm-s-sinusoids span.cm-comment {color: #778899;}
+.cm-s-sinusoids span.cm-atom {color: #ae81ff;}
+.cm-s-sinusoids span.cm-number {color: #ae81ff;}
+
+.cm-s-sinusoids span.cm-property, .cm-s-monokai span.cm-attribute {color: #1ABC9C;}
+.cm-s-sinusoids span.cm-keyword {color: #f92672;}
+.cm-s-sinusoids span.cm-string {color: #f1c40f;}
+
+.cm-s-sinusoids span.cm-variable {color: #1ABC9C;}
+.cm-s-sinusoids span.cm-variable-2 {color: #9effff;}
+.cm-s-sinusoids span.cm-def {color: #fd971f;}
+.cm-s-sinusoids span.cm-bracket {color: #f8f8f2;}
+.cm-s-sinusoids span.cm-tag {color: #f92672;}
+.cm-s-sinusoids span.cm-link {color: #ae81ff;}
+.cm-s-sinusoids span.cm-error {background: #f92672; color: #f8f8f0;}
+
+.cm-s-sinusoids .CodeMirror-activeline-background {background: #373831 !important;}
+.cm-s-sinusoids .CodeMirror-matchingbracket {
+  text-decoration: underline;
+  color: white !important;
+}
