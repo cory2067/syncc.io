@@ -48,9 +48,15 @@ Meteor.methods({
                             }, 
                             function (file, path) {
                                 console.log('file found: ', file.name, 'at path: ', path);
-                                Documents.addFile(path, {
+                                Documents.addFile(path+'/'+file.name, {
                                     fileName: file.name,
                                     storagePath: path
+                                }, function(err) {
+                                    if (err) {
+                                        console.log("error adding" + err);
+                                    } else {
+                                        console.log("added successfully");
+                                    }
                                 });
                             });
                         }));
