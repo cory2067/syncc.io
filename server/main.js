@@ -130,6 +130,12 @@ Meteor.methods({
         touch.sync(path+"/"+name);
         Documents.addFile(path+"/"+name, {
             fileName: name
+        }, function(err) {
+            if (err) {
+                console.log("error making new file" + err);
+            } else {
+                Meteor.call('updateJSON');
+            }
         });
     }
 });
