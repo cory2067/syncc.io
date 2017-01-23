@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Changes } from '../collections/changes';
+import { EditUsers } from '../collections/editusers';
 import { CurrJSON } from '../collections/json';
 import { EditorContents } from '../collections/editor';
 import { Tracker } from 'meteor/tracker'
@@ -8,6 +9,42 @@ import unzip from 'unzip'
 import DirectoryStructureJSON from 'directory-structure-json'
 
 Meteor.startup(() => {
+  Meteor.publish('changes', (editor)=>{
+    var a = Changes.find({editor: editor});
+    if(a) {
+      return a
+    }
+    return this.ready();
+  });
+  Meteor.publish('editorcontents', (editor)=>{
+    var a = EditorContents.find({editor: editor});
+    if(a) {
+      return a;
+    }
+    return this.ready();
+  });
+  Meteor.publish('editusers', (editor)=>{
+    var a = EditUsers.find({editor: editor});
+    if(a) {
+      return a;
+    }
+    return this.ready();
+  });
+  Meteor.publish('documents', ()=> {
+    var a = Documents.find().cursor;
+    console.log(a);
+    if(a) {
+      return a;
+    }
+    return this.ready();
+  });
+  Meteor.publish('currjson', ()=> {
+    var a = CurrJSON.find();
+    if(a) {
+      return a;
+    }
+    return this.ready();
+  })
 });
 
 Meteor.methods({
@@ -42,10 +79,10 @@ Meteor.methods({
                             if (err) console.log(err);
                             console.log("structure" + structure);
                             structure = structure;
-                            DirectoryStructureJSON.traverseStructure(structure, basepath, 
+                            DirectoryStructureJSON.traverseStructure(structure, basepath,
                             function (folder, path) {
                                 console.log('folder found: ', folder.name, 'at path: ', path);
-                            }, 
+                            },
                             function (file, path) {
                                 console.log('file found: ', file.name, 'at path: ', path);
                                 Documents.addFile(path, {
@@ -56,7 +93,7 @@ Meteor.methods({
                         }));
                     }
                 }));
-        
+
         }));
     },
     deleteChanges: function(params){

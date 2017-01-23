@@ -1,3 +1,11 @@
+import { Meteor } from 'meteor/meteor';
+
+Template.ProjectList.onCreated(()=>{
+    Meteor.subscribe('currjson');
+    Meteor.subscribe('documents');
+    Meteor.subscribe('editusers');
+});
+
 Template.ProjectList.helpers({
     docs: function () {
         var a = Documents.find({"userId": Meteor.userId()}).fetch();

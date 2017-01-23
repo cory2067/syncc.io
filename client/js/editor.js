@@ -14,7 +14,23 @@ var doc = null;
 var editId = null;
 var init = true;
 
+Template.EditorPage.onCreated(() => {
+  Session.set("ready", false)
+  var id = FlowRouter.getParam("editID");
+  Meteor.subscribe("changes", id);
+  Meteor.subscribe("editorcontents", id);
+  Meteor.subscribe("editusers", id, function() {
+    Session.set("ready", true);
+  });
+  Meteor.subscribe("documents");
+});
+
 Template.EditorPage.onRendered(() => {
+    /*if(!Session.get("ready")) {
+      console.log("heck you, its not ready yet");
+      return;
+    }*/
+    console.log("ok now its ready thx");
     lock = ['self'];
     Session.set("lock", ['self']);
     doc = $('.CodeMirror')[0].CodeMirror;
@@ -28,47 +44,19 @@ Template.EditorPage.onRendered(() => {
     } catch(e) { console.log("FUCK")}
   }, 1000); */
 
-    Changes.find({editor:id}).observe({
-        _suppress_initial: true,
-        added: function (changes) {
-          console.log(changes);
-          if(changes['user'] != userId) {
-            //console.log(changes);
-            doc.replaceRange(changes['text'], changes['from'], changes['to'], origin='ignore');
 
-            //sketchy stuff for special cases when highlighting other user text
-            var removedLen = changes['removed'].length
-            if(changes['removed'][0] == "") {
-                removedLen = 0;
-              }
-
-            //there's a case when i need to shift the highlighted lines
-            if(removedLen != 1 && !changes['text'][0]) {
-              changes['text'].splice(0,1);
-              changes['from']['line']++;
-              changes['to']['line']++;
-            }
-
-            if(changes['text'].length || removedLen==1) {
-              var mark = doc.markText({line: changes['from']['line'], ch:0}, {line: changes['to']['line']+changes['text'].length-1}, {className: "editing"});
-              setTimeout(function() {
-                mark.clear();
-              }, 1000);
-            }
-          }
-        },
-        changed: function (changes, old) {
-        },
-        removed: function (i) {
-
-       }
-     });
-
-    var current = EditUsers.find({editor: id}).fetch();
     Tracker.autorun(function (c) {
       if(!Meteor.user()) {
+        console.log("usr wher u at")
         return;
       }
+      if(!Session.get("ready")) {
+        console.log("hold up kiddo, ur not ready for this");
+        return;
+      }
+      console.log("ok is goodmeme now");
+      c.stop();
+      var current = EditUsers.find({editor: id}).fetch();
       username = Meteor.user()['emails'][0]['address'];
       EditUsers.insert({name: username, editor: id, line: 0, init:true}, function(err, _id) {
           userId = _id;
@@ -97,7 +85,7 @@ Template.EditorPage.onRendered(() => {
             EditorContents.find({editor: id, user:'system'}).observe({
               added: function(changed, o) {
                 console.log("i detectted:");
-                console.log(changed.doc);
+                //console.log(changed.doc);
                 doc.setValue(changed.doc); //wew laddie copy and pasting code
                 init = false;              //maybe someday, i'll make this not trash
                 EditUsers.update({_id: userId}, {$set: {init: false}});
@@ -113,11 +101,47 @@ Template.EditorPage.onRendered(() => {
           setInterval(() => {
             EditorContents.update({_id: editId}, {$set: {doc: doc.getValue()}});
           },5000); //periodically save
+          Changes.find({editor:id}).observe({
+              _suppress_initial: true,
+              added: function (changes) {
+                console.log(changes);
+                if(changes['user'] != userId) {
+                  //console.log(changes);
+                  doc.replaceRange(changes['text'], changes['from'], changes['to'], origin='ignore');
+
+                  //sketchy stuff for special cases when highlighting other user text
+                  var removedLen = changes['removed'].length
+                  if(changes['removed'][0] == "") {
+                      removedLen = 0;
+                    }
+
+                  //there's a case when i need to shift the highlighted lines
+                  if(removedLen != 1 && !changes['text'][0]) {
+                    changes['text'].splice(0,1);
+                    changes['from']['line']++;
+                    changes['to']['line']++;
+                  }
+
+                  if(changes['text'].length || removedLen==1) {
+                    var mark = doc.markText({line: changes['from']['line'], ch:0}, {line: changes['to']['line']+changes['text'].length-1}, {className: "editing"});
+                    setTimeout(function() {
+                      mark.clear();
+                    }, 1000);
+                  }
+                }
+              },
+              changed: function (changes, old) {
+              },
+              removed: function (i) {
+
+             }
+           });
       });
     });
     EditUsers.find({editor: id}).observe({
       _suppress_initial: true,
       added: function(changed, o) {
+        console.log("ADD");
         if(changed['init']) {
           //Meteor.call("deleteChanges", [id, fileName]);
           EditorContents.update({_id: editId}, {$set: {doc: doc.getValue(), refresh:Random.id()}});
@@ -128,6 +152,7 @@ Template.EditorPage.onRendered(() => {
         }
       },
       changed: function(changed, o) {
+        console.log("CHANGE");
         if(!changed['init']) {
           var index = lock.indexOf(changed['name']);
           if(index > -1) {
@@ -146,7 +171,12 @@ Template.EditorPage.onRendered(() => {
 
 Template.EditorHead.helpers({
   getFileName() {
-    return Documents.find({'_id': FlowRouter.getParam("editID")}).fetch()[0].name;
+    var file = Documents.find({'_id': FlowRouter.getParam("editID")}).fetch();
+    console.log(file);
+    if(file.length) {
+      return file[0].name;
+    }
+    return "Loading...";
   },
 
   getURL(){
@@ -162,7 +192,12 @@ Template.EditorSidebar.helpers({
 
 Template.FileTabs.helpers({
   getFileName() {
-    return Documents.find({'_id': FlowRouter.getParam("editID")}).fetch()[0].name;
+    var file = Documents.find({'_id': FlowRouter.getParam("editID")}).fetch();
+    console.log(file);
+    if(file.length) {
+      return file[0].name;
+    }
+    return "Loading...";
   }
 });
 
