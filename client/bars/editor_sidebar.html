@@ -43,7 +43,7 @@
                     <p class="settings-descript">use keymaps from other sources</p>
                     <div class="form-group">
                         <select class="form-control" id="modes">
-                            <option>vim</option>
+                            <option value="vim" selected>vim</option>
                             <option>emacs</option>
                             <option>sublime</option>
                             <option>[none]</option>
@@ -78,13 +78,15 @@
                 <div class="setting-section">
                     <h4>Themes:</h4>
                     <div class="form-group">
-                        <select class="form-control" id="modes">
+                        <select class="form-control" id="themes">
                             <option>syncc</option>
                             <option>night</option>
                             <option>light</option>
                         </select>
                     </div>
                 </div>
+
+                <button id="submitChanges" onclick="submitChange()" class="btn btn-default btn-blue">Save</button>
             </div>
         </div>
     </div>
@@ -159,5 +161,24 @@
 
                 checkWrapper();
             });
+        
+        //select functions
+        function selectTheme() {
+            var theme = input.options[input.selectedIndex].innerHTML;
+            editor.setOption("theme", theme);
+        }
+
+        //immediately submit when clicked
+        function submitChange(){
+            $("#myForm").submit();
+        }
+
+        $(function() {
+            $('#changetheme').click(toggletheme);
+
+            function toggletheme() {
+                $("#select").val(8).trigger('change');
+            }
+        });
     </script>
 </template>

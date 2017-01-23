@@ -81,6 +81,26 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
     padding: 15px 35px;
   }
 
+  .btn-blue{
+    background-color: $accent;
+    color: $cloud;
+    border: none;
+
+    &:hover{background-color: $accents; color: $white;}
+    &:focus, &:active{background-color: $accented!important; color: $cloud!important;}
+  }
+
+  .btn-grey{
+    background-color: $chrome;
+    color: $cloud;
+    border: none;
+
+    &:hover{
+      background-color: $charcoal;
+      color: $cloud;
+    }
+  }
+
 
 
 /***********************
@@ -581,19 +601,8 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
       height: 2.3em;
       margin: 9px 10px 0 0;
       padding: 0 35px;
-      background-color: $accent;
-      color: $white;
       text-transform: uppercase;
-      text-align: center;
       display: inline-block;
-
-      &:hover{
-        background-color: $accent;
-        color: $white;
-      }
-      &:focus{
-        background-color: $accented;
-      }
     }
 
     .editLeft{
@@ -640,30 +649,6 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
 
       .modal-footer{
         padding-bottom: 0;
-
-        .btn-default{
-          background-color: $chrome;
-          color: $cloud;
-          border: none;
-
-          &:hover{
-            background-color: $charcoal;
-          }
-        }
-
-        .btn-copy{
-          background-color: $accent;
-          color: $cloud;
-          border: none;
-
-          &:hover{
-            background-color: $accents;
-          }
-
-          &:focus{
-            background-color: $accented;
-          }
-        }
       }
     }
   }
@@ -763,6 +748,8 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
           }
         }
       }
+
+      .btn-blue{float: right;}
     }
 
     //The fricking checkbox

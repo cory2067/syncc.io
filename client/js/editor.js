@@ -191,7 +191,8 @@ Template.EditorPage.helpers({
           autoCloseBrackets: true,
           matchBrackets: true,
           matchTags: true,
-          autoCloseTags: true
+          autoCloseTags: true,
+          lineWrapping: true
       }
     },
 
