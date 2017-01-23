@@ -5,6 +5,7 @@ import { EditorContents } from '../collections/editor';
 import { Tracker } from 'meteor/tracker'
 import fs from 'fs'
 import unzip from 'unzip'
+import touch from 'touch'
 import DirectoryStructureJSON from 'directory-structure-json'
 
 Meteor.startup(() => {
@@ -26,39 +27,44 @@ Meteor.methods({
         console.log("starting unzip");
         var structure;
         //Remove the zip file
-        readStream.on('close', Meteor.bindEnvironment(function() {
-            console.log("finished unzip");
-            console.log("unlinking "+filePath);
-            fs.unlink(filePath, Meteor.bindEnvironment(function(err) {
-                if (err) {
-                    console.log("Couldn't delete " + err);
-                } else {
-                    console.log("Successfully deleted");
-                    var basepath = outPath + '/' + fileName.substr(0, fileName.indexOf('.'));
-                    console.log(basepath+ "    basepath to addd");
-                    console.log("Get structure");
-                    DirectoryStructureJSON.getStructure(fs, basepath, Meteor.bindEnvironment(function (err, structure, total) {
-                        if (err) console.log(err);
-                        console.log("structure" + structure);
-                        structure = structure;
-                        DirectoryStructureJSON.traverseStructure(structure, basepath, 
-                        function (folder, path) {
-                            console.log('folder found: ', folder.name, 'at path: ', path);
-                        }, 
-                        function (file, path) {
-                            console.log('file found: ', file.name, 'at path: ', path);
-                            Documents.addFile(path, {
-                                fileName: file.name,
-                                storagePath: path
+        readStream.pipe(unzip.Extract({path: outPath}))
+            .on('close', Meteor.bindEnvironment(function() {
+                console.log("finished unzip");
+                console.log("unlinking "+filePath);
+                Documents.unlink(filePath, Meteor.bindEnvironment(function(err) {
+                    if (err) {
+                        console.log("Couldn't delete " + err);
+                    } else {
+                        console.log("Successfully deleted");
+                        var basepath = outPath + '/' + fileName.substr(0, fileName.indexOf('.'));
+                        console.log(basepath+ "    basepath to addd");
+                        console.log("Get structure");
+                        DirectoryStructureJSON.getStructure(fs, basepath, Meteor.bindEnvironment(function (err, structure, total) {
+                            if (err) console.log(err);
+                            console.log("structure" + structure);
+                            structure = structure;
+                            DirectoryStructureJSON.traverseStructure(structure, basepath, 
+                            function (folder, path) {
+                                console.log('folder found: ', folder.name, 'at path: ', path);
+                            }, 
+                            function (file, path) {
+                                console.log('file found: ', file.name, 'at path: ', path);
+                                Documents.addFile(path+'/'+file.name, {
+                                    fileName: file.name,
+                                    storagePath: path
+                                }, function(err) {
+                                    if (err) {
+                                        console.log("error adding" + err);
+                                    } else {
+                                        console.log("added successfully");
+                                    }
+                                });
                             });
-                        });
-                    }));
-                }
-            }));
+                        }));
+                    }
+                }));
         
-
         }));
-        readStream.pipe(unzip.Extract({path: outPath}));
     },
     deleteChanges: function(params){
         Changes.remove({editor: params[0], file: params[1]});
@@ -118,5 +124,18 @@ Meteor.methods({
             }
             //console.log("Structure in JSON format:" +newJSON);
         }));
+    }, 
+    newFile: function(name) {
+        var path = Meteor.absolutePath + "/files";
+        touch.sync(path+"/"+name);
+        Documents.addFile(path+"/"+name, {
+            fileName: name
+        }, function(err) {
+            if (err) {
+                console.log("error making new file" + err);
+            } else {
+                Meteor.call('updateJSON');
+            }
+        });
     }
 });

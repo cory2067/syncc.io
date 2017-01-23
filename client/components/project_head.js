@@ -41,5 +41,17 @@ Template.ProjectHead.events({
             });
             uploadInstance.start();
         }
+    },
+    'click #new_file': function(event, template) {
+        console.log("making new file");
+        var nameInput;
+        nameInput = prompt("Name of new file", "helloworld.py");
+        console.log(nameInput);
+        Meteor.call('newFile', nameInput);
+
+
+    },
+    'click #new_folder': function(event, template) {
+        console.log("NOT YET");
     }
 });
