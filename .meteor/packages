@@ -34,3 +34,5 @@ cfs:filesystem
 ostrio:meteor-root
 cfs:ejson-file
 sacha:spin
+udondan:jszip
+ostrio:files

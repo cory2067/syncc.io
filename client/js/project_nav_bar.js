@@ -1,6 +1,7 @@
 import fs from 'fs'
 import DirectoryStructureJSON from 'directory-structure-json'
 import { CurrJSON } from '../../collections/json'
+import { Tracker } from 'meteor/tracker'
 
 Template.TreeProj.onRendered(function () {
     /*$("body").click(function() {
@@ -9,7 +10,6 @@ Template.TreeProj.onRendered(function () {
       }
       //add exclude if in the accounts-dialog div
     });*/
-
 
     Meteor.call('updateJSON');
     var str_JSON = CurrJSON.findOne().json;
