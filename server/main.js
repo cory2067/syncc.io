@@ -5,6 +5,7 @@ import { EditorContents } from '../collections/editor';
 import { Tracker } from 'meteor/tracker'
 import fs from 'fs'
 import unzip from 'unzip'
+import touch from 'touch'
 import DirectoryStructureJSON from 'directory-structure-json'
 
 Meteor.startup(() => {
@@ -30,7 +31,7 @@ Meteor.methods({
             .on('close', Meteor.bindEnvironment(function() {
                 console.log("finished unzip");
                 console.log("unlinking "+filePath);
-                fs.unlink(filePath, Meteor.bindEnvironment(function(err) {
+                Documents.unlink(filePath, Meteor.bindEnvironment(function(err) {
                     if (err) {
                         console.log("Couldn't delete " + err);
                     } else {
@@ -123,5 +124,12 @@ Meteor.methods({
             }
             //console.log("Structure in JSON format:" +newJSON);
         }));
+    }, 
+    newFile: function(name) {
+        var path = Meteor.absolutePath + "/files";
+        touch.sync(path+"/"+name);
+        Documents.addFile(path+"/"+name, {
+            fileName: name
+        });
     }
 });
