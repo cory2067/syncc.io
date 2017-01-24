@@ -6,6 +6,7 @@ import { Tracker } from 'meteor/tracker'
 import { Changes } from '../../collections/changes'
 import { EditorContents } from '../../collections/editor'
 import { Meteor } from 'meteor/meteor';
+import { Documents } from '../../collections/files'
 
 var username = "Guest"
 var userId = null ;

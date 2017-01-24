@@ -1,4 +1,5 @@
 import { Template } from 'meteor/templating';
+import { Documents } from '../collections/files'
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Random } from 'meteor/random'
 import { EditUsers } from '../collections/editusers';

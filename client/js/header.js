@@ -1,3 +1,5 @@
+import { Documents } from '../../collections/files'
+
 Template.Header.events({
     'click #editor': function(event, template) {
       var nameInput;

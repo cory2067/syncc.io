@@ -1,4 +1,4 @@
-this.Documents = new Meteor.Files({
+export const Documents = new Meteor.Files({
     debug: false,
     collectionName: 'Documents',
     storagePath: Meteor.absolutePath + '/files',

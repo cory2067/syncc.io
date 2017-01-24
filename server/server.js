@@ -1,3 +1,5 @@
+import { Documents } from '../collections/files'
+
 Documents.allow({
     'insert': function(userId, doc) {
         return true;
@@ -6,4 +8,3 @@ Documents.allow({
         return true;
     }
 });
-
