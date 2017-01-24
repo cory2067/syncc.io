@@ -7,11 +7,8 @@ Do the following one line at a time, and proceed to the next step when a new 'Er
 
 ```
 npm install --save bcrypt-nodejs && npm uninstall --save bcrypt
-
 meteor npm install --save fibers
-
 meteor npm install --save underscore
-
 meteor npm install --save source-map-support
 ```
 
