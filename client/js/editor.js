@@ -198,21 +198,11 @@ Template.EditorPage.onRendered(() => {
           mode = info.mode;
           spec = info.mime;
         }
-      } else if (/\//.test(val)) {
-        var info = CodeMirror.findModeByMIME(val);
-        if (info) {
-          mode = info.mode;
-          spec = val;
-        }
-      } else {
-        mode = spec = val;
       }
       if (mode) {
         doc.setOption("mode", spec);
-        //CodeMirror.autoLoadMode(doc, mode);
-        //document.getElementById("modeinfo").textContent = spec;
       } else {
-        alert("Could not find a mode corresponding to " + val);
+        console.log("Could not find a mode corresponding to " + val);
       }
     });
 });
