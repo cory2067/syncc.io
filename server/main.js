@@ -103,6 +103,9 @@ Meteor.methods({
 
         }));
     },
+    getPath: function() {
+      return Meteor.absolutePath;
+    },
     deleteChanges: function(params){
         Changes.remove({editor: params[0], file: params[1]});
     },
@@ -161,7 +164,7 @@ Meteor.methods({
             }
             //console.log("Structure in JSON format:" +newJSON);
         }));
-    }, 
+    },
     newFile: function(name) {
         var path = Meteor.absolutePath + "/files";
         touch.sync(path+"/"+name);
@@ -179,7 +182,7 @@ Meteor.methods({
         var buffer = new Buffer(content);
 
         Documents.write(buffer, {
-            fileName: file_name, 
+            fileName: file_name,
         }, function (error, fileRef) {
             if (error) {
                 console.log("error: "+error);
@@ -187,6 +190,6 @@ Meteor.methods({
                 console.log(fileRef.name + 'is successfully saved to FS._id ' + fileRef._id);
             }
         });
-            
+
     }
 });
