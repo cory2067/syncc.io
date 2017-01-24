@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Changes } from '../collections/changes';
 import { EditUsers } from '../collections/editusers';
 import { CurrJSON } from '../collections/json';
+import { Documents } from '../collections/files'
 import { EditorContents } from '../collections/editor';
 import { Tracker } from 'meteor/tracker'
 import fs from 'fs'

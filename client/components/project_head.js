@@ -1,4 +1,5 @@
 import { Tracker } from 'meteor/tracker'
+import { Documents } from '../../collections/files'
 
 Template.ProjectHead.events({
     'change #files': function(event, template) {

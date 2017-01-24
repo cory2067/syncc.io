@@ -6,6 +6,7 @@ import { Tracker } from 'meteor/tracker'
 import { Changes } from '../../collections/changes'
 import { EditorContents } from '../../collections/editor'
 import { Meteor } from 'meteor/meteor';
+import { Documents } from '../../collections/files'
 
 var username = "Guest"
 var userId = null ;
@@ -31,9 +32,24 @@ Template.EditorPage.onCreated(() => {
 Template.EditorPage.onRendered(() => {
     Meteor.call("getPath", function(err, path) {
       $("#jstree").on("activate_node.jstree", (a,b)=>{
+        var content = doc.getValue();
+        console.log(docId);
+        var file = Documents.find({'_id': docId}).fetch();
+        console.log(file);
+        var pth = file[0].path;
+        var file_name;
+        if(file.length) {
+          file_name =  file[0].name;
+        }
+        console.log(file_name +"told to write" + content + " to "+ pth);
+        Meteor.call('writeFile', [content, pth, file_name]);
+
+        console.log("moving the fuck on");
         var filePath = $("#jstree").jstree(true).get_path(b.node).join('/');
         var full = path + "/files/" + filePath;
+        console.log(full);
         var found = Documents.find({path: full}).fetch()
+        console.log(found);
         if(found.length > 1) {
           alert("oh hecc this isnt supposed to happen");
         } else if(found.length == 1) {
@@ -292,6 +308,7 @@ Template.EditorPage.helpers({
          },
         "cursorActivity": function(doc) {
             EditUsers.update({_id:userId}, {$set: {line:doc.getCursor()['line']}});
+            EditUsers.update({_id:userId}, {$set: {line1:doc.getCursor()['line']+1}});
         }
       }
     },
@@ -312,6 +329,20 @@ Template.EditorPage.helpers({
 
 
 Template.EditorPage.events({
+    'click #saveFile': function(event, template) {
+      var content = doc.getValue();
+      console.log(docId);
+      var file = Documents.find({'_id': docId}).fetch();
+      console.log(file);
+      var path = file[0].path;
+      var file_name;
+      if(file.length) {
+        file_name =  file[0].name;
+      }
+      console.log(file_name +"told to write" + content + " to "+ path);
+      Meteor.call('writeFile', [content, path, file_name]);
+    },
+
     'click #newFileBtn': function(event, template) {
       $(function(){
         $("#createNewFile").click(function(){

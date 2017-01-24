@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import { Documents } from '../../collections/files'
 
 Template.ProjectList.onCreated(()=>{
     Meteor.subscribe('currjson');
