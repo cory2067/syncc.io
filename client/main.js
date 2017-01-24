@@ -25,9 +25,6 @@ Template.Header.helpers({
     }
 });
 Template.HomePage.helpers({
-    newEditor() {
-      return Random.id(8);
-    },
     getUser() {
       a= Meteor.user();
       if(a) {
@@ -38,5 +35,25 @@ Template.HomePage.helpers({
       else {
         return '';
       }
+    }
+});
+Template.HomePage.onCreated(()=>{
+  Meteor.subscribe("documents");
+});
+Template.HomePage.events({
+    'click #demoEditor': function(event, template) {
+        console.log("making new file");
+        var nameInput = Random.id(8)+'.py';
+        Meteor.call('newFile', nameInput, function() {
+          Meteor.call("getPath", function(err, path) {
+            var full = path + "/files/" + nameInput;
+            var found = Documents.find({path: full}).fetch()
+            if(found.length > 1) {
+              alert("Please choose a unique file name!");
+            } else if(found.length == 1) {
+              window.location.href = "/" + found[0]['_id'];
+            }
+          });
+        });
     }
 });

@@ -8,7 +8,8 @@ Template.ProjectList.onCreated(()=>{
 
 Template.ProjectList.helpers({
     docs: function () {
-        var a = Documents.find({"userId": Meteor.userId()}).fetch();
+        // PLEASE CHANGE THIS BACK ONCE STUFF WORKSi
+        var a = Documents.find(/*{"userId": Meteor.userId()}*/).fetch();
         console.log(Meteor.users.find().fetch());
         for(var entry=0; entry<a.length; entry++) {
           //a[entry]['date'] = a[entry].original.updatedAt.toString().substring(0, 15);

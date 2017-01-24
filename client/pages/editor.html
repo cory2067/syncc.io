@@ -16,7 +16,11 @@
   </div>
 
   {{#if lockUser}}
+    {{#if lockUser="self"}}
+    <div id="loadingSpin"><p>Loading editor...</p>{{>spinner}}</div>
+    {{else}}
     <div id="loadingSpin"><p>{{lockUser}} is joining</p>{{>spinner}}</div>
+    {{/if}}
   {{/if}}
   <script>
     //Script to choose/make tabs active would go here.

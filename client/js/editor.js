@@ -17,6 +17,8 @@ var docId = null;
 
 Template.EditorPage.onCreated(() => {
   Session.set("ready", false)
+  Session.set("loginTimeout", false);
+  setTimeout(()=>{Session.set("loginTimeout", true)}, 1000);
   var id = FlowRouter.getParam("editID");
   Meteor.subscribe("changes", id);
   Meteor.subscribe("editorcontents", id);
@@ -63,7 +65,7 @@ Template.EditorPage.onRendered(() => {
   }, 1000); */
 
     Tracker.autorun(function (c) {
-      if(!Meteor.user()) {
+      if(!Meteor.user() && !Session.get("loginTimeout")) {
         console.log("usr wher u at")
         return;
       }
@@ -74,7 +76,9 @@ Template.EditorPage.onRendered(() => {
       console.log("ok is goodmeme now");
       c.stop();
       var current = EditUsers.find({editor: id}).fetch();
-      username = Meteor.user()['emails'][0]['address'];
+      if(Meteor.user()) {
+        username = Meteor.user()['emails'][0]['address'];
+      }
       EditUsers.insert({name: username, editor: id, line: 0, init:true}, function(err, _id) {
           userId = _id;
           Session.set("userId", _id);
@@ -303,6 +307,26 @@ Template.EditorPage.helpers({
       return file[0].name;
     }
     return "Loading...";
+  }
+});
+
+
+Template.EditorPage.events({
+    'click #newFile': function(event, template) {
+      var nameInput;
+      nameInput = prompt("Name of new file", "helloworld.py");
+      console.log(nameInput);
+      Meteor.call('newFile', nameInput, function() {
+        Meteor.call("getPath", function(err, path) {
+          var full = path + "/files/" + nameInput;
+          var found = Documents.find({path: full}).fetch()
+          if(found.length > 1) {
+            alert("Please give your file a unique name!");
+          } else if(found.length == 1) {
+            window.location.href = "/" + found[0]['_id'];
+          }
+        });
+    });
   }
 });
 

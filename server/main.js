@@ -170,7 +170,7 @@ Meteor.methods({
         touch.sync(path+"/"+name);
         Documents.addFile(path+"/"+name, {
             fileName: name
-        }, function(err) {
+        }, function(err, f) {
             if (err) {
                 console.log("error making new file" + err);
             } else {

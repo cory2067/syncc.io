@@ -6,7 +6,7 @@ Template.ProjectHead.events({
         var file = event.currentTarget.files[0];
         if (file) {
             var uploadInstance = Documents.insert({
-                file: file, 
+                file: file,
                 streams: 'dynamic',
                 chunkSize: 'dynamic',
             }, false);
@@ -26,7 +26,7 @@ Template.ProjectHead.events({
         var file = event.currentTarget.files[0];
         if (file) {
             var uploadInstance = Documents.insert({
-                file: file, 
+                file: file,
                 streams: 'dynamic',
                 chunkSize: 'dynamic',
             }, false);
@@ -47,9 +47,17 @@ Template.ProjectHead.events({
         var nameInput;
         nameInput = prompt("Name of new file", "helloworld.py");
         console.log(nameInput);
-        Meteor.call('newFile', nameInput);
-
-
+        Meteor.call('newFile', nameInput, function() {
+          Meteor.call("getPath", function(err, path) {
+            var full = path + "/files/" + nameInput;
+            var found = Documents.find({path: full}).fetch()
+            if(found.length > 1) {
+              alert("Please choose a unique file name!");
+            } else if(found.length == 1) {
+              window.location.href = "/" + found[0]['_id'];
+            }
+          });
+        });
     },
     'click #new_folder': function(event, template) {
         console.log("NOT YET");
