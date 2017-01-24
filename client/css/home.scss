@@ -682,6 +682,8 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
   }
 
   #mini-editSidebar{
+    position: fixed;
+    z-index: 999;
     width: 62px;
     background: $blacc;
     height: calc(100vh - 50px);
@@ -727,7 +729,9 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
   .pullout{
     position: fixed;
     left: 62px;
-    width: 0px; //expands when toggled
+    z-index: 99;
+    margin-left: -265px;
+    width: 265px;
     height: calc(100vh - 50px);
     overflow-y: auto;
     background: $grey;
@@ -736,7 +740,7 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
     transition: all 0.5s ease;
 
     &.toggled{
-      width: 265px;
+      margin-left: 0px;
     }
 
     h3{
