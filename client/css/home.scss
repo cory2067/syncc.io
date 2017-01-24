@@ -879,10 +879,18 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
     .row{margin: 0; height: inherit;}
   }
 
-  .CodeMirror{
-    height: calc(100vh - 87px);
-
-    //personal theme//
-    //background-color: $darkgrey!important;
-    //.CodeMirror-gutters{background-color: $darkgrey!important;}
+  #loadingSpin{
+    display: block;
+    border-radius: 5px;
+    position: absolute;
+    width: 20%;
+    height: 20%;
+    top: 20%;
+    left: 40%;
+    background-color: $cloud;
+    text-align: center;
+    padding: 20px 0 0 0;
+    font-size: 1.2em;
   }
+
+  .CodeMirror{height: calc(100vh - 87px);}

@@ -16,7 +16,7 @@
   </div>
 
   {{#if lockUser}}
-    <div style="position: absolute; width: 20%; left: 40%; top:40%; height:20%; background-color: white; text-align: center; font-size: 18px;">{{lockUser}} is joining{{>spinner}}</div>
+    <div id="loadingSpin"><p>{{lockUser}} is joining</p>{{>spinner}}</div>
   {{/if}}
   <script>
     //Script to choose/make tabs active would go here.
