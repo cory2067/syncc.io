@@ -25,6 +25,9 @@ Template.TreeProj.onRendered(function () {
       //console.log(str_JSON);
       var tree = JSON.parse(str_JSON);
       this.$('#jstree').jstree({
+      "themes": {
+        "theme": "apple"
+      },
       core: {
         themes: {
           name: 'proton',
@@ -34,6 +37,7 @@ Template.TreeProj.onRendered(function () {
         },
         data: (tree)
       }
+
       });
   });
 });

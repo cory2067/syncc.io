@@ -4,14 +4,15 @@
             <div class="editLeft">
                 <li><a href="" class="title">{{#if currentUser}}{{getFileName}}{{else}}Demo{{/if}}</a></li>
                 <li>{{#if currentUser}}
-                        <a href="/projects"><i class="glyphicon glyphicon-chevron-left"></i></a>
+                        <a href="/projects" class="backGlyph"><i class="glyphicon glyphicon-chevron-left"></i></a>
                     {{else}}
-                        <a href="/"><i class="glyphicon glyphicon-chevron-left"></i></a>
+                        <a href="/" class="backGlyph"><i class="glyphicon glyphicon-chevron-left"></i></a>
                     {{/if}}
                 </li>
             </div>
             <div class="editRight">
                 <li><button id="shareBtn" class="btn btn-blue shareBtn" data-toggle="modal" data-target="#shareURL">Share</button></li>
+                <li><button id="saveFile" class="btn newBtn">Save</button></li>
                 <li><button id="newFile" class="btn newBtn">New</button></li>
             </div>
         </ul>
@@ -26,7 +27,7 @@
                 </div>
                 <div class="modal-body">
                     <p>Share your code to collaborators with this URL:</p>
-                    <input class="form-control URL" id="theURL" value="syncc.io/{{getURL}}" readonly>
+                    <input class="form-control URL" id="theURL" readonly>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default btn-blue" data-copytarget="#theURL">Copy</button>
@@ -37,6 +38,11 @@
     </div>
 
     <script>
+    //Current URL
+    $("#shareBtn").click(function(){
+        $("#theURL").val(window.location.href);
+    })
+
     /*
     Copy text from any appropriate field to the clipboard
     By Craig Buckler, @craigbuckler

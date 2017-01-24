@@ -13,6 +13,7 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
   $cloud: #E2E5E9;
   $white: #EDEFF1;
   $chrome: #778899;
+  $chrom: #bdc3c7;
   $grey: #3C4956;
   $darkgrey: #313D4A;
   $charcoal: #465464;
@@ -592,33 +593,35 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
       padding: 0 14px;
       line-height: 50px;
       white-space: nowrap;
-        &:hover{
-          background-color: $accent;
-          color: $white;
+      }
 
-          .glyphicon{color:$white;}
-        }
-        &:focus{
-          background-color: $accented;
-        }
+      .backGlyph{
+          &:hover{
+            background-color: $accent;
+            color: $white;
+            .glyphicon{color:$white;}
+          }
+          &:focus{
+            background-color: $accented;
+          }
+        }        
 
-        .title{
-          color: $white;
-          font-size: 1.5em;
-        }
+      .title{
+        color: $white;
+        font-size: 1em;
       }
     }
 
     .shareBtn{
       height: 2.3em;
       margin: 9px 10px 0 0;
-      padding: 0 35px;
+      padding: 0 25px;
       text-transform: uppercase;
+      color: $white;
     }
 
     .newBtn{
-      border: 1px solid $cloud;
-      background: none;
+      background: $darkgrey;
       color: $cloud;
       text-transform: uppercase;
       height: 2.3em;
@@ -628,11 +631,7 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
       
       &:hover{
         color: $cloud;
-        background: $chrome;
-      }
-      &:focus{
-        color: $cloud;
-        background: $darkgrey;
+        background: $grey;
       }
     }
 
