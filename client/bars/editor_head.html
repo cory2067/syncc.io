@@ -13,12 +13,12 @@
             <div class="editRight">
                 <li><button id="shareBtn" class="btn btn-blue shareBtn" data-toggle="modal" data-target="#shareURL">Share</button></li>
                 <li><button id="saveFile" class="btn newBtn">Save</button></li>
-                <li><button id="newFile" class="btn newBtn">New</button></li>
+                <li><button id="newFileBtn" class="btn newBtn" data-toggle="modal" data-target="#newFile">New</button></li>
             </div>
         </ul>
     </div>
 
-    <!--POPUP-->
+    <!--SHARE POPUP-->
     <div id="shareURL" class="modal fade" role="dialog">
         <div class="modal-content">
             <div class="modal-dialog">
@@ -31,6 +31,25 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default btn-blue" data-copytarget="#theURL">Copy</button>
+                    <button type="button" class="btn btn-default btn-grey" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--NEW FILE POPUP-->
+    <div id="newFile" class="modal fade" role="dialog">
+        <div class="modal-content">
+            <div class="modal-dialog">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <h3 style="margin-top: 0;">Name of New File </h3><p><i> (must name with file extension) </i></p>
+                    <input class="form-control fileName" id="fileName" value="helloworld.py" required>
+                </div>
+                <div class="modal-footer">
+                    <button id="createNewFile" type="button" class="btn btn-default btn-blue" data-dismiss="modal">Create</button>
                     <button type="button" class="btn btn-default btn-grey" data-dismiss="modal">Close</button>
                 </div>
             </div>

@@ -13,7 +13,6 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
   $cloud: #E2E5E9;
   $white: #EDEFF1;
   $chrome: #778899;
-  $chrom: #bdc3c7;
   $grey: #3C4956;
   $darkgrey: #313D4A;
   $charcoal: #465464;
@@ -100,7 +99,7 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
     border: none;
 
     &:hover{background-color: $accents; color: $white;}
-    &:focus, &:active{background-color: $accented!important; color: $cloud!important;}
+    &:focus, &:active{background-color: $accented!important; color: $white!important;}
   }
 
   .btn-grey{
@@ -647,7 +646,9 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
   //shareURL modal
   #shareURL{
     width: 500px;
-    margin: 15% auto;
+    margin-top: 15%;
+    margin-left: auto;
+    margin-right: auto;
 
     .modal-content .modal-dialog{
       padding: 15px;
@@ -680,6 +681,41 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
       .modal-footer{
         padding-bottom: 0;
       }
+    }
+  }
+
+  //newFile modal
+  #newFile{
+    width: 500px;
+    margin-top: 15%;
+    margin-left: auto;
+    margin-right: auto;
+
+    .modal-content .modal-dialog{
+      padding: 15px;
+      width: inherit;
+      margin: 0;
+
+      p{color: $chrome;}
+
+      .modal-header{
+        padding: 0;
+        border: none;
+      }
+
+      .modal-body{
+        padding: 0 10px 10px;
+        
+        .form-control{border: 1px solid $chrome;}
+
+        .fileName{
+          padding: 5px 10px;
+          font-style: italic;
+          border-radius: 5px;
+        }
+      }
+
+      .modal-footer{padding-bottom: 0;}
     }
   }
 
