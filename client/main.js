@@ -44,7 +44,7 @@ Template.HomePage.events({
     'click #demoEditor': function(event, template) {
         console.log("making new file");
         var nameInput = Random.id(8)+'.py';
-        Meteor.call('newFile', nameInput, function() {
+        Meteor.call('newFile', [nameInput, Meteor.userId()], function() {
           Meteor.call("getPath", function(err, path) {
             var full = path + "/files/" + nameInput;
             var found = Documents.find({path: full}).fetch()

@@ -316,7 +316,7 @@ Template.EditorPage.events({
       var nameInput;
       nameInput = prompt("Name of new file", "helloworld.py");
       console.log(nameInput);
-      Meteor.call('newFile', nameInput, function() {
+      Meteor.call('newFile', [nameInput, Meteor.userId()], function() {
         Meteor.call("getPath", function(err, path) {
           var full = path + "/files/" + nameInput;
           var found = Documents.find({path: full}).fetch()
