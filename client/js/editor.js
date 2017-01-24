@@ -279,7 +279,7 @@ Template.EditorPage.helpers({
           lineNumbers: true,
           mode: "python",
           theme: "sinusoids",
-          keyMap: "vim",
+          keyMap: "default",
           indentUnit: 4,
           indentWithTabs: true,
           autoCloseBrackets: true,
