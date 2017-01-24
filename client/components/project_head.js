@@ -47,6 +47,7 @@ Template.ProjectHead.events({
         var nameInput;
         nameInput = prompt("Name of new file", "helloworld.py");
         console.log(nameInput);
+<<<<<<< HEAD
         Meteor.call('newFile', nameInput, function() {
           Meteor.call("getPath", function(err, path) {
             var full = path + "/files/" + nameInput;
@@ -58,6 +59,11 @@ Template.ProjectHead.events({
             }
           });
         });
+=======
+        Meteor.call('newFile', [nameInput, Meteor.userId()]);
+
+
+>>>>>>> 1e4f673124fb4d3b796049057eb0ebe16b49e49f
     },
     'click #new_folder': function(event, template) {
         console.log("NOT YET");
