@@ -27,6 +27,18 @@ Template.EditorPage.onCreated(() => {
 });
 
 Template.EditorPage.onRendered(() => {
+    Meteor.call("getPath", function(err, path) {
+      $("#jstree").on("activate_node.jstree", (a,b)=>{
+        var filePath = $("#jstree").jstree(true).get_path(b.node).join('/');
+        var full = path + "/files/" + filePath;
+        var found = Documents.find({path: full}).fetch()
+        if(found.length > 1) {
+          alert("oh hecc this isnt supposed to happen");
+        } else if(found.length == 1) {
+          window.location.href = "/" + found[0]['_id'];
+        }
+      });
+    });
     /*if(!Session.get("ready")) {
       console.log("heck you, its not ready yet");
       return;

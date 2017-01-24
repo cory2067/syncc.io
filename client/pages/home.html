@@ -3,9 +3,9 @@
   {{> Header}}
     <div class="home-wrapper">
       <h1>SYNCC</h1>
-      {{#if getUser.name}}
+      {{#if getUser}}
         <!--INSERT PROFILE PAGE HERE (or dashboard)-->
-        <p>you are logged in. welcome, {{getUser.name}}.</p>
+        <p>you are logged in. welcome, {{getUser}}.</p>
       {{else}}
         <p class="sub">welcome to the site thing</p>
         <a href="/{{newEditor}}" class="button">Demo</a>
