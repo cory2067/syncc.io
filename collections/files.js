@@ -3,7 +3,10 @@ this.Documents = new Meteor.Files({
     collectionName: 'Documents',
     storagePath: Meteor.absolutePath + '/files',
     namingFunction: function(file){
-        var name = file.name;
-        return name.substr(0, name.indexOf('.'));
+        if(file) {
+            var name = file.name;
+            console.log("Name of thing you're trying to add " + name);
+            return name.substr(0, name.indexOf('.'));
+        }
     }
 });

@@ -8,7 +8,7 @@ Template.ProjectHead.events({
             var uploadInstance = Documents.insert({
                 file: file, 
                 streams: 'dynamic',
-                chunkSize: 'dynamic'
+                chunkSize: 'dynamic',
             }, false);
             uploadInstance.on('end', function(error, fileObj) {
                 if (error) {

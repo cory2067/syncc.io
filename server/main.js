@@ -33,7 +33,7 @@ Meteor.startup(() => {
   });
   Meteor.publish('documents', ()=> {
     var a = Documents.find().cursor;
-    console.log(a);
+    //console.log(a);
     if(a) {
       return a;
     }
@@ -109,7 +109,7 @@ Meteor.methods({
     openFile: function(fileId) {
         fileObj = Documents.find({_id: fileId}).fetch()[0];
         if (fileObj) {
-            console.log(fileObj);
+            //console.log(fileObj);
             var fileName = fileObj.name;
             var fileId = fileObj._id;
             var filePath = Meteor.absolutePath + "/files/"+fileName;
@@ -118,7 +118,7 @@ Meteor.methods({
             var csv = '';
 
             var stream = fs.createReadStream(filePath);
-            console.log("initialized stream");
+            //console.log("initialized stream");
             // read stream
             stream.on('data', function(chunk) {
                 csv += chunk.toString();
@@ -175,16 +175,16 @@ Meteor.methods({
             }
         });
     },
-    writeFile: function(content, path, file_name) {
+    writeFile: function(a) {
+        var content = a[0];
+        var path = a[1];
+        var file_name = a[2];
         var buffer = new Buffer(content);
+        console.log("file nameeeee" + file_name);
 
-        Documents.write(buffer, {
-            fileName: file_name, 
-        }, function (error, fileRef) {
-            if (error) {
-                console.log("error: "+error);
-            } else {
-                console.log(fileRef.name + 'is successfully saved to FS._id ' + fileRef._id);
+        fs.writeFile(path, content, function (err) {
+            if (err) {
+                console.log("errrrrror"+err);
             }
         });
             
