@@ -174,5 +174,19 @@ Meteor.methods({
                 Meteor.call('updateJSON');
             }
         });
+    },
+    writeFile: function(content, path, file_name) {
+        var buffer = new Buffer(content);
+
+        Documents.write(buffer, {
+            fileName: file_name, 
+        }, function (error, fileRef) {
+            if (error) {
+                console.log("error: "+error);
+            } else {
+                console.log(fileRef.name + 'is successfully saved to FS._id ' + fileRef._id);
+            }
+        });
+            
     }
 });
