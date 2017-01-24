@@ -13,6 +13,7 @@ var lock = ['self'];
 var doc = null;
 var editId = null;
 var init = true;
+var docId = null;
 
 Template.EditorPage.onCreated(() => {
   Session.set("ready", false)
@@ -31,6 +32,7 @@ Template.EditorPage.onRendered(() => {
       return;
     }*/
     console.log("ok now its ready thx");
+    docId = FlowRouter.getParam("editID");
     lock = ['self'];
     Session.set("lock", ['self']);
     doc = $('.CodeMirror')[0].CodeMirror;
@@ -303,5 +305,17 @@ Template.EditorPage.helpers({
 });
 
 Template.EditorPage.onDestroyed(function() {
+  console.log(":o you're trying to destroy the page");
   EditUsers.remove({_id : userId});
+  var content = doc.getValue();
+  console.log(docId);
+  var file = Documents.find({'_id': docId}).fetch();
+  console.log(file);
+  var path = file[0].path;
+  var file_name;
+  if(file.length) {
+    file_name =  file[0].name;
+  }
+  console.log(file_name +"told to write" + content + " to "+ path);
+  Meteor.call('writeFile', [content, path, file_name]);
 });
