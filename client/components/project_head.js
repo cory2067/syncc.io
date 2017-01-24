@@ -47,7 +47,7 @@ Template.ProjectHead.events({
         var nameInput;
         nameInput = prompt("Name of new file", "helloworld.py");
         console.log(nameInput);
-        Meteor.call('newFile', nameInput);
+        Meteor.call('newFile', [nameInput, Meteor.userId()]);
 
 
     },

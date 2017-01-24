@@ -152,8 +152,8 @@ Meteor.methods({
             if (err) {
                 console.log(err);
             }
-            console.log("Total number of folders"+total.folders);
-            console.log("Total number of files"+total.files);
+            //console.log("Total number of folders"+total.folders);
+            //console.log("Total number of files"+total.files);
             if(!curr.length) {
               console.log("Nothing in JSON yet, inserting...");
               CurrJSON.insert({json:JSON.stringify(structure, null, 4)})
@@ -165,15 +165,21 @@ Meteor.methods({
             //console.log("Structure in JSON format:" +newJSON);
         }));
     },
-    newFile: function(name) {
+    newFile: function(a) {
+        var name = a[0];
+        var userId = a[1];
         var path = Meteor.absolutePath + "/files";
         touch.sync(path+"/"+name);
+        console.log("User: " + Meteor.userId());
         Documents.addFile(path+"/"+name, {
-            fileName: name
-        }, function(err) {
+            fileName: name,
+            userId: Meteor.userId()
+        }, function(err, fileObj) {
             if (err) {
                 console.log("error making new file" + err);
             } else {
+                console.log("fileId" + fileObj._id+ "     user" + userId);
+                Documents.update({_id: fileObj._id}, {$set: {userId: userId}});
                 Meteor.call('updateJSON');
             }
         });
