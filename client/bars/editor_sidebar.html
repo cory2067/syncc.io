@@ -23,7 +23,7 @@
                 <p>Currently, the following users are accessing this file:</p>
                 {{#each editingUsers}}
                 <p style="margin-bottom: 5px;">{{name}}<!--(mongo id: {{_id}})--></p>
-                <p style="color: #778899; font-style: italic;">currently editing line {{line}}</p>
+                <p style="color: #778899; font-style: italic;">currently editing line {{line1}}</p>
                 {{/each}}
             </div>
         </div>
@@ -43,10 +43,10 @@
                     <p class="settings-descript">use keymaps from other sources</p>
                     <div class="form-group">
                         <select class="form-control" id="modes" onchange="selectMode()">
-                            <option selected>vim</option>
+                            <option>vim</option>
                             <option>emacs</option>
                             <option>sublime</option>
-                            <option>default</option>
+                            <option selected>default</option>
                         </select>
                     </div>
                 </div>
@@ -149,9 +149,9 @@
                 };
 
                 checkWrapper();
-            });       
-        
-        
+            });
+
+
         //select functions
             function selectTheme() {
                 var editor = $('.CodeMirror')[0].CodeMirror;

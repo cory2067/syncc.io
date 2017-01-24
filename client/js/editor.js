@@ -292,6 +292,7 @@ Template.EditorPage.helpers({
          },
         "cursorActivity": function(doc) {
             EditUsers.update({_id:userId}, {$set: {line:doc.getCursor()['line']}});
+            EditUsers.update({_id:userId}, {$set: {line1:doc.getCursor()['line']+1}});
         }
       }
     },
