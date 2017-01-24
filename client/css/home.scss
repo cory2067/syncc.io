@@ -81,6 +81,18 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
     padding: 15px 35px;
   }
 
+  .err{
+    width: 100%;
+    padding-top: 14%;
+    text-align: center;
+    vertical-align: middle;
+
+    .banana{
+      height: 150px;
+      margin-bottom: 20px;
+    }
+  }
+
   .btn-blue{
     background-color: $accent;
     color: $cloud;

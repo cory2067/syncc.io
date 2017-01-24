@@ -1,15 +1,23 @@
 <template name="ProjectsPage">
   <div id="projbgd">
     {{> Header}}
-    {{> ProjectSidebar}}
 
-    <div class="projecthead">
-      <div class="padded">
-        {{> ProjectHead}}
+    {{#if currentUser}}
+      {{> ProjectSidebar}}
 
-        <p>Uploaded files. Currently cannot open files or upload folders or make new anythings.</p>
-        {{> ProjectList}}
+      <div class="projecthead">
+        <div class="padded">
+          {{> ProjectHead}}
+
+          <p>Uploaded files. Currently cannot open files or upload folders or make new anythings.</p>
+          {{> ProjectList}}
+        </div>
       </div>
-    </div>
+    {{else}}
+      <div class="padded err">
+        <img src="/imgs/bananaicon.png" alt="oops" class="banana">
+        <p>Oops! Please log in to see projects and files!</p>
+      </div>
+    {{/if}}
   </div>
 </template>
