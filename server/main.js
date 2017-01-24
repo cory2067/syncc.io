@@ -68,7 +68,7 @@ Meteor.methods({
             .on('close', Meteor.bindEnvironment(function() {
                 console.log("finished unzip");
                 console.log("unlinking "+filePath);
-                Documents.unlink(filePath, Meteor.bindEnvironment(function(err) {
+                Documents.remove({path: filePath}, Meteor.bindEnvironment(function(err) {
                     if (err) {
                         console.log("Couldn't delete " + err);
                     } else {
