@@ -1,7 +1,7 @@
 import { Documents } from '../../collections/files'
 
 Template.Header.events({
-    'click #editor': function(event, template) {
+    /*'click #editor': function(event, template) {
       $(function(){
         $("#createNewFile").click(function(){
         var nameInput = $("#fileName").val();
@@ -19,5 +19,5 @@ Template.Header.events({
           });
         });
       });
-    }
+    }*/
 });
