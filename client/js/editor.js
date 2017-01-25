@@ -15,6 +15,8 @@ var doc = null;
 var editId = null;
 var init = true;
 var docId = null;
+var illegals = [];
+var illegalTimeout = {};
 
 Template.EditorPage.onCreated(() => {
   Session.set("ready", false)
@@ -104,7 +106,7 @@ Template.EditorPage.onRendered(() => {
             console.log("ur not the first one");
             var syncTimeout = setTimeout(()=>{
               for(var p=0; p<current.length; p++) {
-                EditUsers.remove(current[0]._id);
+                EditUsers.remove(current[p]._id);
               }
               location.reload();
             }, 1500);
@@ -169,6 +171,20 @@ Template.EditorPage.onRendered(() => {
 
                   if(changes['text'].length || removedLen==1) {
                     var mark = doc.markText({line: changes['from']['line'], ch:0}, {line: changes['to']['line']+changes['text'].length-1}, {className: "editing"});
+                    for(var l=changes['from']['line'];l<changes['to']['line']+changes['text'].length;l++) {
+                      if(illegals.indexOf(l) > -1) {
+                        if(illegalTimeout[l]) {
+                          clearInterval(illegalTimeout[l]);
+                          illegalTimeout[l] = setTimeout(()=>{illegals.splice(illegals.indexOf(l));}, 1000);
+                        }
+                        continue;
+                      }
+                      else {
+                        illegals.push(l);
+                        illegalTimeout[l] = setTimeout(()=>{illegals.splice(illegals.indexOf(l));}, 1000);
+                      }
+                      console.log(illegals);
+                    }
                     setTimeout(function() {
                       mark.clear();
                     }, 1000);
@@ -300,8 +316,11 @@ Template.EditorPage.helpers({
     editorEvents() {
        return {
          "beforeChange": function(doc, change) {
-           if(lock.length && change['origin'] != 'setValue' && change['origin'] != 'ignore') {
-             change.cancel();
+           if(change['origin'] != 'ignore' && change['origin'] != 'setValue') {
+             if(lock.length || illegals.indexOf(change['from']['line']) > -1) {
+               change.cancel();
+               console.log("nice illegal!");
+             }
            }
          },
          "change": function(doc, change){
