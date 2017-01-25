@@ -13,9 +13,10 @@ Template.ProjectHead.events({
             }, false);
             uploadInstance.on('end', function(error, fileObj) {
                 if (error) {
-                    console.log("error uploading");
-                } else{
+                    console.log("error uploading" + error);
+                } else {
                     console.log("File " + fileObj.name + " successfully uploaded");
+                    Meteor.call("assignFile", [fileObj._id, fileObj.name]);
                     Meteor.call("updateJSON");
                 }
             });
@@ -43,7 +44,9 @@ Template.ProjectHead.events({
                     console.log("Error uploading" + error);
                 } else {
                     console.log("Successfully uploaded" + fileObj.name);
-                    Meteor.call('unzip', fileObj.name);
+                    Meteor.call("assignFile", [fileObj._id, fileObj.name], function() {
+                        Meteor.call('unzip', [fileObj.name, fileObj._storagePath]);
+                    });
                     Meteor.call("updateJSON");
                 }
             });

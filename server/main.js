@@ -5,7 +5,7 @@ import { CurrJSON } from '../collections/json';
 import { Documents } from '../collections/files'
 import { EditorContents } from '../collections/editor';
 import { Tracker } from 'meteor/tracker'
-import fs from 'fs'
+import fs from 'fs-extra'
 import unzip from 'unzip'
 import touch from 'touch'
 import DirectoryStructureJSON from 'directory-structure-json'
@@ -57,9 +57,10 @@ Meteor.methods({
         console.log(msg);
     },
     unzip: function(file) {
-        var fileName = file;
-        var filePath = Meteor.absolutePath + "/files/"+fileName;
-        var outPath = Meteor.absolutePath + "/files";
+        var fileName = file[0];
+        var id = Meteor.userId();
+        var filePath = file[1]+"/"+id+"/"+fileName;
+        var outPath = file[1] + "/"+id;
         //console.log(filePath + " -> " + outPath);
         readStream = fs.createReadStream(filePath);
         console.log("starting unzip");
@@ -115,7 +116,7 @@ Meteor.methods({
           if (fileObj) {
               //console.log(fileObj);
               var fileName = fileObj.name;
-              var fileId = fileObj._id;
+              var fileId = Meteor.userId();
               var filePath = fileObj._storagePath + "/" + fileName;
               //console.log(filePath);
               var parsed;
@@ -200,5 +201,24 @@ Meteor.methods({
             }
         });
 
+    },
+    assignFile: function(f) {
+        var id = f[0];
+        var name = f[1];
+        console.log("giving to user path: " + Meteor.absolutePath+"/files/"+Meteor.userId());
+        var path = Meteor.absolutePath+"/files/"+Meteor.userId();
+        Documents.update(id, {$set: {_storagePath: path}});
+
+        var oldPath = Meteor.absolutePath+"/files/"+name;
+        var newPath = path+"/"+name;
+        Documents.update(id, {$set: {path: newPath}});
+        console.log("attempting to move " + oldPath + " to "+ newPath);
+        fs.move(oldPath, newPath, function(err) {
+            if (err) {
+                console.log("error moving" + err);
+            } else {
+                console.log("success");
+            }
+        });
     }
 });
