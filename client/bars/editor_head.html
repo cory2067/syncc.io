@@ -12,8 +12,9 @@
             </div>
             <div class="editRight">
                 <li><button id="shareBtn" class="btn btn-blue shareBtn" data-toggle="modal" data-target="#shareURL">Share</button></li>
-                <li><button id="saveFile" class="btn newBtn">Save</button></li>
-                <li><button id="newFileBtn" class="btn newBtn" data-toggle="modal" data-target="#newFile">New</button></li>
+                <li><button id="saveFile" class="btn newBtn" onclick="showSave()">Save</button></li>
+                <li><button id="newFileBtn" class="btn newBtn" data-toggle="modal" data-target="#newFile" >New</button></li>
+                <li><p id="saveMsg">saved</p></li>
             </div>
         </ul>
     </div>
@@ -57,6 +58,14 @@
     </div>
 
     <script>
+    function showSave() {
+        $("#saveFile").click(function(e){
+            $("#saveMsg").fadeIn(1000);
+            $("#saveMsg").delay(3000).fadeOut(1000);
+        });
+    };
+     
+    
     //Current URL
     $(function() {
       $("#shareBtn").click(function(){
