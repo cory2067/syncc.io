@@ -12,6 +12,7 @@
     "child_process": "^1.0.2",
     "directory-structure-json": "^1.0.0",
     "fibers": "^1.0.15",
+    "fs-extra": "^2.0.0",
     "meteor-node-stubs": "~0.2.0",
     "source-map-support": "^0.4.10",
     "sys": "0.0.1",

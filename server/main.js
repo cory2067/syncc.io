@@ -5,7 +5,7 @@ import { CurrJSON } from '../collections/json';
 import { Documents } from '../collections/files'
 import { EditorContents } from '../collections/editor';
 import { Tracker } from 'meteor/tracker'
-import fs from 'fs'
+import fs from 'fs-extra'
 import unzip from 'unzip'
 import touch from 'touch'
 import DirectoryStructureJSON from 'directory-structure-json'
@@ -57,9 +57,10 @@ Meteor.methods({
         console.log(msg);
     },
     unzip: function(file) {
-        var fileName = file;
-        var filePath = Meteor.absolutePath + "/files/"+fileName;
-        var outPath = Meteor.absolutePath + "/files";
+        var fileName = file[0];
+        var id = Meteor.userId();
+        var filePath = file[1]+"/"+id+"/"+fileName;
+        var outPath = file[1] + "/"+id;
         //console.log(filePath + " -> " + outPath);
         readStream = fs.createReadStream(filePath);
         console.log("starting unzip");
@@ -111,40 +112,42 @@ Meteor.methods({
         Changes.remove({editor: params[0], file: params[1]});
     },
     openFile: function(fileId) {
-        fileObj = Documents.find({_id: fileId}).fetch()[0];
-        if (fileObj) {
-            //console.log(fileObj);
-            var fileName = fileObj.name;
-            var fileId = fileObj._id;
-            var filePath = Meteor.absolutePath + "/files/"+fileName;
-            //console.log(filePath);
-            var parsed;
-            var csv = '';
+          fileObj = Documents.find({_id: fileId}).fetch()[0];
+          if (fileObj) {
+              //console.log(fileObj);
+              var fileName = fileObj.name;
+              var fileId = Meteor.userId();
+              var filePath = fileObj._storagePath + "/" + fileName;
+              //console.log(filePath);
+              var parsed;
+              var csv = '';
 
-            var stream = fs.createReadStream(filePath);
-            //console.log("initialized stream");
-            // read stream
-            stream.on('data', function(chunk) {
-                csv += chunk.toString();
-            });
+              var stream = fs.createReadStream(filePath);
+              stream.on('error', Meteor.bindEnvironment(function(){
+                  console.log("Holy shit I fucked that up!");
+                  send("This file doesn't seem to exist anymore.\nHowever, you can still edit here and it will be saved as a new file.");
+              }));
+              //console.log("initialized stream");
+              // read stream
+              stream.on('data', function(chunk) {
+                  csv += chunk.toString();
+              });
 
-            stream.on('end', Meteor.bindEnvironment(function() {
-                //parsed = Baby.parse(csv);
-                //rows = parsed.data;
-                //console.log(rows);
-                console.log("return" + csv);
-                send(csv);
-                return csv;
-            }));
-
-            function send(csv) {
-                EditorContents.insert({editor: fileId, file:fileName, user:'system', doc: csv, refresh:""}, function(err, id) {
-                    console.log(err);
-                    console.log(id);
-                });
+              stream.on('end', Meteor.bindEnvironment(function() {
+                  //parsed = Baby.parse(csv);
+                  //rows = parsed.data;
+                  //console.log(rows);
+                  //console.log("return" + csv);
+                  send(csv);
+                  return csv;
+              }));
             }
-            //EditorContents.insert({editor: 'idk', file:"meme.py", user:'system', doc: csv, refresh:""});
-        }
+          function send(csv) {
+              EditorContents.insert({editor: fileId, file:fileName, user:'system', doc: csv, refresh:""}, function(err, id) {
+                  console.log(err);
+                  console.log(id);
+              });
+          }
     },
     updateJSON: function() {
         var basepath = Meteor.absolutePath + "/files";
@@ -198,5 +201,24 @@ Meteor.methods({
             }
         });
 
+    },
+    assignFile: function(f) {
+        var id = f[0];
+        var name = f[1];
+        console.log("giving to user path: " + Meteor.absolutePath+"/files/"+Meteor.userId());
+        var path = Meteor.absolutePath+"/files/"+Meteor.userId();
+        Documents.update(id, {$set: {_storagePath: path}});
+
+        var oldPath = Meteor.absolutePath+"/files/"+name;
+        var newPath = path+"/"+name;
+        Documents.update(id, {$set: {path: newPath}});
+        console.log("attempting to move " + oldPath + " to "+ newPath);
+        fs.move(oldPath, newPath, function(err) {
+            if (err) {
+                console.log("error moving" + err);
+            } else {
+                console.log("success");
+            }
+        });
     }
 });

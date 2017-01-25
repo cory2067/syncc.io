@@ -21,6 +21,10 @@ Template.ProjectList.helpers({
 
 Template.ProjectList.events({
     'click #remove': function(event, template) {
-        Documents.remove({_id: this._id});
+        try {
+          Documents.remove({_id: this._id});
+        } catch(e) {
+          alert("error deleting");
+        }
     }
 });
