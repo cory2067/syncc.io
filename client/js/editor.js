@@ -102,8 +102,15 @@ Template.EditorPage.onRendered(() => {
           console.log("addd user");
           if(current.length) {
             console.log("ur not the first one");
+            var syncTimeout = setTimeout(()=>{
+              for(var p=0; p<current.length; p++) {
+                EditUsers.remove(current[0]._id);
+              }
+              location.reload();
+            }, 1500);
             EditorContents.find({editor: id}).observe({
               changed: function(changed, o) {
+                clearInterval(syncTimeout);
                 console.log("here's what i found:")
                 console.log(changed)
                 if(init){
