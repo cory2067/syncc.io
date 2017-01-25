@@ -53,8 +53,9 @@ Template.EditorPage.onRendered(() => {
         var found = Documents.find({path: full}).fetch()
         console.log(found);
         if(found.length > 1) {
-          alert("oh hecc this isnt supposed to happen");
-        } else if(found.length == 1) {
+          console.log("oh hecc this isnt supposed to happen, but im not gonna do anything about it");
+        }
+        if(found.length) {
           window.location.href = "/" + found[0]['_id'];
         }
       });
