@@ -65,11 +65,13 @@ Meteor.methods({
         readStream = fs.createReadStream(filePath);
         console.log("starting unzip");
         var structure;
-        //Remove the zip file
+        //Removeo the zip file
         readStream.pipe(unzip.Extract({path: outPath}))
             .on('close', Meteor.bindEnvironment(function() {
                 console.log("finished unzip");
                 console.log("unlinking "+filePath);
+                fs.remove(filePath);
+
                 Documents.remove({path: filePath}, Meteor.bindEnvironment(function(err) {
                     if (err) {
                         console.log("Couldn't delete " + err);
