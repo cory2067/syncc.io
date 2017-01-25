@@ -60,7 +60,7 @@ Template.ProjectHead.events({
         console.log(nameInput);
           Meteor.call('newFile', [nameInput, Meteor.userId()], function() {
             Meteor.call("getPath", function(err, path) {
-              var full = path + "/files/" + nameInput;
+              var full = path + "/files/" +Meteor.userId()+"/"+ nameInput;
               var found = Documents.find({path: full}).fetch()
               if(found.length > 1) {
                 alert("Please give your file a unique name!");

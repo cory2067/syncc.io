@@ -65,11 +65,13 @@ Meteor.methods({
         readStream = fs.createReadStream(filePath);
         console.log("starting unzip");
         var structure;
-        //Remove the zip file
+        //Removeo the zip file
         readStream.pipe(unzip.Extract({path: outPath}))
             .on('close', Meteor.bindEnvironment(function() {
                 console.log("finished unzip");
                 console.log("unlinking "+filePath);
+                fs.remove(filePath);
+
                 Documents.remove({path: filePath}, Meteor.bindEnvironment(function(err) {
                     if (err) {
                         console.log("Couldn't delete " + err);
@@ -150,7 +152,7 @@ Meteor.methods({
           }
     },
     updateJSON: function() {
-        var basepath = Meteor.absolutePath + "/files";
+        var basepath = Meteor.absolutePath + "/files/"+Meteor.userId();
         var curr = CurrJSON.find().fetch();
         DirectoryStructureJSON.getStructure(fs, basepath, Meteor.bindEnvironment(function (err, structure, total) {
             if (err) {
@@ -172,7 +174,7 @@ Meteor.methods({
     newFile: function(a) {
         var name = a[0];
         var userId = a[1];
-        var path = Meteor.absolutePath + "/files";
+        var path = Meteor.absolutePath + "/files/"+Meteor.userId();
         touch.sync(path+"/"+name);
         console.log("User: " + Meteor.userId());
         Documents.addFile(path+"/"+name, {
