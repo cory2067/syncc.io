@@ -116,7 +116,7 @@ Meteor.methods({
               //console.log(fileObj);
               var fileName = fileObj.name;
               var fileId = fileObj._id;
-              var filePath = Meteor.absolutePath + "/files/"+fileName;
+              var filePath = fileObj._storagePath + "/" + fileName;
               //console.log(filePath);
               var parsed;
               var csv = '';
