@@ -643,6 +643,12 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
     }
   }
 
+  #saveMsg{
+    margin: 15px;
+    color: $chrome;
+    display: none;
+  }
+
   //shareURL modal
   #shareURL{
     width: 500px;
