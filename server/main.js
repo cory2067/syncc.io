@@ -152,7 +152,7 @@ Meteor.methods({
           }
     },
     updateJSON: function() {
-        var basepath = Meteor.absolutePath + "/files";
+        var basepath = Meteor.absolutePath + "/files/"+Meteor.userId();
         var curr = CurrJSON.find().fetch();
         DirectoryStructureJSON.getStructure(fs, basepath, Meteor.bindEnvironment(function (err, structure, total) {
             if (err) {
@@ -174,7 +174,7 @@ Meteor.methods({
     newFile: function(a) {
         var name = a[0];
         var userId = a[1];
-        var path = Meteor.absolutePath + "/files";
+        var path = Meteor.absolutePath + "/files/"+Meteor.userId();
         touch.sync(path+"/"+name);
         console.log("User: " + Meteor.userId());
         Documents.addFile(path+"/"+name, {
