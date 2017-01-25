@@ -370,7 +370,7 @@ Template.EditorPage.events({
       Meteor.call('writeFile', [content, path, file_name]);
     },
 
-    'click #newFileBtn': function(event, template) {
+    /*'click #newFileBtn': function(event, template) {
       $(function(){
         $("#createNewFile").click(function(){
         var nameInput = $("#fileName").val();
@@ -388,7 +388,7 @@ Template.EditorPage.events({
           });
         });
       });
-    }
+    }*/
 });
 
 Template.EditorPage.onDestroyed(function() {
