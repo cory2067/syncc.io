@@ -118,7 +118,7 @@ Meteor.methods({
           if (fileObj) {
               //console.log(fileObj);
               var fileName = fileObj.name;
-              var fileId = Meteor.userId();
+              var fileId = fileObj._id;;
               var filePath = fileObj._storagePath + "/" + fileName;
               //console.log(filePath);
               var parsed;
@@ -195,7 +195,7 @@ Meteor.methods({
         var path = a[1];
         var file_name = a[2];
         var buffer = new Buffer(content);
-        console.log("file nameeeee" + file_name);
+        console.log("trying to write to file nameeeee" + file_name);
 
         fs.writeFile(path, content, function (err) {
             if (err) {
