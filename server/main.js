@@ -80,6 +80,7 @@ Meteor.methods({
                         var basepath = outPath + '/' + fileName.substr(0, fileName.indexOf('.'));
                         console.log(basepath+ "    basepath to addd");
                         console.log("Get structure");
+                        const userId = Meteor.userId();
                         DirectoryStructureJSON.getStructure(fs, basepath, Meteor.bindEnvironment(function (err, structure, total) {
                             if (err) console.log(err);
                             console.log("structure" + structure);
@@ -92,12 +93,16 @@ Meteor.methods({
                                 console.log('file found: ', file.name, 'at path: ', path);
                                 Documents.addFile(path+'/'+file.name, {
                                     fileName: file.name,
-                                    storagePath: path
-                                }, function(err) {
+                                    storagePath: path, 
+                                    userId: Meteor.userId()
+                                }, function(err, fileObj) {
                                     if (err) {
                                         console.log("error adding" + err);
                                     } else {
                                         console.log("added successfully");
+                                        console.log(fileObj._id);
+                                        console.log("id"+userId);
+                                        Documents.update({_id: fileObj._id}, {$set: {userId: userId}});
                                     }
                                 });
                             });
