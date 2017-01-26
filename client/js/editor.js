@@ -8,6 +8,7 @@ import { EditorContents } from '../../collections/editor'
 import { Meteor } from 'meteor/meteor';
 import { Documents } from '../../collections/files'
 
+var fileName = ""
 var username = "Guest"
 var userId = null ;
 var lock = ['self'];
@@ -257,7 +258,14 @@ Template.EditorHead.events({
     $("#downloadContainer").attr("href", 'data:text/plain;charset=utf-8,'
           + encodeURIComponent(content));
     $(".downloadAction")[0].click();
-    }
+  },
+  "click #exportBtn": function() {
+    var content = doc.getValue();
+    Meteor.call("exportFile", [content, fileName], function(err,url) {
+      console.log(err);
+      $(".editRight")[0].append(url);
+    });
+  }
 });
 
 Template.EditorHead.helpers({
@@ -289,6 +297,7 @@ Template.FileTabs.helpers({
     var file = Documents.find({'_id': FlowRouter.getParam("editID")}).fetch();
     console.log(file);
     if(file.length) {
+      fileName = file[0].name;
       return file[0].name;
     }
     return "Loading...";
@@ -380,7 +389,7 @@ Template.EditorPage.events({
       }
       console.log(file_name +"told to write" + content + " to "+ path);
       Meteor.call('writeFile', [content, path, file_name]);
-    },
+    }
 });
 
 Template.EditorPage.onDestroyed(function() {

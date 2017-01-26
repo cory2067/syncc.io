@@ -73,4 +73,4 @@ Template.newFileModal.events({
       });
     });
   }
-}); 
+});
