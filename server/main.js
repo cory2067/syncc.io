@@ -80,6 +80,7 @@ Meteor.methods({
                         var basepath = outPath + '/' + fileName.substr(0, fileName.indexOf('.'));
                         console.log(basepath+ "    basepath to addd");
                         console.log("Get structure");
+                        const userId = Meteor.userId();
                         DirectoryStructureJSON.getStructure(fs, basepath, Meteor.bindEnvironment(function (err, structure, total) {
                             if (err) console.log(err);
                             console.log("structure" + structure);
@@ -92,12 +93,16 @@ Meteor.methods({
                                 console.log('file found: ', file.name, 'at path: ', path);
                                 Documents.addFile(path+'/'+file.name, {
                                     fileName: file.name,
-                                    storagePath: path
-                                }, function(err) {
+                                    storagePath: path, 
+                                    userId: Meteor.userId()
+                                }, function(err, fileObj) {
                                     if (err) {
                                         console.log("error adding" + err);
                                     } else {
                                         console.log("added successfully");
+                                        console.log(fileObj._id);
+                                        console.log("id"+userId);
+                                        Documents.update({_id: fileObj._id}, {$set: {userId: userId}});
                                     }
                                 });
                             });
@@ -118,7 +123,7 @@ Meteor.methods({
           if (fileObj) {
               //console.log(fileObj);
               var fileName = fileObj.name;
-              var fileId = Meteor.userId();
+              var fileId = fileObj._id;;
               var filePath = fileObj._storagePath + "/" + fileName;
               //console.log(filePath);
               var parsed;
@@ -195,7 +200,7 @@ Meteor.methods({
         var path = a[1];
         var file_name = a[2];
         var buffer = new Buffer(content);
-        console.log("file nameeeee" + file_name);
+        console.log("trying to write to file nameeeee" + file_name);
 
         fs.writeFile(path, content, function (err) {
             if (err) {

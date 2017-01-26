@@ -43,12 +43,12 @@ Template.EditorPage.onRendered(() => {
         if(file.length) {
           file_name =  file[0].name;
         }
-        console.log(file_name +"told to write" + content + " to "+ pth);
+        //console.log(file_name +"told to write" + content + " to "+ pth);
         Meteor.call('writeFile', [content, pth, file_name]);
 
         console.log("moving the fuck on");
         var filePath = $("#jstree").jstree(true).get_path(b.node).join('/');
-        var full = path + "/files/" + filePath;
+        var full = path + "/files/"+Meteor.userId()+"/" + filePath;
         console.log(full);
         var found = Documents.find({path: full}).fetch()
         console.log(found);
@@ -127,7 +127,7 @@ Template.EditorPage.onRendered(() => {
             });
           } else {
             console.log("ur apparently the first");
-            console.log(FlowRouter.getParam("editID"));
+            console.log("Opening...." +FlowRouter.getParam("editID"));
             Meteor.call("openFile", FlowRouter.getParam("editID"));
             EditorContents.find({editor: id, user:'system'}).observe({
               added: function(changed, o) {
