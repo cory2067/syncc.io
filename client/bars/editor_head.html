@@ -1,4 +1,5 @@
 <template name="EditorHead">
+    <a id="downloadContainer" class="downloadAction" style="display: none;" href="" download="{{getFileName}}" target="_parent"></a>
     <div id="editHead">
         <ul>
             <div class="editLeft">
@@ -14,6 +15,7 @@
                 <li><button id="shareBtn" class="btn btn-blue shareBtn" data-toggle="modal" data-target="#shareURL">Share</button></li>
                 <li><button id="saveFile" class="btn newBtn" onclick="showSave()">Save</button></li>
                 <li><button id="newFileBtn" class="btn newBtn" data-toggle="modal" data-target="#newFile" >New</button></li>
+                <li><button id="downloadBtn" class="btn newBtn">Download</button></li>
                 <li><p id="saveMsg">saved</p></li>
             </div>
         </ul>
@@ -64,8 +66,8 @@
             $("#saveMsg").delay(3000).fadeOut(1000);
         });
     };
-     
-    
+
+
     //Current URL
     $(function() {
       $("#shareBtn").click(function(){

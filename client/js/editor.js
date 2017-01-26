@@ -251,7 +251,19 @@ Template.EditorPage.onRendered(() => {
     });
 });
 
+Template.EditorHead.events({
+  "click #downloadBtn": function() {
+    var content = doc.getValue();
+    $("#downloadContainer").attr("href", 'data:text/plain;charset=utf-8,'
+          + encodeURIComponent(content));
+    $(".downloadAction")[0].click();
+    }
+});
+
 Template.EditorHead.helpers({
+  file: function () {
+    return Documents.findOne();
+  },
   getFileName() {
     var file = Documents.find({'_id': FlowRouter.getParam("editID")}).fetch();
     console.log(file);
