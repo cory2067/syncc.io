@@ -260,5 +260,8 @@ Meteor.methods({
             .filter(file => fs.statSync(path.join(srcpath, file)).isDirectory())
         console.log(subdir);
         return subdir;
+    },
+    makeDir: function() {
+        fs.ensureDir(Meteor.absolutePath+"/files/"+Meteor.userId());
     }
 });

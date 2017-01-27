@@ -18,6 +18,7 @@ Template.ProjectList.onCreated(()=>{
 Template.ProjectList.helpers({
     //get docs in path
     docs: function () {
+        Meteor.call('makeDir');
         console.log("getting relevant docs");
 
         var pathString = Session.get('pathString');
@@ -35,9 +36,10 @@ Template.ProjectList.helpers({
         return a;
     }, 
     folders: function () {
+        Meteor.call('makeDir');
         console.log("fetching folders");
         var pathString = Session.get('pathString');
-        Meteor.call('getSubDir', ['/files/'+pathString], 
+        Meteor.call('getSubDir', ['/files'+pathString], 
             function(err, serverResult) {
                 console.log("serverResult"+serverResult);
                 if (err) {
@@ -48,6 +50,7 @@ Template.ProjectList.helpers({
             }
         );
         var subDirs = Session.get('subDir');
+        console.log("subdirectories:" +subDirs);
         return subDirs;
     }, 
     path: function () {
