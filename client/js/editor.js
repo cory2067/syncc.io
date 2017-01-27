@@ -222,7 +222,7 @@ Template.EditorPage.onRendered(() => {
       added: function(changed, o) {
         console.log("ADD");
         if(changed['init']) {
-          //Meteor.call("deleteChanges", [id, fileName]);
+          //Meteor.call("deleteChanges", [id, fileName])
           EditorContents.update({_id: editId}, {$set: {doc: doc.getValue(), refresh:Random.id()}});
           lock.push(changed['name']);
           Session.set("lock", lock);
@@ -277,9 +277,9 @@ Template.EditorHead.events({
   },
   "click #exportBtn": function() {
     var content = doc.getValue();
-    Meteor.call("exportFile", [content, fileName], function(err,url) {
-      console.log(err);
-      $(".editRight")[0].append(url);
+    $.post("http://dpaste.com/api/v2/", {content:content, title:fileName}, function(d) {
+      $(".editRight")[0].append(d);
+      //Jessica, do something better with this url (the variable "d")
     });
   }
 });

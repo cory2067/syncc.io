@@ -245,31 +245,5 @@ Meteor.methods({
                 console.log("success");
             }
         });
-    },
-    exportFile(data) {
-      var result = null;
-      paste.setDevKey("c8a00b613d176951fdfe0b087c9901ff");
-      paste.login("cychloryn", "mememan17", function(success, data) {
-        if(!success) {
-            console.log("Failed (" + data + ")");
-            result = "http://syncc.io"
-        }
-
-        paste.create({
-            contents: data[0],
-            name: data[1],
-            privacy: "0"
-        }, function(success, d) {
-            if(success) {
-                console.log(d);
-                result = d;
-              }
-              else {
-                result = null
-              }
-        });
-      });
-      while(!result) { Meteor.sleep(100); }
-      return result;
     }
 });
