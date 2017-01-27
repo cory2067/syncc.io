@@ -30,6 +30,22 @@ Template.EditorPage.onCreated(() => {
     Session.set("ready", true);
   });
   Meteor.subscribe("documents");
+
+  $(window).bind('beforeunload', function() {
+    EditUsers.remove({_id : userId});
+    var content = doc.getValue();
+    console.log(docId);
+    var file = Documents.find({'_id': docId}).fetch();
+    console.log(file);
+    var path = file[0].path;
+    var file_name;
+    if(file.length) {
+      file_name =  file[0].name;
+    }
+    console.log(file_name +"told to write" + content + " to "+ path);
+    Meteor.call('writeFile', [content, path, file_name]);
+    Meteor.call("logServer", "deelt page beforeunload");
+  });
 });
 
 Template.EditorPage.onRendered(() => {
