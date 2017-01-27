@@ -284,7 +284,7 @@ Template.EditorHead.events({
   "click #exportBtn": function() {
     var content = doc.getValue();
     $.post("http://dpaste.com/api/v2/", {content:content, title:fileName}, function(d) {
-      $(".editRight")[0].append(d);
+      $("#pasteBin").val(d);
       //Jessica, do something better with this url (the variable "d")
     });
   }
