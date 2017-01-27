@@ -199,10 +199,12 @@ Meteor.methods({
         });
         touch.sync(path+"/"+name);
         console.log("User: " + Meteor.userId());
+        var done = false;
         Documents.addFile(path+"/"+name, {
             fileName: name,
             userId: Meteor.userId()
         }, function(err, fileObj) {
+            done = true
             if (err) {
                 console.log("error making new file" + err);
             } else {
@@ -211,6 +213,8 @@ Meteor.methods({
                 Meteor.call('updateJSON', userId);
             }
         });
+        console.log("waiting for file completion");
+        while(!done) Meteor.sleep(100);
         console.log("Done newFile");
     },
     writeFile: function(a) {
