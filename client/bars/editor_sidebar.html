@@ -42,7 +42,7 @@
                     <h4>Key Maps:</h4>
                     <p class="settings-descript">use keymaps from other sources</p>
                     <div class="form-group">
-                        <select class="form-control" id="modes" onchange="selectMode()">
+                        <select class="form-control" id="keys" onchange="selectKey()">
                             <option>vim</option>
                             <option>emacs</option>
                             <option>sublime</option>
@@ -75,6 +75,34 @@
                             <option>solarized</option>
                             <option>tomorrow-night-eighties</option>
                             <option>vibrant-ink</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="setting-section">
+                    <h4>File Type:</h4>
+                    <p class="settings-descript">override autodetected file type and syntax highlighting</p>
+                    <div class="form-group">
+                        <select class="form-control" id="keys" onchange="selectMode()">
+                            <option val="python">python</option>
+                            <option val="aspx">asp.net</option>
+                            <option val="coffescript">coffescript</option>
+                            <option val="csrc">C</option>
+                            <option val="c++src">C++</option>
+                            <option val="csharp">C#</option>
+                            <option val="css">css</option>
+                            <option val="dyango">django</option>
+                            <option val="html">html</option>
+                            <option val="http">http</option>
+                            <option val="jade">jade</option>
+                            <option val="java">java</option>
+                            <option val="jsp">java server pages</option>
+                            <option val="less">less</option>
+                            <option val="lua">lua</option>
+                            <option val="markdown">markdown</option>
+                            <option val="ruby">ruby</option>
+                            <option val="x-scss">scss</option>
+                            <option val="sql">sql</option>
+                            <option val="octave">octave</option>
                         </select>
                     </div>
                 </div>
@@ -172,10 +200,16 @@
                 }
             };
 
+            function selectKey() {
+                var editor = $('.CodeMirror')[0].CodeMirror;
+
+                editor.setOption("keyMap", $('#keys').find(":selected").text());
+            };
+
             function selectMode() {
                 var editor = $('.CodeMirror')[0].CodeMirror;
 
-                editor.setOption("keyMap", $('#modes').find(":selected").text());
-            };
+                editor.setOption("mode", $('#modes').find(":selected").val());
+            }
     </script>
 </template>
