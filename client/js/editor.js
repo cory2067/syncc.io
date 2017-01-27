@@ -106,10 +106,6 @@ Template.EditorPage.onRendered(() => {
         return;
       }
       if(!Session.get("ready")) {
-        if(!Documents.find({"_id": id}).fetch().length) {
-          console.log("time to die!!!!!!")
-          window.location.replace("/notfound");
-        }
         console.log("hold up kiddo, ur not ready for this");
         return;
       }
@@ -124,6 +120,10 @@ Template.EditorPage.onRendered(() => {
           Session.set("userId", _id);
           Session.set("editing", true);
           console.log("addd user");
+          if(!Documents.find({"_id": id}).fetch().length) {
+            console.log("time to die!!!!!!")
+            window.location.replace("/notfound");
+          }
           if(current.length) {
             console.log("ur not the first one");
             var syncTimeout = setTimeout(()=>{
