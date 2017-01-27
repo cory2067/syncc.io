@@ -7,12 +7,12 @@ import { Session } from 'meteor/session'
 import path from 'path';
 import fs from 'fs';
 
-var pathString = "";
-var currPath = [];
 Template.ProjectList.onCreated(()=>{
     Meteor.subscribe('currjson');
     Meteor.subscribe('documents');
     Meteor.subscribe('editusers');
+    Session.set('pathString', "");
+    Session.set('currPath', []);
 });
 
 Template.ProjectList.helpers({
@@ -20,6 +20,7 @@ Template.ProjectList.helpers({
     docs: function () {
         console.log("getting relevant docs");
 
+        var pathString = Session.get('pathString');
         //get path
         console.log("Current path string is "+pathString);
         var fullPath = Meteor.userId()+pathString;
@@ -35,6 +36,7 @@ Template.ProjectList.helpers({
     }, 
     folders: function () {
         console.log("fetching folders");
+        var pathString = Session.get('pathString');
         Meteor.call('getSubDir', ['/files/'+Meteor.userId()+pathString], 
             function(err, serverResult) {
                 console.log("serverResult"+serverResult);
@@ -61,6 +63,13 @@ Template.ProjectList.events({
     'click #folder': function(event, template) {
         //forward that directory
         console.log("clicked folder");
-        //template.currPath.set(template.counter.get().push
+        console.log(event.target.textContent);
+        var cd = event.target.textContent
+        var newPath = Session.get('pathString') + "/"+cd;
+        Session.set('pathString', newPath);
+        var newPathArray = Session.get('currPath').push(cd);
+        Session.set('currPath', newPathArray);
+        console.log("path string is now: "+Session.get('currPath'));
+        console.log("currPath is now:" + Session.get('pathString'));
     }
 });
