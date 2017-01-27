@@ -9,6 +9,8 @@ import paste from 'better-pastebin';
 import fs from 'fs-extra'
 import unzip from 'unzip'
 import touch from 'touch'
+import path from 'path'
+import dir from 'node-dir'
 import DirectoryStructureJSON from 'directory-structure-json'
 
 Meteor.startup(() => {
@@ -47,7 +49,7 @@ Meteor.startup(() => {
       return a;
     }
     return this.ready();
-  })
+  });
 });
 
 Meteor.methods({
@@ -271,5 +273,14 @@ Meteor.methods({
       });
       while(!result) { Meteor.sleep(100); }
       return result;
+    }, 
+    getSubDir: function(p) {
+        console.log("get sub dir called");
+        var srcpath = Meteor.absolutePath+"/"+p;
+        console.log("path" + srcpath);
+        var subdir =  fs.readdirSync(srcpath)
+            .filter(file => fs.statSync(path.join(srcpath, file)).isDirectory())
+        console.log(subdir);
+        return subdir;
     }
 });
