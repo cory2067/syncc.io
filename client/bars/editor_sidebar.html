@@ -82,7 +82,7 @@
                     <h4>File Type:</h4>
                     <p class="settings-descript">override autodetected file type and syntax highlighting</p>
                     <div class="form-group">
-                        <select class="form-control" id="keys" onchange="selectMode()">
+                        <select class="form-control" id="modes" onchange="selectMode()">
                             <option val="python">python</option>
                             <option val="aspx">asp.net</option>
                             <option val="coffescript">coffescript</option>
@@ -100,7 +100,6 @@
                             <option val="lua">lua</option>
                             <option val="markdown">markdown</option>
                             <option val="ruby">ruby</option>
-                            <option val="x-scss">scss</option>
                             <option val="sql">sql</option>
                             <option val="octave">octave</option>
                         </select>
@@ -208,8 +207,7 @@
 
             function selectMode() {
                 var editor = $('.CodeMirror')[0].CodeMirror;
-
-                editor.setOption("mode", $('#modes').find(":selected").val());
+                editor.setOption("mode", $('#modes').find(":selected").text());
             }
     </script>
 </template>
