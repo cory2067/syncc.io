@@ -11,8 +11,8 @@ Template.ProjectList.onCreated(()=>{
     Meteor.subscribe('currjson');
     Meteor.subscribe('documents');
     Meteor.subscribe('editusers');
-    Session.set('pathString', "");
-    Session.set('currPath', []);
+    Session.set('pathString', "/"+Meteor.userId());
+    Session.set('currPath', [Meteor.userId()]);
 });
 
 Template.ProjectList.helpers({
@@ -23,7 +23,7 @@ Template.ProjectList.helpers({
         var pathString = Session.get('pathString');
         //get path
         console.log("Current path string is "+pathString);
-        var fullPath = Meteor.userId()+pathString;
+        var fullPath = pathString;
         console.log("path to show: "+fullPath);
         var a = Documents.find({"userId": Meteor.userId(), "_storagePath": new RegExp(fullPath+'$', 'i')}).fetch();
         console.log("relevant user docs #: "+a.length);
@@ -37,7 +37,7 @@ Template.ProjectList.helpers({
     folders: function () {
         console.log("fetching folders");
         var pathString = Session.get('pathString');
-        Meteor.call('getSubDir', ['/files/'+Meteor.userId()+pathString], 
+        Meteor.call('getSubDir', ['/files/'+pathString], 
             function(err, serverResult) {
                 console.log("serverResult"+serverResult);
                 if (err) {
@@ -49,6 +49,10 @@ Template.ProjectList.helpers({
         );
         var subDirs = Session.get('subDir');
         return subDirs;
+    }, 
+    path: function () {
+        console.log(Session.get('currPath'));
+        return Session.get('currPath');
     }
 });
 
@@ -62,14 +66,32 @@ Template.ProjectList.events({
     },
     'click #folder': function(event, template) {
         //forward that directory
-        console.log("clicked folder");
+        console.log("--------------------------------------clicked folder");
         console.log(event.target.textContent);
         var cd = event.target.textContent
         var newPath = Session.get('pathString') + "/"+cd;
         Session.set('pathString', newPath);
-        var newPathArray = Session.get('currPath').push(cd);
-        Session.set('currPath', newPathArray);
-        console.log("path string is now: "+Session.get('currPath'));
-        console.log("currPath is now:" + Session.get('pathString'));
+        var pathArray = Session.get('currPath').slice(0)
+        pathArray.push(cd);
+        Session.set('currPath', pathArray);
+        console.log("path string is now: "+Session.get('pathString'));
+        console.log("currPath is now:" + Session.get('currPath'));
+    }, 
+    'click #path': function(event, template) {
+        var clicked = event.target.textContent;
+        console.log(".........................................clicked path "+clicked);
+        //parsing array
+        var pathArray = Session.get('currPath').slice(0);
+        var index = pathArray.indexOf(clicked);
+        pathArray = pathArray.slice(0, index+1);
+        Session.set('currPath', pathArray);
+
+        //parsing string
+        var pathString = Session.get('pathString');
+        console.log("original path string: "+pathString);
+        console.log("index: "+pathString.indexOf(clicked));
+        pathString = pathString.substring(0,pathString.indexOf(clicked) + clicked.length);
+        console.log("pathString is now" + pathString);
+        Session.set('pathString', pathString);
     }
 });

@@ -18,7 +18,10 @@
         </div>
     </div>
 
-
+    <div>Path tree</div>
+    {{#each path}}
+        <div id="path">{{this.name}}</div>
+    {{/each}}
     {{#each folders}}
         <div class="row docsrow">
             <div class="col-md-6">
@@ -31,9 +34,6 @@
                 </div>
                 <div class="col-md-4">
                     <p>{{this.user}}</p>
-                </div>
-                <div class="col-md-4">
-                    <button class="close" type="button" id="remove" name="removeBtn">&times;</button>
                 </div>
             </div>
         </div>

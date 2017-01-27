@@ -254,7 +254,7 @@ Meteor.methods({
     },
     getSubDir: function(p) {
         console.log("get sub dir called");
-        var srcpath = Meteor.absolutePath+"/"+p;
+        var srcpath = Meteor.absolutePath+p;
         console.log("path" + srcpath);
         var subdir =  fs.readdirSync(srcpath)
             .filter(file => fs.statSync(path.join(srcpath, file)).isDirectory())
