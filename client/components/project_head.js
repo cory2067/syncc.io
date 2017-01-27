@@ -17,7 +17,7 @@ Template.ProjectHead.events({
                 } else {
                     console.log("File " + fileObj.name + " successfully uploaded");
                     Meteor.call("assignFile", [fileObj._id, fileObj.name]);
-                    Meteor.call("updateJSON");
+                    Meteor.call("updateJSON", Meteor.userId());
                 }
             });
             uploadInstance.start();
@@ -47,21 +47,26 @@ Template.ProjectHead.events({
                     Meteor.call("assignFile", [fileObj._id, fileObj.name], function() {
                         Meteor.call('unzip', [fileObj.name, fileObj._storagePath]);
                     });
-                    Meteor.call("updateJSON");
+                    Meteor.call("updateJSON", Meteor.userId());
                 }
             });
             uploadInstance.start();
         }
     },
+
     'click #new_file': function(event, template) {
         $(function(){
-        $("#createNewFile").click(function(){
+        $("#createNewFile").click(function(){/*
+        console.log("-------------------------------new file creater in header");
         var nameInput = $("#fileName").val();
-        console.log(nameInput);
+        console.log("You want a new file called"+nameInput+"  calling new file...");
           Meteor.call('newFile', [nameInput, Meteor.userId()], function() {
             Meteor.call("getPath", function(err, path) {
+              console.log("user: "+Meteor.userId());
               var full = path + "/files/" +Meteor.userId()+"/"+ nameInput;
-              var found = Documents.find({path: full}).fetch()
+              console.log("checking if already exists at "+full);
+              var found = Documents.find({path: full}).fetch();
+              console.log("This is what was found "+found);
               if(found.length > 1) {
                 alert("Please give your file a unique name!");
               } else if(found.length == 1) {
@@ -69,6 +74,7 @@ Template.ProjectHead.events({
               }
             });
           });
+          console.log("--------------------------------end file creater in header");*/
         });
       });
     },

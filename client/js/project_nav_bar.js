@@ -15,7 +15,7 @@ Template.TreeProj.onRendered(function () {
       //add exclude if in the accounts-dialog div
     });*/
     Tracker.autorun(function(c) {
-      Meteor.call('updateJSON');
+      Meteor.call("updateJSON", Meteor.userId());
       var entry = CurrJSON.findOne();
       if(!entry) {
         return;

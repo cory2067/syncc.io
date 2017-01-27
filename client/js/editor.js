@@ -8,6 +8,7 @@ import { EditorContents } from '../../collections/editor'
 import { Meteor } from 'meteor/meteor';
 import { Documents } from '../../collections/files'
 
+var fileName = ""
 var username = "Guest"
 var userId = null ;
 var lock = ['self'];
@@ -29,6 +30,22 @@ Template.EditorPage.onCreated(() => {
     Session.set("ready", true);
   });
   Meteor.subscribe("documents");
+
+  $(window).bind('beforeunload', function() {
+    EditUsers.remove({_id : userId});
+    var content = doc.getValue();
+    console.log(docId);
+    var file = Documents.find({'_id': docId}).fetch();
+    console.log(file);
+    var path = file[0].path;
+    var file_name;
+    if(file.length) {
+      file_name =  file[0].name;
+    }
+    console.log(file_name +"told to write" + content + " to "+ path);
+    Meteor.call('writeFile', [content, path, file_name]);
+    Meteor.call("logServer", "deelt page beforeunload");
+  });
 });
 
 Template.EditorPage.onRendered(() => {
@@ -103,9 +120,14 @@ Template.EditorPage.onRendered(() => {
           Session.set("userId", _id);
           Session.set("editing", true);
           console.log("addd user");
+          if(!Documents.find({"_id": id}).fetch().length) {
+            console.log("time to die!!!!!!")
+            window.location.replace("/notfound");
+          }
           if(current.length) {
             console.log("ur not the first one");
             var syncTimeout = setTimeout(()=>{
+              console.log("you've timeout out, reloading")
               for(var p=0; p<current.length; p++) {
                 EditUsers.remove(current[p]._id);
               }
@@ -113,15 +135,16 @@ Template.EditorPage.onRendered(() => {
             }, 1500);
             EditorContents.find({editor: id}).observe({
               changed: function(changed, o) {
-                clearInterval(syncTimeout);
-                console.log("here's what i found:")
-                console.log(changed)
+                console.log("sync timeout cancelled");
+                console.log(changed);
                 if(init){
                   doc.setValue(changed.doc);
                   init = false;
                   EditUsers.update({_id: userId}, {$set: {init: false}});
                   lock.splice(0,1);//remove self from lock
                   Session.set("lock", lock);
+                  console.log(lock);
+                  clearInterval(syncTimeout);
                 }
               }
             });
@@ -205,7 +228,7 @@ Template.EditorPage.onRendered(() => {
       added: function(changed, o) {
         console.log("ADD");
         if(changed['init']) {
-          //Meteor.call("deleteChanges", [id, fileName]);
+          //Meteor.call("deleteChanges", [id, fileName])
           EditorContents.update({_id: editId}, {$set: {doc: doc.getValue(), refresh:Random.id()}});
           lock.push(changed['name']);
           Session.set("lock", lock);
@@ -251,7 +274,26 @@ Template.EditorPage.onRendered(() => {
     });
 });
 
+Template.EditorHead.events({
+  "click #downloadBtn": function() {
+    var content = doc.getValue();
+    $("#downloadContainer").attr("href", 'data:text/plain;charset=utf-8,'
+          + encodeURIComponent(content));
+    $(".downloadAction")[0].click();
+  },
+  "click #exportBtn": function() {
+    var content = doc.getValue();
+    $.post("http://dpaste.com/api/v2/", {content:content, title:fileName}, function(d) {
+      $(".editRight")[0].append(d);
+      //Jessica, do something better with this url (the variable "d")
+    });
+  }
+});
+
 Template.EditorHead.helpers({
+  file: function () {
+    return Documents.findOne();
+  },
   getFileName() {
     var file = Documents.find({'_id': FlowRouter.getParam("editID")}).fetch();
     console.log(file);
@@ -277,6 +319,7 @@ Template.FileTabs.helpers({
     var file = Documents.find({'_id': FlowRouter.getParam("editID")}).fetch();
     console.log(file);
     if(file.length) {
+      fileName = file[0].name;
       return file[0].name;
     }
     return "Loading...";
@@ -368,7 +411,7 @@ Template.EditorPage.events({
       }
       console.log(file_name +"told to write" + content + " to "+ path);
       Meteor.call('writeFile', [content, path, file_name]);
-    },
+    }
 });
 
 Template.EditorPage.onDestroyed(function() {

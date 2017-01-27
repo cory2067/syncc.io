@@ -5,6 +5,7 @@ import { CurrJSON } from '../collections/json';
 import { Documents } from '../collections/files'
 import { EditorContents } from '../collections/editor';
 import { Tracker } from 'meteor/tracker'
+import paste from 'better-pastebin';
 import fs from 'fs-extra'
 import unzip from 'unzip'
 import touch from 'touch'
@@ -59,6 +60,7 @@ Meteor.methods({
     unzip: function(file) {
         var fileName = file[0];
         var id = Meteor.userId();
+        console.log("meteor.userId()"+ Meteor.userId());
         var filePath = file[1]+"/"+id+"/"+fileName;
         var outPath = file[1] + "/"+id;
         //console.log(filePath + " -> " + outPath);
@@ -93,7 +95,7 @@ Meteor.methods({
                                 console.log('file found: ', file.name, 'at path: ', path);
                                 Documents.addFile(path+'/'+file.name, {
                                     fileName: file.name,
-                                    storagePath: path, 
+                                    storagePath: path,
                                     userId: Meteor.userId()
                                 }, function(err, fileObj) {
                                     if (err) {
@@ -156,44 +158,64 @@ Meteor.methods({
               });
           }
     },
-    updateJSON: function() {
-        var basepath = Meteor.absolutePath + "/files/"+Meteor.userId();
-        var curr = CurrJSON.find().fetch();
-        DirectoryStructureJSON.getStructure(fs, basepath, Meteor.bindEnvironment(function (err, structure, total) {
-            if (err) {
-                console.log(err);
-            }
-            //console.log("Total number of folders"+total.folders);
-            //console.log("Total number of files"+total.files);
-            if(!curr.length) {
-              console.log("Nothing in JSON yet, inserting...");
-              CurrJSON.insert({json:JSON.stringify(structure, null, 4)})
-            }
-            else {
-              console.log("Updating existing JSON");
-              CurrJSON.update(curr[0]._id, {$set: {json: JSON.stringify(structure, null, 4)}});
-            }
-            //console.log("Structure in JSON format:" +newJSON);
-        }));
+    updateJSON: function(id) {
+        console.log("initially called update JSON");
+        console.log("User"+ id);
+        if (id) {
+            var basepath = Meteor.absolutePath + "/files/"+id;
+            console.log("path:" + basepath);
+            var curr = CurrJSON.find().fetch();
+            DirectoryStructureJSON.getStructure(fs, basepath, Meteor.bindEnvironment(function (err, structure, total) {
+                if (err) {
+                    console.log(err);
+                }
+                //console.log("Total number of folders"+total.folders);
+                //console.log("Total number of files"+total.files);
+                if(!curr.length) {
+                    console.log("Nothing in JSON yet, inserting...");
+                    CurrJSON.insert({json:JSON.stringify(structure, null, 4)})
+                }
+                else {
+                    console.log("Updating existing JSON");
+                    CurrJSON.update(curr[0]._id, {$set: {json: JSON.stringify(structure, null, 4)}});
+                }
+                //console.log("Structure in JSON format:" +newJSON);
+            }));
+        } else {
+            console.log("NO USER");
+
+        }
     },
     newFile: function(a) {
         var name = a[0];
         var userId = a[1];
-        var path = Meteor.absolutePath + "/files/"+Meteor.userId();
+        console.log("newFile called" + name +"  for "+userId);
+        var path = Meteor.absolutePath + "/files/"+userId;
+        console.log("touching "+path+"/"+name);
+        fs.ensureDirSync(path, function(err) {
+            if (err) {
+                console.log("Error ensuring directory");
+            }
+        });
         touch.sync(path+"/"+name);
         console.log("User: " + Meteor.userId());
+        var done = false;
         Documents.addFile(path+"/"+name, {
             fileName: name,
             userId: Meteor.userId()
         }, function(err, fileObj) {
+            done = true
             if (err) {
                 console.log("error making new file" + err);
             } else {
                 console.log("fileId" + fileObj._id+ "     user" + userId);
                 Documents.update({_id: fileObj._id}, {$set: {userId: userId}});
-                Meteor.call('updateJSON');
+                Meteor.call('updateJSON', userId);
             }
         });
+        console.log("waiting for file completion");
+        while(!done) Meteor.sleep(100);
+        console.log("Done newFile");
     },
     writeFile: function(a) {
         var content = a[0];
