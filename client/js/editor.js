@@ -123,6 +123,7 @@ Template.EditorPage.onRendered(() => {
           if(current.length) {
             console.log("ur not the first one");
             var syncTimeout = setTimeout(()=>{
+              console.log("you've timeout out, reloading")
               for(var p=0; p<current.length; p++) {
                 EditUsers.remove(current[p]._id);
               }
@@ -130,15 +131,16 @@ Template.EditorPage.onRendered(() => {
             }, 1500);
             EditorContents.find({editor: id}).observe({
               changed: function(changed, o) {
-                clearInterval(syncTimeout);
-                console.log("here's what i found:")
-                console.log(changed)
+                console.log("sync timeout cancelled");
+                console.log(changed);
                 if(init){
                   doc.setValue(changed.doc);
                   init = false;
                   EditUsers.update({_id: userId}, {$set: {init: false}});
                   lock.splice(0,1);//remove self from lock
                   Session.set("lock", lock);
+                  console.log(lock);
+                  clearInterval(syncTimeout);
                 }
               }
             });
