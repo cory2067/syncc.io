@@ -106,6 +106,10 @@ Template.EditorPage.onRendered(() => {
         return;
       }
       if(!Session.get("ready")) {
+        if(!Documents.find({"_id": id}).fetch().length) {
+          console.log("time to die!!!!!!")
+          window.location.replace("/notfound");
+        }
         console.log("hold up kiddo, ur not ready for this");
         return;
       }
