@@ -26,6 +26,13 @@ FlowRouter.route('/projects', {
     }
 });
 
+
+FlowRouter.route('/notfound', {
+  action: function(params) {
+    BlazeLayout.render('App', {main: '404Page'});
+  }
+});
+
 import closeEditor from '/client/js/editor';
 FlowRouter.route('/:editID', {
     action: function(params) {

@@ -86,11 +86,11 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
     padding-top: 14%;
     text-align: center;
     vertical-align: middle;
+  }
 
-    .banana{
-      height: 150px;
-      margin-bottom: 20px;
-    }
+  .banana{
+    height: 150px;
+    margin-bottom: 20px;
   }
 
   .btn-blue{
@@ -309,7 +309,7 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
     margin: auto;
     width: 595px;
     background-color: $white;
-    padding: 8px 0;
+    padding: 8px 25px;
     border-radius: 5px;
     box-shadow: $shadow;
   }
@@ -690,8 +690,9 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
     }
   }
 
-  //newFile modal
-  #newFile{
+
+  //export modal
+  #exportFile{
     width: 500px;
     margin-top: 15%;
     margin-left: auto;
@@ -711,20 +712,25 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
 
       .modal-body{
         padding: 0 10px 10px;
-        
-        .form-control{border: 1px solid $chrome;}
 
-        .fileName{
+        .form-control{
+          border: none!important;
+          box-shadow: none!important;
+        }
+
+        .URL{
           padding: 5px 10px;
           font-style: italic;
+          background-color: $cloud;
           border-radius: 5px;
         }
       }
 
-      .modal-footer{padding-bottom: 0;}
+      .modal-footer{
+        padding-bottom: 0;
+      }
     }
   }
-
 
 
 /**********************
@@ -947,3 +953,42 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
   }
 
   .CodeMirror{height: calc(100vh - 87px);}
+
+
+
+/**********************
+    NEW FILE MODAL
+**********************/
+  #newFile{
+    width: 500px;
+    margin-top: 15%;
+    margin-left: auto;
+    margin-right: auto;
+
+    .modal-content .modal-dialog{
+      padding: 15px;
+      width: inherit;
+      margin: 0;
+
+      p{color: $chrome;}
+
+      .modal-header{
+        padding: 0;
+        border: none;
+      }
+
+      .modal-body{
+        padding: 0 10px 10px;
+        
+        .form-control{border: 1px solid $chrome;}
+
+        .fileName{
+          padding: 5px 10px;
+          font-style: italic;
+          border-radius: 5px;
+        }
+      }
+
+      .modal-footer{padding-bottom: 0;}
+    }
+  }

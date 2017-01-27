@@ -201,10 +201,12 @@ Meteor.methods({
         });
         touch.sync(path+"/"+name);
         console.log("User: " + Meteor.userId());
+        var done = false;
         Documents.addFile(path+"/"+name, {
             fileName: name,
             userId: Meteor.userId()
         }, function(err, fileObj) {
+            done = true
             if (err) {
                 console.log("error making new file" + err);
             } else {
@@ -213,6 +215,8 @@ Meteor.methods({
                 Meteor.call('updateJSON', userId);
             }
         });
+        console.log("waiting for file completion");
+        while(!done) Meteor.sleep(100);
         console.log("Done newFile");
     },
     writeFile: function(a) {
@@ -248,32 +252,6 @@ Meteor.methods({
             }
         });
     },
-    exportFile(data) {
-      var result = null;
-      paste.setDevKey("c8a00b613d176951fdfe0b087c9901ff");
-      paste.login("cychloryn", "mememan17", function(success, data) {
-        if(!success) {
-            console.log("Failed (" + data + ")");
-            result = "http://syncc.io"
-        }
-
-        paste.create({
-            contents: data[0],
-            name: data[1],
-            privacy: "0"
-        }, function(success, d) {
-            if(success) {
-                console.log(d);
-                result = d;
-              }
-              else {
-                result = null
-              }
-        });
-      });
-      while(!result) { Meteor.sleep(100); }
-      return result;
-    }, 
     getSubDir: function(p) {
         console.log("get sub dir called");
         var srcpath = Meteor.absolutePath+"/"+p;
