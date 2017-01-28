@@ -34,12 +34,12 @@ Template.ProjectList.helpers({
             //a[entry]['user'] = Meteor.users.find(a[entry].userId).fetch()[0].emails[0].address;
         }
         return a;
-    }, 
+    },
     folders: function () {
         Meteor.call('makeDir');
         console.log("fetching folders");
         var pathString = Session.get('pathString');
-        Meteor.call('getSubDir', ['/files'+pathString], 
+        Meteor.call('getSubDir', ['/files'+pathString],
             function(err, serverResult) {
                 console.log("serverResult"+serverResult);
                 if (err) {
@@ -52,7 +52,7 @@ Template.ProjectList.helpers({
         var subDirs = Session.get('subDir');
         console.log("subdirectories:" +subDirs);
         return subDirs;
-    }, 
+    },
     path: function () {
         console.log(Session.get('currPath'));
         return Session.get('currPath');
@@ -79,7 +79,7 @@ Template.ProjectList.events({
         Session.set('currPath', pathArray);
         console.log("path string is now: "+Session.get('pathString'));
         console.log("currPath is now:" + Session.get('currPath'));
-    }, 
+    },
     'click #path': function(event, template) {
         var clicked = event.target.textContent;
         console.log(".........................................clicked path "+clicked);
