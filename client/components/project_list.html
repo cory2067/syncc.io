@@ -17,7 +17,6 @@
             </div>
         </div>
     </div>
-
     <a href="#" id="pathBack"><i class="glyphicon glyphicon-chevron-up"></i> Back a Folder</a>
     <br/>
     {{#each path}}
@@ -58,6 +57,7 @@
             </div>
         </div>
     {{/each}}
+    {{#if inHome}}
     {{#each collabDocs}}
         <div class="row docsrow">
             <div class="col-md-6">
@@ -77,5 +77,6 @@
             </div>
         </div>
     {{/each}}
+    {{/if}}
     </div>
 </template>

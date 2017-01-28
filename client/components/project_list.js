@@ -64,6 +64,9 @@ Template.ProjectList.helpers({
         var a = Session.get('currPath').slice(0);
         a[0] = "home";
         return a;
+    },
+    inHome: function() {
+      return Session.get('currPath').length == 1
     }
 });
 
