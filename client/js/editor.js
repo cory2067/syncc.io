@@ -341,27 +341,28 @@ Template.EditorSidebar.events({
   "change #modeForm": function() {
     var editor = $('.CodeMirror')[0].CodeMirror;
     var choice = $('#modes').find(":selected").text();
-    console.log("looks like you tried to change mode");
-    console.log("your choice was " + choice);
+    //console.log("looks like you tried to change mode");
+    //console.log("your choice was " + choice);
     if (choice == "autodetect") {
-      console.log("you selected auto");
+      //console.log("you selected auto");
       var modeInput = Documents.find({'_id': FlowRouter.getParam("editID")}).fetch();
       if(modeInput.length==0) {
         return;
       }
       var val = modeInput[0].name, m, mode, spec;
-      console.log(val);
+      //console.log(val);
       if (m = /.+\.([^.]+)$/.exec(val)) {
         var info = CodeMirror.findModeByExtension(m[1]);
-        console.log(info);
+        //console.log("logged info is" + info);
         if (info) {
           mode = info.mode;
           spec = info.mime;
-          console.log(mode);
+          //console.log("logged mode is" + mode);
         }
       }
       if (mode) {
-        editor.setOption("mode", choice);
+        //console.log("entered")
+        editor.setOption("mode", mode);
       } else {
         console.log("Could not find a mode corresponding to " + val);
       }
