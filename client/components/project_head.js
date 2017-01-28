@@ -11,6 +11,12 @@ Template.ProjectHead.events({
                 streams: 'dynamic',
                 chunkSize: 'dynamic',
             }, false);
+            uploadInstance.on('error', function(error, fileObj) {
+                alert('Error during upload: '+error);
+            });
+            uploadInstance.on('abort', function(error, fileObj) {
+                prompt('Are you sure you want to abort upload?');
+            });
             uploadInstance.on('end', function(error, fileObj) {
                 if (error) {
                     console.log("error uploading" + error);
