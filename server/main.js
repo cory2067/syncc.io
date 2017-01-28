@@ -219,7 +219,7 @@ Meteor.methods({
             fileName: name,
             userId: Meteor.userId()
         }, function(err, fileObj) {
-            ate(fileObj._id, {$set: {collab: []}});
+            Documents.update(fileObj._id, {$set: {collab: []}});
             done = true
             if (err) {
                 console.log("error making new file" + err);

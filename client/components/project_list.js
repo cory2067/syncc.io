@@ -18,6 +18,9 @@ Template.ProjectList.onCreated(()=>{
 Template.ProjectList.helpers({
     collabDocs: function() {
         var a = Documents.find({"collab": Meteor.userId()}).fetch();
+        for(var q=0; q<a.length; q++) {
+          a[q]['owner'] = Meteor.users.find(a[q]['userId']).fetch()[0]['emails'][0]['address']
+        }
         return a;
     },
     //get docs in path
