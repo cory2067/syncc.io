@@ -16,6 +16,13 @@ Template.ProjectList.onCreated(()=>{
 });
 
 Template.ProjectList.helpers({
+    collabDocs: function() {
+        var a = Documents.find({"collab": Meteor.userId()}).fetch();
+        for(var q=0; q<a.length; q++) {
+          a[q]['owner'] = Meteor.users.find(a[q]['userId']).fetch()[0]['emails'][0]['address']
+        }
+        return a;
+    },
     //get docs in path
     docs: function () {
         Meteor.call('makeDir');
@@ -34,12 +41,12 @@ Template.ProjectList.helpers({
             //a[entry]['user'] = Meteor.users.find(a[entry].userId).fetch()[0].emails[0].address;
         }
         return a;
-    }, 
+    },
     folders: function () {
         Meteor.call('makeDir');
         console.log("fetching folders");
         var pathString = Session.get('pathString');
-        Meteor.call('getSubDir', ['/files'+pathString], 
+        Meteor.call('getSubDir', ['/files'+pathString],
             function(err, serverResult) {
                 console.log("serverResult"+serverResult);
                 if (err) {
@@ -52,10 +59,11 @@ Template.ProjectList.helpers({
         var subDirs = Session.get('subDir');
         console.log("subdirectories:" +subDirs);
         return subDirs;
-    }, 
+    },
     path: function () {
-        console.log(Session.get('currPath'));
-        return Session.get('currPath');
+        var a = Session.get('currPath').slice(0);
+        a[0] = "home";
+        return a;
     }
 });
 
@@ -79,12 +87,14 @@ Template.ProjectList.events({
         Session.set('currPath', pathArray);
         console.log("path string is now: "+Session.get('pathString'));
         console.log("currPath is now:" + Session.get('currPath'));
-    }, 
-    'click #path': function(event, template) {
-        var clicked = event.target.textContent;
-        console.log(".........................................clicked path "+clicked);
+    },
+    'click #pathBack': function(event, template) {
         //parsing array
         var pathArray = Session.get('currPath').slice(0);
+        if(pathArray.length > 1) {
+          var clicked = pathArray[pathArray.length-2];
+        } else { var clicked = pathArray[0]; }
+        console.log("wew " + clicked);
         var index = pathArray.indexOf(clicked);
         pathArray = pathArray.slice(0, index+1);
         Session.set('currPath', pathArray);

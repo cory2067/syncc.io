@@ -45,7 +45,9 @@ Template.ProjectHead.events({
                 } else {
                     console.log("Successfully uploaded" + fileObj.name);
                     Meteor.call("assignFile", [fileObj._id, fileObj.name], function() {
-                        Meteor.call('unzip', [fileObj.name, fileObj._storagePath]);
+                        Meteor.call('unzip', [fileObj.name, fileObj._storagePath], function() {
+                          location.reload();
+                        });
                     });
                     Meteor.call("updateJSON", Meteor.userId());
                 }
