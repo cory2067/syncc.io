@@ -8,15 +8,9 @@ FlowRouter.route('/', {
     }
 });
 
-FlowRouter.route('/neditor', {
-    action: function(params) {
-        BlazeLayout.render('App', {main: 'NeditorPage'})
-    }
-});
-
 FlowRouter.route('/editor', {
     action: function(params) {
-        BlazeLayout.render('App', {main: 'EditorPage'})
+        BlazeLayout.render('App', {main: 'NeditorPage'})
     }
 });
 

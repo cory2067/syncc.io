@@ -306,7 +306,7 @@ Template.EditorHead.helpers({
     if(file.length) {
       return file[0].name;
     }
-    return "Loading...";
+    return "Editor";
   },
 
   getURL(){
