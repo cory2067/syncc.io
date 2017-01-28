@@ -5,7 +5,7 @@ import { CurrJSON } from '../collections/json';
 import { Documents } from '../collections/files'
 import { EditorContents } from '../collections/editor';
 import { Tracker } from 'meteor/tracker'
-import paste from 'better-pastebin';
+import { Accounts } from 'meteor/accounts-base'
 import fs from 'fs-extra'
 import unzip from 'unzip'
 import touch from 'touch'
@@ -55,6 +55,19 @@ Meteor.startup(() => {
 Meteor.methods({
     injectFile: function(params) {
       EditorContents.insert({editor: params['editor'], file:params['file'], user:'system', doc: "", refresh:""});
+    },
+    findUser: function(params) {
+      var email = params[0];
+      var editor = params[1];
+      console.log(email);
+      var result = Accounts.findUserByEmail(email);
+      try {
+        var result = Accounts.findUserByEmail(email);
+        console.log(result);
+        return result['_id'];
+      } catch (e) {
+        return ""
+      }
     },
     logServer: function(msg) {
         console.log(msg);

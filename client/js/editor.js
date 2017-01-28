@@ -275,6 +275,12 @@ Template.EditorPage.onRendered(() => {
 });
 
 Template.EditorHead.events({
+  "click #collabBtn": function() {
+    val = $("#collabUser").val();
+    Meteor.call("findUser", [val, FlowRouter.getParam("editId")], function(e,r) {
+      console.log(r)
+    });
+  },
   "click #downloadBtn": function() {
     var content = doc.getValue();
     $("#downloadContainer").attr("href", 'data:text/plain;charset=utf-8,'
