@@ -119,7 +119,7 @@ Meteor.methods({
                                         console.log("added successfully");
                                         console.log(fileObj._id);
                                         console.log("id"+userId);
-                                        ate({_id: fileObj._id}, {$set: {userId: userId}});
+                                        Documents.update(fileObj._id, {$set: {collab: []}});
                                     }
                                 });
                             });
@@ -225,7 +225,7 @@ Meteor.methods({
                 console.log("error making new file" + err);
             } else {
                 console.log("fileId" + fileObj._id+ "     user" + userId);
-                ate({_id: fileObj._id}, {$set: {userId: userId}});
+                Documents.update({_id: fileObj._id}, {$set: {userId: userId}});
                 Meteor.call('updateJSON', userId);
             }
         });
