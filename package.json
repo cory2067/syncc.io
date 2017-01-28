@@ -6,6 +6,7 @@
   },
   "dependencies": {
     "babel-runtime": "^6.22.0",
+    "bcrypt": "^1.0.2",
     "bcrypt-nodejs": "0.0.3",
     "better-pastebin": "^0.3.0",
     "bootstrap": "^3.3.7",

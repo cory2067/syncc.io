@@ -119,7 +119,7 @@ Meteor.methods({
                                         console.log("added successfully");
                                         console.log(fileObj._id);
                                         console.log("id"+userId);
-                                        ate({_id: fileObj._id}, {$set: {userId: userId}});
+                                        Documents.update({_id: fileObj._id}, {$set: {userId: userId}});
                                     }
                                 });
                             });
