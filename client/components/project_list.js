@@ -11,7 +11,7 @@ Template.ProjectList.onCreated(()=>{
     Meteor.subscribe('currjson');
     Meteor.subscribe('documents');
     Meteor.subscribe('editusers');
-    Session.set('pathString', "/"+Meteor.userId());
+    Session.set('pathString', ">"+Meteor.userId());
     Session.set('currPath', [Meteor.userId()]);
 });
 
