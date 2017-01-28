@@ -192,6 +192,7 @@ Meteor.methods({
         var name = a[0];
         var userId = a[1];
         console.log("newFile called" + name +"  for "+userId);
+        Documents.update(id, {$set: {collab: [id]}});
         var path = Meteor.absolutePath + "/files/"+userId;
         console.log("touching "+path+"/"+name);
         fs.ensureDirSync(path, function(err) {
@@ -236,6 +237,8 @@ Meteor.methods({
     assignFile: function(f) {
         var id = f[0];
         var name = f[1];
+        console.log("setting you as collaborator");
+        Documents.update(id, {$set: {collab: [id]}});
         console.log("giving to user path: " + Meteor.absolutePath+"/files/"+Meteor.userId());
         var path = Meteor.absolutePath+"/files/"+Meteor.userId();
         Documents.update(id, {$set: {_storagePath: path}});
@@ -263,5 +266,21 @@ Meteor.methods({
     },
     makeDir: function() {
         fs.ensureDir(Meteor.absolutePath+"/files/"+Meteor.userId());
+    }, 
+    addCollab: function(a) {
+        var userId = a[0];
+        var fileId = a[1];
+        Documents.update(fileId, {$push: {collab: userId}});
+    }, 
+    deleteCollab: function(a) {
+        var userId = a[0];
+        var fileId = a[1];
+        try {
+            Documents.update(fileId, {$pull: {collab: userId}});
+        }
+        catch(err) {
+            console.log("NOT A COLLABORATOR");
+        }
     }
+    
 });
