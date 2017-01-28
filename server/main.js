@@ -119,7 +119,7 @@ Meteor.methods({
                                         console.log("added successfully");
                                         console.log(fileObj._id);
                                         console.log("id"+userId);
-                                        Documents.update(fileObj._id, {$set: {collab: []}});
+                                        Documents.update({_id: fileObj._id}, {$set: {collab: [], userId: userId}});
                                     }
                                 });
                             });

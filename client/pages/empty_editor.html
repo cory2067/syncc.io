@@ -1,0 +1,26 @@
+<template name="NeditorPage">
+  <div id="editBgd">
+    {{> EditorHead}}
+    {{> EditorSidebar}}
+
+    <div id="page-content-wrapper">
+        <div class="err">
+            <!-- this won't be a banana forever-->
+            <img src="/imgs/closebanana.png" alt="oops" class="banana">
+            <h3 style="color: #778899"> Currently No Files Open </h3>
+            <p> Create a new one or open an existing file from the File Directory </p>
+        </div>
+    </div>
+  </div>
+
+  {{#if lockUser}}
+    {{#if lockUser="self"}}
+    <div id="loadingSpin"><p>Loading editor...</p>{{>spinner}}</div>
+    {{else}}
+    <div id="loadingSpin"><p>{{lockUser}} is joining</p>{{>spinner}}</div>
+    {{/if}}
+  {{/if}}
+  <script>
+    //Script to choose/make tabs active would go here.
+  </script>
+</template>
