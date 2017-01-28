@@ -109,5 +109,26 @@ Template.ProjectList.events({
         pathString = pathString.substring(0,pathString.indexOf(clicked) + clicked.length);
         console.log("pathString is now" + pathString);
         Session.set('pathString', pathString);
+    }, 
+    'click #path': function(event, template) {
+        var clicked = event.target.textContent.slice(2);
+        console.log(".........................................clicked path "+clicked);
+        if (clicked==='home') 
+        {
+            clicked = Meteor.userId();
+        }
+        var pathArray = Session.get('currPath').slice(0);
+        console.log("currPath is "+pathArray);
+        var index = pathArray.indexOf(clicked);
+        pathArray = pathArray.slice(0, index+1);
+        Session.set('currPath', pathArray);
+
+        //parsing string
+        var pathString = Session.get('pathString');
+        console.log("original path string: "+pathString);
+        console.log("index: "+pathString.indexOf(clicked));
+        pathString = pathString.substring(0,pathString.indexOf(clicked) + clicked.length);
+        console.log("pathString is now" + pathString);
+        Session.set('pathString', pathString);
     }
 });
