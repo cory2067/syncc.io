@@ -18,9 +18,10 @@
         </div>
     </div>
 
-    <div>Path tree</div>
+    <a href="#" id="pathBack"><i class="glyphicon glyphicon-chevron-up"></i> Back a Folder</a>
+    <br/>
     {{#each path}}
-        <div id="path">{{this.name}}</div>
+        <span id="path">/ {{this}}</span>
     {{/each}}
     {{#each folders}}
         <div class="row docsrow">

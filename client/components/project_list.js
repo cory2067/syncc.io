@@ -54,8 +54,9 @@ Template.ProjectList.helpers({
         return subDirs;
     },
     path: function () {
-        console.log(Session.get('currPath'));
-        return Session.get('currPath');
+        var a = Session.get('currPath').slice(0);
+        a[0] = "home";
+        return a;
     }
 });
 
@@ -80,11 +81,13 @@ Template.ProjectList.events({
         console.log("path string is now: "+Session.get('pathString'));
         console.log("currPath is now:" + Session.get('currPath'));
     },
-    'click #path': function(event, template) {
-        var clicked = event.target.textContent;
-        console.log(".........................................clicked path "+clicked);
+    'click #pathBack': function(event, template) {
         //parsing array
         var pathArray = Session.get('currPath').slice(0);
+        if(pathArray.length > 1) {
+          var clicked = pathArray[pathArray.length-2];
+        } else { var clicked = pathArray[0]; }
+        console.log("wew " + clicked);
         var index = pathArray.indexOf(clicked);
         pathArray = pathArray.slice(0, index+1);
         Session.set('currPath', pathArray);
