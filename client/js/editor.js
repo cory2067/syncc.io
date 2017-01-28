@@ -277,7 +277,7 @@ Template.EditorPage.onRendered(() => {
 Template.EditorHead.events({
   "click #collabBtn": function() {
     val = $("#collabUser").val();
-    Meteor.call("findUser", [val, FlowRouter.getParam("editId")], function(e,r) {
+    Meteor.call("findUser", [val, FlowRouter.getParam("editID")], function(e,r) {
       console.log(r)
     });
   },
