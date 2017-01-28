@@ -317,6 +317,38 @@ Template.EditorHead.helpers({
 Template.EditorSidebar.helpers({
   editingUsers() {
     return EditUsers.find({editor: FlowRouter.getParam("editID")}).fetch();
+  },
+});
+
+Template.EditorSidebar.events({
+  "change #modeForm": function() {
+    var editor = $('.CodeMirror')[0].CodeMirror;
+    var choice = $('#modes').find(":selected").text();
+    console.log("looks like you tried to change mode");
+    console.log("your choice was " + choice);
+    if (choice == "autodetect") {
+      console.log("you selected auto");
+      var modeInput = Documents.find({'_id': FlowRouter.getParam("editID")}).fetch();
+      if(modeInput.length==0) {
+        return;
+      }
+      var val = modeInput[0].name, m, mode, spec;
+      console.log(val);
+      if (m = /.+\.([^.]+)$/.exec(val)) {
+        var info = CodeMirror.findModeByExtension(m[1]);
+        console.log(info);
+        if (info) {
+          mode = info.mode;
+          spec = info.mime;
+          console.log(mode);
+        }
+      }
+      if (mode) {
+        editor.setOption("mode", choice);
+      } else {
+        console.log("Could not find a mode corresponding to " + val);
+      }
+    }
   }
 });
 

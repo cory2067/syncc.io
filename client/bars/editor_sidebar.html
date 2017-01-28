@@ -82,27 +82,32 @@
                     <h4>File Type:</h4>
                     <p class="settings-descript">override autodetected file type and syntax highlighting</p>
                     <div class="form-group">
+                        <form id="modeForm">
                         <select class="form-control" id="modes" onchange="selectMode()">
-                            <option val="python">python</option>
-                            <option val="aspx">asp.net</option>
-                            <option val="coffescript">coffescript</option>
-                            <option val="csrc">C</option>
-                            <option val="c++src">C++</option>
-                            <option val="csharp">C#</option>
-                            <option val="css">css</option>
-                            <option val="dyango">django</option>
-                            <option val="html">html</option>
-                            <option val="http">http</option>
-                            <option val="jade">jade</option>
-                            <option val="java">java</option>
-                            <option val="jsp">java server pages</option>
-                            <option val="less">less</option>
-                            <option val="lua">lua</option>
-                            <option val="markdown">markdown</option>
-                            <option val="ruby">ruby</option>
-                            <option val="sql">sql</option>
-                            <option val="octave">octave</option>
+                            <option>autodetect</option>
+                            <option>coffeescript</option>
+                            <option>css</option>
+                            <option>cypher</option>
+                            <option>django</option>
+                            <option>erlang</option>
+                            <option>gas</option>
+                            <option>haml</option>
+                            <option>haskell</option>
+                            <option>htmlembedded</option>
+                            <option>http</option>
+                            <option>jade</option>
+                            <option>javascript</option>
+                            <option>lua</option>
+                            <option>markdown</option>
+                            <option>octave</option>
+                            <option>perl</option>
+                            <option>php</option>
+                            <option>python</option>
+                            <option>ruby</option>
+                            <option>sql</option>
+                            <option>xml</option>
                         </select>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -207,7 +212,11 @@
 
             function selectMode() {
                 var editor = $('.CodeMirror')[0].CodeMirror;
-                editor.setOption("mode", $('#modes').find(":selected").text());
+                var choice = $('#modes').find(":selected").text();
+                console.log(choice);
+                if (choice != "autodetect"){
+                    editor.setOption("mode", choice);
+                }
             }
     </script>
 </template>

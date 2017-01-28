@@ -559,6 +559,17 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
       button.close{
         padding-right: 12px;
       }
+
+      #pathBack{
+        margin-right: 15px;
+
+        &:hover, &:focus{color: $accented;}
+      }
+
+      #path{
+        color: $charcoal;
+        text-transform: capitalize;
+      }
     }
 
 

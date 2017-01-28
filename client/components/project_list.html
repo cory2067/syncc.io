@@ -1,5 +1,12 @@
 <template name="ProjectList">
     <div id="ProjectList">
+    
+    <div class="row">
+        <a href="#" id="pathBack"><i class="glyphicon glyphicon-chevron-up"></i> Back a Folder</a>
+        {{#each path}}
+            <span id="path">{{this}}</span>
+        {{/each}}
+    </div>
 
     <div class="row subrow">
         <div class="col-md-6">
@@ -18,15 +25,11 @@
         </div>
     </div>
 
-    <a href="#" id="pathBack"><i class="glyphicon glyphicon-chevron-up"></i> Back a Folder</a>
-    <br/>
-    {{#each path}}
-        <span id="path">/ {{this}}</span>
-    {{/each}}
     {{#each folders}}
         <div class="row docsrow">
             <div class="col-md-6">
-                <a id="folder" href="#"><strong>{{this}}</strong></a>
+                <!--<i class="glyphicon glyphicon-folder-open"></i>-->
+                <a id="folder" href="#">{{this}}</a>
             </div>
             <div class="col-md-6">
                 <div class="col-md-4">
@@ -42,6 +45,7 @@
     {{#each docs}}
         <div class="row docsrow">
             <div class="col-md-6">
+                <!--<i class="glyphicon glyphicon-file"></i>-->
                 <a href="/{{this._id}}">{{this.name}}</a>
             </div>
             <div class="col-md-6">
@@ -61,6 +65,7 @@
     {{#each collabDocs}}
         <div class="row docsrow">
             <div class="col-md-6">
+                <!--<i class="glyphicon glyphicon-file"></i>-->
                 <a href="/{{this._id}}">{{this.name}}</a>
             </div>
             <div class="col-md-6">
