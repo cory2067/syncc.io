@@ -18,6 +18,7 @@ var init = true;
 var docId = null;
 var illegals = [];
 var illegalTimeout = {};
+var saveHandle;
 
 Template.EditorPage.onCreated(() => {
   Session.set("ready", false)
@@ -30,6 +31,22 @@ Template.EditorPage.onCreated(() => {
     Session.set("ready", true);
   });
   Meteor.subscribe("documents");
+
+  //Set save file at intevals
+  saveHandle = Meteor.setInterval(function() {
+      console.log("Interval saving");
+      var content = doc.getValue();
+      var file = Documents.find({'_id': docId}).fetch();
+      var path = file[0].path;
+      var file_name;
+      if(file.length) {
+          file_name =  file[0].name;
+      }
+      console.log(file_name +"told to write" + content + " to "+ path);
+      Meteor.call('writeFile', [content, path, file_name]);  
+
+  }, 3000);
+
 
   $(window).bind('beforeunload', function() {
     EditUsers.remove({_id : userId});
@@ -434,4 +451,5 @@ Template.EditorPage.onDestroyed(function() {
   }
   console.log(file_name +"told to write" + content + " to "+ path);
   Meteor.call('writeFile', [content, path, file_name]);
+  Meteor.clearInterval(saveHandle);
 });
