@@ -16,6 +16,10 @@ Template.ProjectList.onCreated(()=>{
 });
 
 Template.ProjectList.helpers({
+    collabDocs: function() {
+        var a = Documents.find({"collab": Meteor.userId()}).fetch();
+        return a;
+    },
     //get docs in path
     docs: function () {
         Meteor.call('makeDir');

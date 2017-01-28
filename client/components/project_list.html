@@ -58,5 +58,24 @@
             </div>
         </div>
     {{/each}}
+    {{#each collabDocs}}
+        <div class="row docsrow">
+            <div class="col-md-6">
+                <a href="/{{this._id}}">{{this.name}}</a>
+            </div>
+            <div class="col-md-6">
+                <div class="col-md-4">
+                    <!--write helper to make this not weird date-->
+                    <p>{{this.date}}</p>
+                </div>
+                <div class="col-md-4">
+                    <p>{{this.user}}</p>
+                </div>
+                <div class="col-md-4">
+                    <button class="close" type="button" id="remove" name="removeBtn">&times;</button>
+                </div>
+            </div>
+        </div>
+    {{/each}}
     </div>
 </template>
