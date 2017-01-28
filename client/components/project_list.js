@@ -11,7 +11,7 @@ Template.ProjectList.onCreated(()=>{
     Meteor.subscribe('currjson');
     Meteor.subscribe('documents');
     Meteor.subscribe('editusers');
-    Session.set('pathString', ">"+Meteor.userId());
+    Session.set('pathString', "/"+Meteor.userId());
     Session.set('currPath', [Meteor.userId()]);
 });
 
@@ -63,6 +63,9 @@ Template.ProjectList.helpers({
     path: function () {
         var a = Session.get('currPath').slice(0);
         a[0] = "home";
+        for(var q=0; q<a.length-1; q++) {
+          a[q] = a[q] + " >"
+        }
         return a;
     },
     inHome: function() {
