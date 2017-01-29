@@ -542,6 +542,11 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
         }
       }
 
+      a.path{
+        color: $chrome;
+        &:hover{color: $accent;}
+      }
+
       .docsrow{
         padding: 5px 0;
         border-bottom: 1px solid $cloud;
@@ -827,11 +832,16 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
     .email-box{
       width: 100%;
       display: inline-block;
-      background: $darkgrey;
+      background-color: $darkgrey;
       color: $chrome;
       border-radius: 5px;
       position: relative;
       margin-bottom: 10px;
+
+      &:focus {
+        background-color: $blacc;
+        color: $chrome;
+      }
 
       .form-control{
         background-color: inherit;
@@ -839,11 +849,15 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
       }
 
       input[type=text]{
-        color: $chrome;
+        color: $cloud;
         font-family: 'Open Sans';
         border: none;
         box-shadow: none;
         display: inline-block;
+
+        &::-webkit-input-placeholder{
+          color: $chrome;
+        }
       }
 
       .add-btn{
