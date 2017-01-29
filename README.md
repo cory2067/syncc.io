@@ -8,6 +8,10 @@ Online collaborative coding platform that combines the real-time capabilities of
 ## Built With
 * [Meteor](https://www.meteor.com/) - The Javascript framework used
 
+## Libraries Used
+* [CodeMirror](https://codemirror.net/) - Text editor written in Javascript
+* [Skulpt](http://www.skulpt.org/) - Python implementation written in Javascript
+
 ## Authors
 * **Cory Lynch**
 * **Michelle Tan**
