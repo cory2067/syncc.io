@@ -62,10 +62,16 @@ Template.ProjectList.helpers({
     },
     path: function () {
         var a = Session.get('currPath').slice(0);
-        a[0] = "home";
-        for(var q=0; q<a.length-1; q++) {
-          a[q] = a[q] + " >"
+        console.log("THIS IS A BEFORE: " + a);
+        for(var q=0; q<a.length; q++) {
+            if(q==0){
+                a[q] = {name: "home", glyph: false};
+            } else {
+                a[q] = {name: a[q], glyph: true};
+            }
+          //a[q] = a[q]
         }
+        console.log(a);
         return a;
     },
     inHome: function() {

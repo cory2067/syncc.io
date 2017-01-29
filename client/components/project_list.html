@@ -4,7 +4,7 @@
     <div class="row">
         <a href="#" id="pathBack"><i class="glyphicon glyphicon-chevron-up"></i> Back a Folder</a>
         {{#each path}}
-            <span id="path">{{this}}</span>
+            <span id="path">{{#if glyph}} <i class='glyphicon glyphicon-menu-right'></i> {{/if}} {{name}}</span>
         {{/each}}
     </div>
 
