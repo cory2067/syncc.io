@@ -140,7 +140,7 @@ Template.ProjectList.events({
         Session.set('pathString', pathString);
     },
     'click #path': function(event, template) {
-        var clicked = event.target.textContent.replace(/\W/g, '');
+        var clicked = event.target.textContent;
         console.log(".........................................clicked path "+clicked);
         if (clicked==='home')
         {
