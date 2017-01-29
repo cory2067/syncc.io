@@ -15,6 +15,7 @@ Template.ProjectList.onCreated(()=>{
     Session.set('currPath', [Meteor.userId()]);
     Session.set('foldersRendered', "meme");
     Session.set("loading", false);
+    Session.set("searchQuery", '')
 });
 
 Template.ProjectList.helpers({
@@ -23,8 +24,12 @@ Template.ProjectList.helpers({
     },
     collabDocs: function() {
         var a = Documents.find({"collab": Meteor.userId()}).fetch();
+        b = []
+        var query = Session.get("searchQuery");
         for(var q=0; q<a.length; q++) {
           a[q]['owner'] = Meteor.users.find(a[q]['userId']).fetch()[0]['emails'][0]['address']
+          if(a[q]['name'].toLowerCase().indexOf(query) > -1)
+            b.push(a[q]);
         }
         return a;
     },
@@ -40,12 +45,13 @@ Template.ProjectList.helpers({
         console.log("path to show: "+fullPath);
         var a = Documents.find({"userId": Meteor.userId(), "_storagePath": new RegExp(fullPath+'$', 'i')}).fetch();
         console.log("relevant user docs #: "+a.length);
+        var query =  Session.get("searchQuery");
+        b = []
         for(var entry=0; entry<a.length; entry++) {
-            console.log(a[entry]);
-            //a[entry]['date'] = a[entry].original.updatedAt.toString().substring(0, 15);
-            //a[entry]['user'] = Meteor.users.find(a[entry].userId).fetch()[0].emails[0].address;
+            if(a[entry]['name'].toLowerCase().indexOf(query) > -1)
+              b.push(a[entry]);
         }
-        return a;
+        return b;
     },
     folders: function () {
         var eman17 = Session.get("foldersRendered"); //rerenders on change
@@ -64,7 +70,15 @@ Template.ProjectList.helpers({
         );
         var subDirs = Session.get('subDir');
         console.log("subdirectories:" +subDirs);
-        return subDirs;
+        if(!subDirs)
+          return [];
+        b = []
+        var query = Session.get("searchQuery");
+        for(var entry=0; entry<subDirs.length; entry++) {
+            if(subDirs[entry].toLowerCase().indexOf(query) > -1)
+              b.push(subDirs[entry]);
+        }
+        return b;
     },
     path: function () {
         var a = Session.get('currPath').slice(0);
@@ -132,7 +146,7 @@ Template.ProjectList.events({
         {
             clicked = Meteor.userId();
         }
-        
+
         if (clicked != '')
         {
             var pathArray = Session.get('currPath').slice(0);

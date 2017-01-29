@@ -4,6 +4,9 @@ import { Session } from 'meteor/session'
 import { Random } from 'meteor/random'
 
 Template.ProjectHead.events({
+    'keyup #search': function(event, template) {
+      Session.set("searchQuery", event.target.value.toLowerCase());
+    },
     'change #files': function(event, template) {
         Session.set("loading", true);
         console.log("Changed file");
