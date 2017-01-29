@@ -58,6 +58,16 @@ Template.HomePage.events({
 });
 
 Template.newFileModal.events({
+  'click #cloneGitRepo': function() {
+      var repo = $("#repoURL").val();
+      console.log(repo);
+      Session.set("loading", true);
+      Meteor.call("gitClone", repo, function(e) {
+        Meteor.call("updateJSON", Meteor.userId());
+        Session.set("foldersRendered", Random.id());;
+        Session.set("loading", false);
+      });
+    },
   'click #createNewFile': function(event, template) {
   $(function(){
     console.log("---------------------------------main start");
