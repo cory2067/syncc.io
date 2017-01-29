@@ -1,15 +1,21 @@
 import { Tracker } from 'meteor/tracker'
 import { Documents } from '../../collections/files'
+import { Session } from 'meteor/session'
+import { Random } from 'meteor/random'
 
 Template.ProjectHead.events({
     'click #cloneBtn': function() {
       var repo = prompt("repo no URL wa nan desu ka?");
       console.log(repo);
+      Session.set("loading", true);
       Meteor.call("gitClone", repo, function(e) {
         Meteor.call("updateJSON", Meteor.userId());
+        Session.set("foldersRendered", Random.id());;
+        Session.set("loading", false);
       });
     },
     'change #files': function(event, template) {
+        Session.set("loading", true);
         console.log("Changed file");
         var file = event.currentTarget.files[0];
         if (file) {
@@ -32,11 +38,13 @@ Template.ProjectHead.events({
                     Meteor.call("assignFile", [fileObj._id, fileObj.name]);
                     Meteor.call("updateJSON", Meteor.userId());
                 }
+                Session.set("loading", false);
             });
             uploadInstance.start();
         }
     },
     'change #zip': function(event, template) {
+        Session.set("loading", true);
         console.log("Changed zip file");
         var file = event.currentTarget.files[0];
         if (file) {
@@ -59,8 +67,8 @@ Template.ProjectHead.events({
                     console.log("Successfully uploaded" + fileObj.name);
                     Meteor.call("assignFile", [fileObj._id, fileObj.name], function() {
                         Meteor.call('unzip', [fileObj.name, fileObj._storagePath], function() {
-                          locatiion.reload();
-                          //Meteor.call("updateJSON", Meteor.userId());
+                          Session.set("foldersRendered", Random.id());
+                          Session.set("loading", false);
                         });
                     });
                     Meteor.call("updateJSON", Meteor.userId());

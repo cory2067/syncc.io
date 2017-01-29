@@ -13,9 +13,14 @@ Template.ProjectList.onCreated(()=>{
     Meteor.subscribe('editusers');
     Session.set('pathString', "/"+Meteor.userId());
     Session.set('currPath', [Meteor.userId()]);
+    Session.set('foldersRendered', "meme");
+    Session.set("loading", false);
 });
 
 Template.ProjectList.helpers({
+    loading: function() {
+      return Session.get("loading");
+    },
     collabDocs: function() {
         var a = Documents.find({"collab": Meteor.userId()}).fetch();
         for(var q=0; q<a.length; q++) {
@@ -43,6 +48,7 @@ Template.ProjectList.helpers({
         return a;
     },
     folders: function () {
+        var eman17 = Session.get("foldersRendered"); //rerenders on change
         Meteor.call('makeDir');
         console.log("fetching folders");
         var pathString = Session.get('pathString');
@@ -118,11 +124,11 @@ Template.ProjectList.events({
         pathString = pathString.substring(0,pathString.indexOf(clicked) + clicked.length);
         console.log("pathString is now" + pathString);
         Session.set('pathString', pathString);
-    }, 
+    },
     'click #path': function(event, template) {
         var clicked = event.target.textContent.replace(/\W/g, '');
         console.log(".........................................clicked path "+clicked);
-        if (clicked==='home') 
+        if (clicked==='home')
         {
             clicked = Meteor.userId();
         }
