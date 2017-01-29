@@ -178,6 +178,11 @@ Meteor.methods({
         console.log("User"+ id);
         if (id) {
             var basepath = Meteor.absolutePath + "/files/"+id;
+            fs.ensureDirSync(basepath, function(err) {
+                if (err) {
+                    console.log("Error ensuring directory");
+                }
+            });
             console.log("path:" + basepath);
             var curr = CurrJSON.find().fetch();
             DirectoryStructureJSON.getStructure(fs, basepath, Meteor.bindEnvironment(function (err, structure, total) {
