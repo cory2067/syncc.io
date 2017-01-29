@@ -1,23 +1,21 @@
 <template name="HomePage">
-  <div id="homebgd">
-  {{> Header}}
-    <div class="home-wrapper">
-      <h1>SYNCC</h1>
-      {{#if getUser}}
-        <!--INSERT PROFILE PAGE HERE (or dashboard)-->
-        <p>you are logged in. welcome, {{getUser}}.</p>
-      {{else}}
-        <p class="sub">welcome to the site thing</p>
-        <a href="#" id="demoEditor" class="button">Demo</a>
-        <!-- this is broken, don't know how to access the login popup-->
-        <a href="" class="button" id="signup">Log in</a>
-      {{/if}}
+  {{#if getUser}}
+    <div id="profilebgd">
+      {{> Header}}
+      {{> ProfilePage}}
     </div>
+  {{else}}
+    <div id="homebgd">
+    {{> Header}}
+      <div class="home-wrapper">
+        <h1>SYNCC</h1>
+          <p class="sub">welcome to the site thing</p>
+          <a href="#" id="demoEditor" class="button">Demo</a>
+          <a href="" class="button" id="signup">Log in</a>
+      </div>
+    </div>
+  {{/if}}
 
-    <!-- this tree doesn't need to be here -->
-    <!-- <div id="jstree"></div> -->
-  </div>
-  
   <script>
     //acts as if the sign in link in the header was clicked
     $(function(){

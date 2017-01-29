@@ -300,6 +300,41 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
 
 
 /***********************
+   Profile Page Styles
+***********************/
+  #profilebgd{
+    background-size: cover;
+    background-color: white;
+    height: inherit;
+  }
+
+  .profile-wrapper{
+    margin: 7% 22% 0;
+
+    .col-md-4{width: 275px;}
+
+    .prof-main{
+      margin-bottom: 25px;
+
+      .prof-pic{
+        width: 150px;
+        height: 150px;
+        background: $cloud;
+        border-radius: 50%;
+      }
+
+      .prof-subtitle{
+        font-style: italic;
+        color: $chrome;
+      }
+    }
+    
+    h3{font-weight: bold; font-size: 1.4em;}
+  }
+
+
+
+/***********************
       About Styles
 ***********************/
   .about{

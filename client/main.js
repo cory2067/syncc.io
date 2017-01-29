@@ -57,6 +57,20 @@ Template.HomePage.events({
     }
 });
 
+Template.ProfilePage.helpers({
+    getUser() {
+      a= Meteor.user();
+      if(a) {
+        a['email'] = a['emails'][0]['address']
+        a['name'] = a['email'].split("@")[0]
+        return a;
+      }
+      else {
+        return '';
+      }
+    }
+});
+
 Template.newFileModal.events({
   'click #cloneGitRepo': function() {
       var repo = $("#repoURL").val();

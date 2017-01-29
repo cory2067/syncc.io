@@ -1,3 +1,32 @@
 <template name="ProfilePage">
     <!--Will serve as the new home page when a user is logged in-->
+    <div class="profile-wrapper">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="row prof-main">
+                    <div class="prof-pic"></div>
+                    <h2>{{getUser.name}}</h2>
+                    <p class="prof-subtitle">{{getUser.email}}</p>
+                    </div>
+                <div class="row">
+                    <h3>Friends</h3>
+                    <ul>
+                        <!--LOL this will be fixed somehow-->
+                        <li>cor</li>
+                        <li>mtan</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="row">
+                    <h3>Biography</h3>
+                    <p>I have no idea what the fcc to put on the profile page</p>
+                </div>
+                <div class="row">
+                    <h3>Projects</h3>
+                    <p>Not sure if we actually want this even (are we even implementing projects)</p>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
