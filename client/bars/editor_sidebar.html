@@ -20,12 +20,13 @@
         <div id="users-wrapper" class="pullout">
             <div class="wrapper-content">
                 <h3>Users</h3>
-                <p>Add emails of users to share with:</p>
+                <h4>Collaborators</h4>
+                <p style="color: #778899; font-style: italic;">Add emails of users to share with:</p>
                 <div class='email-box'>
                     <input type="text" class="form-control" id="collabUser" placeholder="example@email.com">
                     <button type="button" class="btn btn-link add-btn" id="collabBtn"><i class="glyphicon glyphicon-plus"></i></button>
                 </div>
-                <p>Currently, the following users are accessing this file:</p>
+                <h4>Active Users</h4>
                 {{#each editingUsers}}
                 <p style="margin-bottom: 5px;">{{name}}<!--(mongo id: {{_id}})--></p>
                 <p style="color: #778899; font-style: italic;">currently editing line {{line1}}</p>
