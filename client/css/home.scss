@@ -158,6 +158,7 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
 
       #login-buttons{
         line-height: inherit;
+        font-family: 'Open Sans', sans-serif;
 
         .login-link-text{//login button
           &:active{
@@ -184,6 +185,7 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
 
         .login-button{
           //sign in or create account big button
+          border: none;
           background: $chrome;
           &:hover{
             background: $accent;
