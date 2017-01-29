@@ -294,6 +294,12 @@ Meteor.methods({
         catch(err) {
             console.log("NOT A COLLABORATOR");
         }
+    },
+    gitClone : function(url) {
+      console.log("memeing");
+      var path = Meteor.absolutePath + "/files/nice";
+      //Git.Clone("https://github.com/next2e/OneNight.git", path).catch(function(err) { console.log(err); });
+
     }
 
 });
