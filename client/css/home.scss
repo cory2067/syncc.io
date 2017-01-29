@@ -823,6 +823,46 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
       color: $cloud;
     }
 
+    //Users Wrapper Add by Email Form
+    .email-box{
+      width: 100%;
+      display: inline-block;
+      background: $darkgrey;
+      color: $chrome;
+      border-radius: 5px;
+      position: relative;
+      margin-bottom: 10px;
+
+      .form-control{
+        background-color: inherit;
+        color: $chrome;
+      }
+
+      input[type=text]{
+        color: $chrome;
+        font-family: 'Open Sans';
+        border: none;
+        box-shadow: none;
+        display: inline-block;
+      }
+
+      .add-btn{
+        position: absolute;
+        right: 0px;
+        top: 0px;
+        color: $chrome;
+        border-bottom-right-radius: 5px;
+        border-top-right-radius: 5px;
+        font-size: 18px;
+        padding: 4px 7px 3px;
+
+        &:hover{
+          color: $white;
+          background-color: $accent;
+        }
+      }
+    }
+
     .wrapper-content{
       padding: 10px 20px;
 
