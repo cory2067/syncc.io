@@ -43,7 +43,7 @@ Template.EditorPage.onCreated(() => {
           file_name =  file[0].name;
       }
       console.log(file_name +"told to write" + content + " to "+ path);
-      Meteor.call('writeFile', [content, path, file_name]);  
+      Meteor.call('writeFile', [content, path, file_name]);
 
   }, 3000);
 
