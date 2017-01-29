@@ -20,8 +20,6 @@
         <!--new button-->
         <button id="newBtn" class="btn newff" data-toggle="modal" data-target="#newOpt" data-backdrop="false">New</button>
 
-        <a id="cloneBtn" href="">git clone</a>
-
         <!--popup-->
         <div id="newOpt" class="modal fade" role="dialog">
             <div class="modal-content">
@@ -32,28 +30,38 @@
                     <div class="modal-body">
                         <div style="border-bottom: 1px solid #E2E5E9">
                         <button class="btn btn-default" id="new_file" data-toggle="modal" data-target="#newFile">
-                            <i class='glyphicon glyphicon-file'></i>
+                            <i class="octicon octicon-file-code"></i>
                             New File
                         </button>
                         <button class="btn btn-default dividing" id="new_folder">
-                            <i class='glyphicon glyphicon-folder-open'></i>
+                            <i class="octicon octicon-file-directory"></i>
                             New Folder
                         </button>
                         </div>
+                        
+                        <div style="border-bottom: 2px solid #E2E5E9">
                         <form>
                             <label class="btn btn-default" for="files">
                                 <input type="file" id="files" name="files" multiple/>
-                                <i class='glyphicon glyphicon glyphicon-download-alt'></i>
+                                <i class="octicon octicon-file-symlink-file"></i>
                                 Upload File
                             </label>
                         </form>
                         <form>
                             <label class="btn btn-default" for="zip">
                                 <input type="file" id="zip" name="zipFile"/>
-                                <i class='glyphicon glyphicon-level-up'></i>
+                                <i class="octicon octicon-file-zip"></i>
                                 Upload Folder (.ZIP)
                             </label>
                         </form>
+                        </div>
+
+                        <div>
+                            <button class="btn btn-default" id="cloneBtn" data-toggle="modal" data-target="#gitClone">
+                                <i class="octicon octicon-mark-github"></i>
+                                Git Clone
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

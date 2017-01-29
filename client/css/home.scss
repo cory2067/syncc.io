@@ -566,6 +566,7 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
       }
 
       .glyphdocs{
+        font-size: 1.2em;
         margin-right: 10px;
       }
 
@@ -779,6 +780,8 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
         }
 
         &:focus{background: none;}
+
+        .octicon{font-size: 1.3em;}
       }
     }
 
@@ -1028,7 +1031,7 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
 /**********************
     NEW FILE MODAL
 **********************/
-  #newFile{
+  .newModal{
     width: 500px;
     margin-top: 15%;
     margin-left: auto;

@@ -29,7 +29,7 @@
     {{#each folders}}
         <div class="row docsrow">
             <div class="col-md-6">
-                <i class="glyphicon glyphdocs glyphicon-folder-open"></i>
+                <i class="octicon glyphdocs octicon-file-directory"></i>
                 <a id="folder" href="#">{{this}}</a>
             </div>
             <div class="col-md-6">
@@ -46,7 +46,7 @@
     {{#each docs}}
         <div class="row docsrow">
             <div class="col-md-6">
-                <i class="glyphicon glyphdocs glyphicon-file"></i>
+                <i class="octicon glyphdocs octicon-file-code"></i>
                 <a href="/{{this._id}}">{{this.name}}</a>
             </div>
             <div class="col-md-6">
@@ -67,7 +67,7 @@
     {{#each collabDocs}}
         <div class="row docsrow">
             <div class="col-md-6">
-                <i class="glyphicon glyphdocs glyphicon-file"></i>
+                <i class="octicon glyphdocs octicon-file"></i>
                 <a href="/{{this._id}}">{{this.name}}</a>
             </div>
             <div class="col-md-6">

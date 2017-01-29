@@ -16,6 +16,7 @@
     "fs-extra": "^2.0.0",
     "meteor-node-stubs": "~0.2.0",
     "node-dir": "^0.1.16",
+    "octicons": "^5.0.1",
     "path": "^0.12.7",
     "source-map-support": "^0.4.10",
     "sys": "0.0.1",
