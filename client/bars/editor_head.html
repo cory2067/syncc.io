@@ -17,6 +17,8 @@
                 <li><button id="newFileBtn" class="btn newBtn" data-toggle="modal" data-target="#newFile" >New</button></li>
                 <!--<li><button id="downloadBtn" class="btn newBtn">Download</button></li>-->
                 <li><button id="exportBtn" class="btn newBtn" data-toggle="modal" data-target="#exportFile">Export</button></li>
+                <li><button id="runBtn" class="btn newBtn">Run .py</button></li>
+                <li><button id="runJsBtn" class="btn newBtn">Run .js</button></li>
                 <li><p id="saveMsg">saved</p></li>
             </div>
         </ul>
@@ -63,6 +65,34 @@
     </div>
 
     <script>
+    function outf(text) {
+        console.log(text);
+    }
+    function builtinRead(x) {
+      if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+              throw "File not found: '" + x + "'";
+      return Sk.builtinFiles["files"][x];
+    }
+
+    $("#runJsBtn").on('click', function() {
+      var code = $('.CodeMirror')[0].CodeMirror.getValue();
+      code = code.replace(/console.log/g, 'alert');
+      eval(code);
+    });
+    $("#runBtn").on('click', function() {
+      var prog = $('.CodeMirror')[0].CodeMirror.getValue();
+      Sk.pre = "output";
+      Sk.configure({output:outf, read:builtinRead});
+      var myPromise = Sk.misceval.asyncToPromise(function() {
+          return Sk.importMainWithBody("<stdin>", false, prog, true);
+      });
+      myPromise.then(function(mod) {
+          console.log('success');
+      },
+          function(err) {
+          console.log(err.toString());
+      });
+    });
     function showSave() {
         //console.log("mamaee");
         $("#saveMsg").fadeIn(500);
