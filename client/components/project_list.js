@@ -62,7 +62,7 @@ Template.ProjectList.helpers({
     },
     path: function () {
         var a = Session.get('currPath').slice(0);
-        console.log("THIS IS A BEFORE: " + a);
+        //console.log("THIS IS A BEFORE: " + a);
         for(var q=0; q<a.length; q++) {
             if(q==0){
                 a[q] = {name: "home", glyph: false};
@@ -126,18 +126,24 @@ Template.ProjectList.events({
         {
             clicked = Meteor.userId();
         }
-        var pathArray = Session.get('currPath').slice(0);
-        console.log("currPath is "+pathArray);
-        var index = pathArray.indexOf(clicked);
-        pathArray = pathArray.slice(0, index+1);
-        Session.set('currPath', pathArray);
+        
+        if (clicked != '')
+        {
+            var pathArray = Session.get('currPath').slice(0);
+            console.log("currPath is "+pathArray);
+            var index = pathArray.indexOf(clicked);
+            pathArray = pathArray.slice(0, index+1);
+            Session.set('currPath', pathArray);
 
-        //parsing string
-        var pathString = Session.get('pathString');
-        console.log("original path string: "+pathString);
-        console.log("index: "+pathString.indexOf(clicked));
-        pathString = pathString.substring(0,pathString.indexOf(clicked) + clicked.length);
-        console.log("pathString is now" + pathString);
-        Session.set('pathString', pathString);
+            //parsing string
+            var pathString = Session.get('pathString');
+            console.log("original path string: "+pathString);
+            console.log("index: "+pathString.indexOf(clicked));
+            pathString = pathString.substring(0,pathString.indexOf(clicked) + clicked.length);
+            console.log("pathString is now" + pathString);
+            Session.set('pathString', pathString);
+        } else {
+            console.log("you tried to break it;")
+        }
     }
 });
