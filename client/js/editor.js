@@ -329,6 +329,24 @@ Template.EditorSidebar.helpers({
   editingUsers() {
     return EditUsers.find({editor: FlowRouter.getParam("editID")}).fetch();
   },
+  collaborators() {
+    console.log("##################################################Getting collaborators");
+    var file =  Documents.find({'_id': FlowRouter.getParam("editID")}).fetch();
+    console.log(file);
+    if(file.length) {
+        var collabId = file[0].collab;
+        console.log("returning");
+        console.log(collabId);
+        var collabEmail = collabId.map(function(id) {
+            var user =  Meteor.users.find().fetch();
+            console.log("User:");
+            return user[0].emails[0].address;
+            
+        });
+        return collabEmail;
+    }
+    return []
+  }
 });
 
 Template.EditorSidebar.events({
