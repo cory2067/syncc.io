@@ -309,7 +309,8 @@ Meteor.methods({
       //this.unblock();
       var command="cd "+path+"; git clone " + url;
       var done = false;
-      basepath = path + "/bennett"
+      var name = url.split('/');
+      basepath = path + "/" + name[name.length-1].split('.')[0];
       exec(command,Meteor.bindEnvironment(function(error,stdout,stderr){
         DirectoryStructureJSON.getStructure(fs, basepath, Meteor.bindEnvironment(function (err, structure, total) {
             if (err) console.log(err);
