@@ -2,6 +2,13 @@ import { Tracker } from 'meteor/tracker'
 import { Documents } from '../../collections/files'
 
 Template.ProjectHead.events({
+    'click #cloneBtn': function() {
+      var repo = prompt("repo no URL wa nan desu ka?");
+      console.log(repo);
+      Meteor.call("gitClone", repo, function(e) {
+        Meteor.call("updateJSON", Meteor.userId());
+      });
+    },
     'change #files': function(event, template) {
         console.log("Changed file");
         var file = event.currentTarget.files[0];
@@ -52,7 +59,8 @@ Template.ProjectHead.events({
                     console.log("Successfully uploaded" + fileObj.name);
                     Meteor.call("assignFile", [fileObj._id, fileObj.name], function() {
                         Meteor.call('unzip', [fileObj.name, fileObj._storagePath], function() {
-                          location.reload();
+                          locatiion.reload();
+                          //Meteor.call("updateJSON", Meteor.userId());
                         });
                     });
                     Meteor.call("updateJSON", Meteor.userId());

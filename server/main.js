@@ -11,6 +11,7 @@ import unzip from 'unzip'
 import touch from 'touch'
 import path from 'path'
 import dir from 'node-dir'
+import { exec } from 'child_process'
 import DirectoryStructureJSON from 'directory-structure-json'
 
 Meteor.startup(() => {
@@ -299,6 +300,49 @@ Meteor.methods({
         catch(err) {
             console.log("NOT A COLLABORATOR");
         }
+    },
+    gitClone : function(url) {
+      console.log("memeing");
+      console.log(url);
+      var path = Meteor.absolutePath + "/files/"+Meteor.userId();
+      //Git.Clone("https://github.com/next2e/OneNight.git", path).catch(function(err) { console.log(err); });
+      //this.unblock();
+      var command="cd "+path+"; git clone " + url;
+      var done = false;
+      var name = url.split('/');
+      basepath = path + "/" + name[name.length-1].split('.')[0];
+      exec(command,Meteor.bindEnvironment(function(error,stdout,stderr){
+        DirectoryStructureJSON.getStructure(fs, basepath, Meteor.bindEnvironment(function (err, structure, total) {
+            if (err) console.log(err);
+            console.log("structure" + structure);
+            var userId = Meteor.userId();
+            structure = structure;
+            DirectoryStructureJSON.traverseStructure(structure, basepath,
+            function (folder, path) {
+                console.log('folder found: ', folder.name, 'at path: ', path);
+            },
+            function (file, path) {
+                console.log('file found: ', file.name, 'at path: ', path);
+                Documents.addFile(path+'/'+file.name, {
+                    fileName: file.name,
+                    storagePath: path,
+                    userId: Meteor.userId()
+                }, function(err, fileObj) {
+                    if (err) {
+                        console.log("error adding" + err);
+                    } else {
+                        console.log("added successfully");
+                        console.log(fileObj._id);
+                        console.log("id"+userId);
+                        Documents.update({_id: fileObj._id}, {$set: {collab: [], userId: userId}});
+                    }
+                });
+            });
+            done = true;
+        }));
+      }));
+      while(!done) Meteor.sleep(100);
+      return "done"
     }
 
 });
