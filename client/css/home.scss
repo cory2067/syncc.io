@@ -914,6 +914,11 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
           background-color: $accent;
         }
       }
+
+      .disabled:hover{
+        color: $chrome;
+        background-color: $blacc;
+      }
     }
 
     .wrapper-content{
@@ -1052,6 +1057,7 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
 
   #console-bottombar{
     background: $darkgrey;
+    color: $chrome;
     height: $consoleheight;
     width: 100%;
   }

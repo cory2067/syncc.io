@@ -1,0 +1,24 @@
+<template name="NeditorConsole">
+    <div id="console-wrapper">
+        <div id="mini-bottombar">
+            <ul>
+                <li>
+                    <a href="" id="show-console"><i class="octicon octicon-terminal"></i>  console</a>
+                </li>
+            </ul>
+            <!--constant existant bar that toggles pull out-->
+        </div>
+        <div id="console-bottombar">
+            <div class="padded">
+                <p>No file open to run</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $("#show-console").click(function(e){
+            e.preventDefault();
+            $("#console-wrapper").toggleClass("toggled");
+        });
+    </script>
+</template>

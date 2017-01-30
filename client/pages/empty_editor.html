@@ -1,16 +1,18 @@
 <template name="NeditorPage">
   <div id="editBgd">
     {{> EditorHead}}
-    {{> EditorSidebar}}
+    {{> NeditorSidebar}}
 
     <div id="page-content-wrapper">
         <div class="err">
-            <!-- this won't be a banana forever-->
+            <!-- this won't be a banana forever or maybe it will be-->
             <img src="/imgs/closebanana.png" alt="oops" class="banana">
             <h3 style="color: #778899"> Currently No Files Open </h3>
             <p> Create a new one or open an existing file from the File Directory </p>
         </div>
     </div>
+
+    {{> NeditorConsole}}
   </div>
 
   <script>

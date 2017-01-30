@@ -418,7 +418,6 @@ Template.EditorConsole.helpers({
       if(e == "js" || e == "py") { l = true }
       return {ext: e, legal:l};
     }
-
   }
 });
 
