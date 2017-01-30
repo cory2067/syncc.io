@@ -351,6 +351,11 @@ Meteor.methods({
         var query = { path: new RegExp('^' + rpath) };
         console.log(query);
         var matches = Documents.remove(query);
+    }, 
+    removeFile: function(path) {
+        console.log("Deleting file at: "+ path);
+        fs.removeSync(path);
+
     }
 
 });

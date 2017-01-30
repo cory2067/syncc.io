@@ -103,6 +103,7 @@ Template.ProjectList.events({
     'click #remove': function(event, template) {
         try {
           Documents.remove({_id: this._id});
+          Meteor.call('removeFile', this.path);
         } catch(e) {
           alert("error deleting");
         }
