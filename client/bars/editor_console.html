@@ -1,0 +1,26 @@
+<template name="EditorConsole">
+    <div id="console-wrapper">
+        <div id="mini-bottombar">
+            <ul>
+                <li>
+                    <a href="" id="show-console"><i class="octicon octicon-terminal"></i>  console</a>
+                </li>
+                <li style="float: right;">
+                    <a href="" id="run-py"><i class="glyphicon glyphicon-play"></i> run .py</a>
+                </li>
+            </ul>
+            <!--constant existant bar that toggles pull out-->
+        </div>
+        <div id="console-bottombar">
+            <!--OUTPUT CODE GOES HERE-->
+            <!-- if no file open, should say so here and prevent running -->
+        </div>
+    </div>
+
+    <script>
+        $("#show-console").click(function(e){
+            e.preventDefault();
+            $("#console-wrapper").toggleClass("toggled");
+        });
+    </script>
+</template>

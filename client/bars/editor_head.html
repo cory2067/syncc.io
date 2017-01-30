@@ -5,7 +5,11 @@
             <div class="editLeft">
                 <li><a href="" class="title">{{#if currentUser}}{{getFileName}}{{else}}Demo{{/if}}</a></li>
                 <li>
-                    <a href="" class="backGlyph" onclick="history.back(-1)"><i class="glyphicon glyphicon-chevron-left"></i></a>
+                    {{#if currentUser}}
+                         <a href="/projects" class="backGlyph"><i class="glyphicon glyphicon-chevron-left"></i></a>
+                     {{else}}
+                         <a href="/" class="backGlyph"><i class="glyphicon glyphicon-chevron-left"></i></a>
+                     {{/if}}
                 </li>
             </div>
             <div class="editRight">
@@ -14,8 +18,8 @@
                 <li><button id="newFileBtn" class="btn newBtn" data-toggle="modal" data-target="#newFile" >New</button></li>
                 <!--<li><button id="downloadBtn" class="btn newBtn">Download</button></li>-->
                 <li><button id="exportBtn" class="btn newBtn" data-toggle="modal" data-target="#exportFile">Export</button></li>
-                <li><button id="runBtn" class="btn newBtn">Run .py</button></li>
-                <li><button id="runJsBtn" class="btn newBtn">Run .js</button></li>
+                <!--<li><button id="runBtn" class="btn newBtn">Run .py</button></li>
+                <li><button id="runJsBtn" class="btn newBtn">Run .js</button></li>-->
                 <li><p id="saveMsg">saved</p></li>
             </div>
         </ul>

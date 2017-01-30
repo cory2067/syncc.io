@@ -155,74 +155,73 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
       /************************
             Login Popup
       ************************/
-
-      #login-buttons{
-        line-height: inherit;
-        font-family: 'Open Sans', sans-serif;
-
-        .login-link-text{//login button
-          &:active{
-            background-color: $accented;
-            color: $white;
-          }
-        }
-
-        .login-close-text{ //changes the close button
-          color: $charcoal;
-          padding: 0px;
-          float: right;
-          padding-bottom: 0px;
-          line-height: normal;
-          text-transform: none;
-          font-size: .7em;
+        #login-buttons{
+          line-height: inherit;
           font-family: 'Open Sans', sans-serif;
-  
-          &:hover{
-            background-color: white;
-            color: $accent;
+
+          .login-link-text{//login button
+            &:active{
+              background-color: $accented;
+              color: $white;
+            }
+          }
+
+          .login-close-text{ //changes the close button
+            color: $charcoal;
+            padding: 0px;
+            float: right;
+            padding-bottom: 0px;
+            line-height: normal;
+            text-transform: none;
+            font-size: .7em;
+            font-family: 'Open Sans', sans-serif;
+    
+            &:hover{
+              background-color: white;
+              color: $accent;
+            }
+          }
+
+          .login-button{
+            //sign in or create account big button
+            border: none;
+            background: $chrome;
+            &:hover{
+              background: $accent;
+            }
+          }
+
+          .accounts-dialog{ //moves box so it doesn't float off the screen
+            top: 120%;
+            left: -85px;
+          }
+
+          .additional-link-container{ //contains signup and forgot password
+            display: inline; //allows to be on the same line
+          }
+
+          #signup-link{ //signup button 
+            float: left;
+          }
+
+          #forgot-password-link{ //forgot password button
+            float: right;
+          }
+
+          .additional-link{ //style type of both sign up and forgot password
+            text-transform: none;
+            line-height: normal;
+            text-transform: none;
+            float: none;
+            padding: 0;
+            margin: 10px 0;
+
+            &:hover{
+              background-color: white;
+              color: $accent;
+            }
           }
         }
-
-        .login-button{
-          //sign in or create account big button
-          border: none;
-          background: $chrome;
-          &:hover{
-            background: $accent;
-          }
-        }
-
-        .accounts-dialog{ //moves box so it doesn't float off the screen
-          top: 120%;
-          left: -85px;
-        }
-
-        .additional-link-container{ //contains signup and forgot password
-          display: inline; //allows to be on the same line
-        }
-
-        #signup-link{ //signup button 
-          float: left;
-        }
-
-        #forgot-password-link{ //forgot password button
-          float: right;
-        }
-
-        .additional-link{ //style type of both sign up and forgot password
-          text-transform: none;
-          line-height: normal;
-          text-transform: none;
-          float: none;
-          padding: 0;
-          margin: 10px 0;
-
-          &:hover{
-            background-color: white;
-            color: $accent;
-          }
-        }
-      }
     }
     
     //Responsive Navbar {fixed}
@@ -988,6 +987,65 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
     input:focus + .slider{ box-shadow: 0 0 1px $accent; }
     input:checked + .slider:before{ transform: translateX(16px); }
   }  
+
+
+
+/**********************
+ Editor Console Styles
+**********************/
+  $miniheight: 20px;
+  $consoleheight: 150px;
+
+  #console-wrapper{
+    position: fixed;
+    bottom: 0;
+    margin-bottom: -$consoleheight;
+    width: 100%;
+    height: $miniheight + $consoleheight;
+    z-index: 999;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+
+    &.toggled{
+      margin-bottom: 0px;
+    }
+  }
+  
+  #mini-bottombar{
+    background-color: $accented;
+    height: $miniheight;
+    width: 100vw;
+    //display: inline-block; 
+
+    ul{ 
+      padding: 0 10px;
+      list-style-type: none; //removes the bullets
+      margin:0;
+    }
+
+    li{
+      float: left; //without this float, they will not populate on the same line
+      height: $miniheight;
+
+      a{
+        color: $cloud;
+        text-align: center;
+        padding: 0 10px;
+        white-space: nowrap;
+
+        &:hover{
+          background-color: $accent;
+        }
+      }
+    }  
+  }
+
+  #console-bottombar{
+    background: $darkgrey;
+    height: $consoleheight;
+    width: 100%;
+  }
 
 
 
