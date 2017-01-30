@@ -107,6 +107,12 @@ Template.ProjectList.events({
           alert("error deleting");
         }
     },
+    'click #removeFolder': function(event, template) {
+        Session.set('loading', true);
+        console.log("Told to remove folder");
+        Meteor.call('removeFolder', Session.get('pathString')+"/"+this);
+        Session.set('loading', false);
+    },
     'click #folder': function(event, template) {
         //forward that directory
         console.log("--------------------------------------clicked folder");

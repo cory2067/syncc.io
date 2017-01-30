@@ -343,6 +343,14 @@ Meteor.methods({
       }));
       while(!done) Meteor.sleep(100);
       return "done"
+    }, 
+    removeFolder: function(path) {
+        var rpath = Meteor.absolutePath+"/files"+path;
+        console.log(rpath);
+        fs.removeSync(rpath);
+        var query = { path: new RegExp('^' + rpath) };
+        console.log(query);
+        var matches = Documents.remove(query);
     }
 
 });
