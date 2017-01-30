@@ -16,6 +16,14 @@ Template.ProjectHead.events({
                 file: file,
                 streams: 'dynamic',
                 chunkSize: 'dynamic',
+                onBeforeUpload: function(file) {
+                    if (file.size <= 10485760) {
+                        return true;
+                    } else {
+                        return ('Please upload files less than 10MB');
+                        Session.set("loading", false);
+                    }
+                }
             }, false);
             uploadInstance.on('error', function(error, fileObj) {
                 alert('Error during upload: '+error);
@@ -53,9 +61,14 @@ Template.ProjectHead.events({
                 chunkSize: 'dynamic',
                 onBeforeUpload: function (file) {
                     if (/zip/i.test(file.extension)) {
-                        return true;
                     } else {
                         alert('Only allowed to add zip files, use the upload files feature instead')
+                        Session.set("loading", false);
+                    }
+                    if (file.size <= 10485760) {
+                        return true;
+                    } else {
+                        alert('Please upload files less than 10MB');
                         Session.set("loading", false);
                     }
                 }
