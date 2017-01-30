@@ -488,6 +488,32 @@ Template.EditorPage.events({
     }
 });
 
+Template.EditorConsole.helpers({
+    fileType() {
+      var modeInput = Documents.find({'_id': FlowRouter.getParam("editID")}).fetch();
+      if(modeInput.length==0) {
+        return;
+      }
+      var val = modeInput[0].name, m, mode, spec;
+      //console.log(val);
+      if (m = /.+\.([^.]+)$/.exec(val)) {
+        var info = CodeMirror.findModeByExtension(m[1]);
+        //console.log("logged info is" + info);
+        if (info) {
+          mode = info.mode;
+          spec = info.mime;
+          //console.log("logged mode is" + mode);
+        }
+      }
+      if (mode) {
+        a = {name: val, type: mode,}
+        return a;
+      } else {
+        console.log("Could not find a mode corresponding to " + val);
+      }
+  }
+});
+
 Template.EditorPage.onDestroyed(function() {
   console.log(":o you're trying to destroy the page");
   EditUsers.remove({_id : userId});
