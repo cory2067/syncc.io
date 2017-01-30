@@ -3,6 +3,7 @@ import { Documents } from '../../collections/files'
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var'
 import { Session } from 'meteor/session'
+import { Random } from 'meteor/random'
 
 import path from 'path';
 import fs from 'fs';
@@ -111,8 +112,10 @@ Template.ProjectList.events({
     'click #removeFolder': function(event, template) {
         Session.set('loading', true);
         console.log("Told to remove folder");
-        Meteor.call('removeFolder', Session.get('pathString')+"/"+this);
-        Session.set('loading', false);
+        Meteor.call('removeFolder', Session.get('pathString')+"/"+this, function() {
+          Session.set('loading', false);
+          Session.set('foldersRendered', Random.id());
+        });
     },
     'click #folder': function(event, template) {
         //forward that directory
