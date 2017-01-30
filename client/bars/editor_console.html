@@ -1,4 +1,5 @@
 <template name="EditorConsole">
+    {{#if type.legal}}
     <div id="console-wrapper">
         <div id="mini-bottombar">
             <ul>
@@ -6,21 +7,64 @@
                     <a href="" id="show-console"><i class="octicon octicon-terminal"></i>  console</a>
                 </li>
                 <li style="float: right;">
-                    <a href="" id="run-py"><i class="glyphicon glyphicon-play"></i> run .py</a>
+                    <a href="" id="runBtn"><i class="glyphicon glyphicon-play"></i> run .<span id="type">{{type.ext}}</span></a>
                 </li>
             </ul>
             <!--constant existant bar that toggles pull out-->
         </div>
         <div id="console-bottombar">
+            <pre id="output"></pre>
             <!--OUTPUT CODE GOES HERE-->
             <!-- if no file open, should say so here and prevent running -->
         </div>
     </div>
+    {{/if}}
 
     <script>
-        $("#show-console").click(function(e){
-            e.preventDefault();
-            $("#console-wrapper").toggleClass("toggled");
-        });
+      $("#show-console").click(function(e){
+          e.preventDefault();
+          $("#console-wrapper").toggleClass("toggled");
+      });
+      function outf(text) {
+          $("#output").append(text);
+          $('#output').scrollTop($('#output').prop("scrollHeight"));
+      }
+      function builtinRead(x) {
+        if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+        return Sk.builtinFiles["files"][x];
+      }
+      $(function(){
+      $("#runBtn").on('click', function() {
+        if($("#console-wrapper").toggleClass("toggled")) {
+          $("#console-wrapper").addClass("toggled");
+        }
+        $("#output").text("--- Running ---\n");
+        var type = $("#type")[0].innerHTML;
+        if(type == 'js') {
+          var code = $('.CodeMirror')[0].CodeMirror.getValue();
+          code = code.replace(/console.log/g, 'outf');
+          console.log(code);
+          try {
+            eval(code);
+          }
+          catch(e) { outf(e); }
+        }
+        else if(type == 'py') {
+          var prog = $('.CodeMirror')[0].CodeMirror.getValue();
+          Sk.pre = "output";
+          Sk.configure({output:outf, read:builtinRead});
+          var myPromise = Sk.misceval.asyncToPromise(function() {
+              return Sk.importMainWithBody("<stdin>", false, prog, true);
+            });
+          myPromise.then(function(mod) {
+              console.log('success');
+          },
+              function(err) {
+              outf(err.toString());
+          });
+        }
+      });
+    });
     </script>
 </template>

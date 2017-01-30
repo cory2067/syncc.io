@@ -407,6 +407,21 @@ Template.FileTabs.helpers({
   }
 });
 
+Template.EditorConsole.helpers({
+  type() {
+    var l = false;
+    var file = Documents.find({'_id': FlowRouter.getParam("editID")}).fetch();
+    console.log(file);
+    if(file.length) {
+      splitted = file[0].name.split(".");
+      e = splitted[splitted.length-1];
+      if(e == "js" || e == "py") { l = true }
+      return {ext: e, legal:l};
+    }
+
+  }
+});
+
 Template.EditorPage.helpers({
   lockUser() {
     var l = Session.get("lock");
