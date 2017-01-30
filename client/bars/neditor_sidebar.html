@@ -1,4 +1,4 @@
-<template name="EditorSidebar">
+<template name="NeditorSidebar">
     <div id="sidebar-wrapper">
 
         <div id="sidebar-mini">
@@ -21,20 +21,14 @@
             <div class="wrapper-content">
                 <h3>Users</h3>
                 <h4>Collaborators:</h4>
-                <!--<p style="color: #778899; font-style: italic;">Add emails of users to share with:</p>-->
                 <div class='email-box'>
-                    <input type="text" class="form-control" id="collabUser" placeholder="example@email.com">
-                    <button type="button" class="btn btn-link add-btn" id="collabBtn"><i class="glyphicon glyphicon-plus"></i></button>
+                    <input type="text" class="form-control" id="collabUser" placeholder="disabled - no file open" readonly>
+                    <button type="button" class="btn btn-link add-btn disabled" id="collabBtn"><i class="glyphicon glyphicon-plus"></i></button>
                 </div>
-                {{#each collaborators}}
-                <p style="margin-bottom: 5px;">{{this}}<!--(mongo id: {{_id}})--></p>
-                {{/each}}
+                <p style="margin-bottom: 5px; color: #778899; font-style: italic;">Not applicable - no file open.</p>
 
                 <h4>Active Users:</h4>
-                {{#each editingUsers}}
-                <p style="margin-bottom: 5px;">{{name}}<!--(mongo id: {{_id}})--></p>
-                <p style="color: #778899; font-style: italic;">currently editing line {{line1}}</p>
-                {{/each}}
+                <p style="margin-bottom: 5px; color: #778899; font-style: italic;">None</p>
             </div>
         </div>
 
@@ -93,30 +87,7 @@
                     <p class="settings-descript">override autodetected file type and syntax highlighting</p>
                     <div class="form-group">
                         <form id="modeForm">
-                        <select class="form-control" id="modes" onchange="selectMode()">
-                            <option>autodetect</option>
-                            <option>coffeescript</option>
-                            <option>css</option>
-                            <option>cypher</option>
-                            <option>django</option>
-                            <option>erlang</option>
-                            <option>gas</option>
-                            <option>haml</option>
-                            <option>haskell</option>
-                            <option>htmlembedded</option>
-                            <option>http</option>
-                            <option>jade</option>
-                            <option>javascript</option>
-                            <option>lua</option>
-                            <option>markdown</option>
-                            <option>octave</option>
-                            <option>perl</option>
-                            <option>php</option>
-                            <option>python</option>
-                            <option>ruby</option>
-                            <option>sql</option>
-                            <option>xml</option>
-                        </select>
+                        <input class="form-control" type="text" id="modes" value="disabled - no file open" readonly>
                         </form>
                     </div>
                 </div>
