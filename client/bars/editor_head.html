@@ -5,7 +5,11 @@
             <div class="editLeft">
                 <li><a href="" class="title">{{#if currentUser}}{{getFileName}}{{else}}Demo{{/if}}</a></li>
                 <li>
-                    <a href="" class="backGlyph" onclick="history.back(-1)"><i class="glyphicon glyphicon-chevron-left"></i></a>
+                    {{#if currentUser}}
+                         <a href="/projects" class="backGlyph"><i class="glyphicon glyphicon-chevron-left"></i></a>
+                     {{else}}
+                         <a href="/" class="backGlyph"><i class="glyphicon glyphicon-chevron-left"></i></a>
+                     {{/if}}
                 </li>
             </div>
             <div class="editRight">
