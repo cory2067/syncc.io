@@ -20,9 +20,6 @@ Template.ProjectHead.events({
             uploadInstance.on('error', function(error, fileObj) {
                 alert('Error during upload: '+error);
             });
-            uploadInstance.on('abort', function(error, fileObj) {
-                prompt('Are you sure you want to abort upload?');
-            });
             uploadInstance.on('end', function(error, fileObj) {
                 if (error) {
                     console.log("error uploading" + error);
@@ -33,7 +30,16 @@ Template.ProjectHead.events({
                 }
                 Session.set("loading", false);
             });
-            uploadInstance.start();
+            Meteor.call("getPath", function(err, path) {
+                var full = path + "/files/" + Meteor.userId()+"/"+file.name;
+                var found = Documents.find({path: full}).fetch();
+                if(found.length > 0) {
+                    alert("This file already exists. Delete the existing file before uploading again");
+                    Session.set("loading", false);
+                } else {
+                    uploadInstance.start();
+                }
+            });
         }
     },
     'change #zip': function(event, template) {
@@ -49,7 +55,8 @@ Template.ProjectHead.events({
                     if (/zip/i.test(file.extension)) {
                         return true;
                     } else {
-                        return 'Only allowed to add zip files, use the upload files feature instead'
+                        alert('Only allowed to add zip files, use the upload files feature instead')
+                        Session.set("loading", false);
                     }
                 }
             }, false);
