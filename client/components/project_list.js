@@ -17,6 +17,7 @@ Template.ProjectList.onCreated(()=>{
     Session.set('foldersRendered', "meme");
     Session.set("loading", false);
     Session.set("searchQuery", '')
+    Meteor.subscribe("userList");
 });
 
 Template.ProjectList.helpers({
@@ -24,7 +25,10 @@ Template.ProjectList.helpers({
       return Session.get("loading");
     },
     collabDocs: function() {
+        console.log("the things")
+        console.log(Documents.find().fetch());
         var a = Documents.find({"collab": Meteor.userId()}).fetch();
+        console.log(a);
         b = []
         var query = Session.get("searchQuery");
         for(var q=0; q<a.length; q++) {

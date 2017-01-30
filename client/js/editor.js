@@ -31,22 +31,7 @@ Template.EditorPage.onCreated(() => {
     Session.set("ready", true);
   });
   Meteor.subscribe("documents");
-
-  //Set save file at intevals
-  saveHandle = Meteor.setInterval(function() {
-      console.log("Interval saving");
-      var content = doc.getValue();
-      var file = Documents.find({'_id': docId}).fetch();
-      var path = file[0].path;
-      var file_name;
-      if(file.length) {
-          file_name =  file[0].name;
-      }
-      console.log(file_name +"told to write" + content + " to "+ path);
-      Meteor.call('writeFile', [content, path, file_name]);
-
-  }, 3000);
-
+  Meteor.subscribe("userList");
 
   $(window).bind('beforeunload', function() {
     EditUsers.remove({_id : userId});
@@ -185,6 +170,21 @@ Template.EditorPage.onRendered(() => {
           EditorContents.insert({editor: id, user: userId, doc: "", refresh:""}, function(err, _id) {
             editId = _id;
           });
+
+          //Set save file at intevals
+          saveHandle = Meteor.setInterval(function() {
+              console.log("Interval saving");
+              var content = doc.getValue();
+              var file = Documents.find({'_id': docId}).fetch();
+              var path = file[0].path;
+              var file_name;
+              if(file.length) {
+                  file_name =  file[0].name;
+              }
+              console.log(file_name +"told to write" + content + " to "+ path);
+              Meteor.call('writeFile', [content, path, file_name]);
+
+          }, 8000);
 
           setInterval(() => {
             EditorContents.update({_id: editId}, {$set: {doc: doc.getValue()}});
@@ -337,11 +337,16 @@ Template.EditorSidebar.helpers({
         var collabId = file[0].collab;
         console.log("returning");
         console.log(collabId);
+        console.log(Meteor.users.find().fetch());
         var collabEmail = collabId.map(function(id) {
-            var user =  Meteor.users.find().fetch();
+            console.log("id="+id);
+            var user =  Meteor.users.find(id).fetch();
+            console.log(user);
+            if(!user.length) return '';
+            console.log(user)
             console.log("User:");
             return user[0].emails[0].address;
-            
+
         });
         return collabEmail;
     }
@@ -383,7 +388,9 @@ Template.EditorSidebar.events({
   "click #collabBtn": function() {
     val = $("#collabUser").val();
     Meteor.call("findUser", [val, FlowRouter.getParam("editID")], function(e,r) {
-      console.log(r)
+      if(r == 'err') {
+        alert("Could not add! Are you sure this user exists?");
+      }
     });
   },
 });
