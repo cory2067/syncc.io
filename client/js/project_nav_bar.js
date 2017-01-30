@@ -9,6 +9,21 @@ Template.TreeProj.onCreated(() => {
   Meteor.call("updateJSON", Meteor.userId());
 });
 Template.TreeProj.onRendered(function () {
+      this.$('#jstree').jstree({
+      "themes": {
+        "theme": "apple"
+      },
+      core: {
+        themes: {
+          name: 'proton',
+          dots: true,
+          icons: true,
+          responsive: true
+        },
+        data: {text: "Loading..."}
+      }
+
+      });
     /*$("body").click(function() {
       if($('.login-close-text')[0]) {
         $(".login-close-text")[0].click();
@@ -26,20 +41,7 @@ Template.TreeProj.onRendered(function () {
       console.log("###########################################################################");
       console.log("thing being rendered"+str_JSON);
       var tree = JSON.parse(str_JSON);
-      this.$('#jstree').jstree({
-      "themes": {
-        "theme": "apple"
-      },
-      core: {
-        themes: {
-          name: 'proton',
-          dots: true,
-          icons: true,
-          responsive: true
-        },
-        data: (tree)
-      }
-
-      });
+      $('#jstree').jstree(true).settings.core.data = tree;
+      $('#jstree').jstree(true).refresh();
+    });
   });
-});

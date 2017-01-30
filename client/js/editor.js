@@ -44,7 +44,7 @@ Template.EditorPage.onCreated(() => {
     if(file.length) {
       file_name =  file[0].name;
     }
-    console.log(file_name +"told to write" + content + " to "+ path);
+    //console.log(file_name +"told to write" + content + " to "+ path);
     Meteor.call('writeFile', [content, path, file_name]);
     Meteor.call("logServer", "deelt page beforeunload");
   });
@@ -181,7 +181,7 @@ Template.EditorPage.onRendered(() => {
               if(file.length) {
                   file_name =  file[0].name;
               }
-              console.log(file_name +"told to write" + content + " to "+ path);
+              //console.log(file_name +"told to write" + content + " to "+ path
               Meteor.call('writeFile', [content, path, file_name]);
 
           }, 8000);
@@ -504,7 +504,7 @@ Template.EditorPage.events({
       if(file.length) {
         file_name =  file[0].name;
       }
-      console.log(file_name +"told to write" + content + " to "+ path);
+      //console.log(file_name +"told to write" + content + " to "+ path);
       Meteor.call('writeFile', [content, path, file_name]);
     }
 });
@@ -521,7 +521,7 @@ Template.EditorPage.onDestroyed(function() {
   if(file.length) {
     file_name =  file[0].name;
   }
-  console.log(file_name +"told to write" + content + " to "+ path);
+  //console.log(file_name +"told to write" + content + " to "+ path);
   Meteor.call('writeFile', [content, path, file_name]);
   Meteor.clearInterval(saveHandle);
 });
