@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Changes } from '../collections/changes';
+import { Profiles } from '../collections/profiles';
 import { EditUsers } from '../collections/editusers';
 import { CurrJSON } from '../collections/json';
 import { Documents } from '../collections/files'
@@ -44,6 +45,13 @@ Meteor.startup(() => {
     }
     return this.ready();
   });
+  Meteor.publish('profiles', ()=> {
+    var a = Profiles.find();
+    if(a) {
+      return a;
+    }
+    return this.ready();
+  });
   Meteor.publish('currjson', ()=> {
     var a = CurrJSON.find();
     if(a) {
@@ -53,10 +61,27 @@ Meteor.startup(() => {
   });
   Meteor.publish('userList', ()=> {
     return Meteor.users.find();
-  })
+  });
 });
 
 Meteor.methods({
+    addFriend: function(email) {
+      console.log(email);
+      try {
+        var result = Accounts.findUserByEmail(email);
+        //console.log(Documents.find(editor).fetch());
+        var exists = Profiles.find({user: Meteor.userId()}).fetch()[0]['friends'].includes(result._id);
+        if(exists) {
+          return "exists"
+        }
+        Profiles.update({user: Meteor.userId()}, {$push: {friends: result._id}});
+        return result['_id'];
+      } catch (e) {
+        console.log(e);
+        console.log("It's ok, we're gonna ignore that error and move on.");
+        return "err"
+      }
+    },
     injectFile: function(params) {
       EditorContents.insert({editor: params['editor'], file:params['file'], user:'system', doc: "", refresh:""});
     },
@@ -186,8 +211,11 @@ Meteor.methods({
     updateJSON: function(id) {
         console.log("initially called update JSON");
         console.log("User"+ id);
-        if (id) {
+        var docs = Documents.find({userId: id}).fetch();
+        console.log(docs);
+        if (id && docs.length != 0) {
             var basepath = Meteor.absolutePath + "/files/"+id;
+                
             fs.ensureDirSync(basepath, function(err) {
                 if (err) {
                     console.log("Error ensuring directory");
@@ -203,7 +231,7 @@ Meteor.methods({
                 //console.log("Total number of files"+total.files);
                 if(!curr.length) {
                     console.log("Nothing in JSON yet, inserting...");
-                    CurrJSON.insert({json:JSON.stringify(structure, null, 4)})
+                    CurrJSON.insert({json:{}})
                 }
                 else {
                     console.log("Updating existing JSON");
@@ -213,6 +241,12 @@ Meteor.methods({
             }));
         } else {
             console.log("NO USER");
+            var curr = CurrJSON.find().fetch();
+            if(!curr.length) {
+                CurrJSON.insert({json:{}})
+            } else {
+                CurrJSON.update(curr[0]._id, {$set: {json: {}}});
+            }
 
         }
     },
@@ -360,12 +394,12 @@ Meteor.methods({
         var query = { path: new RegExp('^' + rpath) };
         console.log(query);
         var matches = Documents.remove(query);
-    }, 
+    },
     removeFile: function(path) {
         console.log("Deleting file at: "+ path);
         fs.removeSync(path);
 
-    }, 
+    },
     moveFolder: function(a) {
         var pathToFile = a[0];
         var fileName = a[1];
@@ -384,7 +418,16 @@ Meteor.methods({
                 console.log("success");
             }
         });
-        
+
+    }, 
+    newFolder: function(a) {
+        var strPath = a[2];
+        console.log("Folder:"+strPath);
+        fs.ensureDirSync(strPath, function(err) {
+            if (err) {
+                console.log("Error ensuring directory");
+            }
+        });
     }
 
 });

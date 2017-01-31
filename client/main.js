@@ -1,5 +1,6 @@
 import { Template } from 'meteor/templating';
 import { Documents } from '../collections/files'
+import { Profiles } from '../collections/profiles'
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Random } from 'meteor/random'
 import { EditUsers } from '../collections/editusers';
@@ -42,7 +43,16 @@ Template.HomePage.helpers({
     }
 });
 Template.HomePage.onCreated(()=>{
+  Meteor.subscribe("userList");
   Meteor.subscribe("documents");
+  Meteor.subscribe("profiles", function() {
+    var user  = Profiles.find({user: Meteor.userId()}).fetch();
+    console.log(user);
+    if(!user.length) {
+      Profiles.insert({user: Meteor.userId(), bio: "", friends: []});
+    }
+    console.log(Profiles.find().fetch());
+  });
   Session.set("loadingDemo", false);
 });
 Template.HomePage.events({
@@ -63,6 +73,9 @@ Template.HomePage.events({
     }
 });
 
+Template.ProfilePage.onRendered(()=>{
+});
+
 Template.ProfilePage.helpers({
     getUser() {
       a= Meteor.user();
@@ -75,6 +88,20 @@ Template.ProfilePage.helpers({
       else {
         return '';
       }
+    },
+    friends() {
+      var user = Profiles.find({user: Meteor.userId()}).fetch()
+      if(!user.length) { return [] }
+      for(var q=0; q<user[0].friends.length; q++) {
+        user[0].friends[q] = Meteor.users.find(user[0].friends[q]).fetch()[0]['emails'][0]['address']
+      }
+      console.log(user[0].friends);
+      return user[0].friends;
+    },
+    bio() {
+      var user = Profiles.find({user: Meteor.userId()}).fetch()
+      if(!user.length) { return '' }
+      return user[0].bio;
     }
 });
 
@@ -123,6 +150,27 @@ Template.newFileModal.events({
             ErrorMessage("fileFail");
             //alert("File creation failed D:");
           }
+          Meteor.call("updateJSON", Meteor.userId());
+      });
+      console.log("------------------------------main end");
+    });
+  });
+  }, 
+  'click #createNewFolder': function(event, template) {
+  $(function(){
+    console.log("---------------------------------main start");
+    var nameInput = $("#folderName").val()
+    if(!nameInput) {
+      $("#errorBtn").click();
+      ErrorMessage("name");
+      //alert("Illegal name!");
+      return;
+    }
+    console.log(nameInput);
+    Meteor.call("getPath", function(err, path) {
+      var full = path + "/files" + Session.get('pathString')+"/"+nameInput;
+      var found = Documents.find({path: full}).fetch();
+      Meteor.call('newFolder', [nameInput, Meteor.userId(),full], function() {
           Meteor.call("updateJSON", Meteor.userId());
       });
       console.log("------------------------------main end");

@@ -122,6 +122,10 @@ Template.ProjectHead.events({
       });
     },
     'click #new_folder': function(event, template) {
-        console.log("NOT YET");
+        console.log("CLicked new folder");
+        $(function(){
+        $("#createNewFolder").click(function(){
+        });
+        });
     }
 });
