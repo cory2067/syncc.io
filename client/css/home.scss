@@ -314,6 +314,11 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
 
   .profile-wrapper{
     margin: 7% 22% 0;
+    padding: 30px;
+    border-radius: 5px;
+    background-color: white;
+
+    .row{margin: 0;}
 
     .col-md-4{width: 275px;}
 
@@ -334,7 +339,6 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
     }
 
     .prof-friends{
-      padding-left: 15px;
       background-color: white;
       z-index: 999;
       position: absolute;
@@ -349,7 +353,7 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
       color: $charcoal;
       border-radius: 5px;
       position: relative;
-      margin: 10px 0 10px 0;
+      margin: 10px 0;
       z-index: 99;
       display: block;
       -webkit-transition: all 0.5s ease;
