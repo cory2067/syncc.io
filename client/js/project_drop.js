@@ -39,13 +39,13 @@ Template.ProjectsPage.onRendered(() => {
                   console.log("error uploading" + error);
               } else {
                   console.log("File " + fileObj.name + " successfully uploaded");
-                  Meteor.call("assignFile", [fileObj._id, fileObj.name]);
+                  Meteor.call("assignFile", [fileObj._id, fileObj.name, Session.get('pathString')]);
                   Meteor.call("updateJSON", Meteor.userId());
               }
               Session.set("loading", false);
           });
           Meteor.call("getPath", function(err, path) {
-              var full = path + "/files/" + Meteor.userId()+"/"+file.name;
+              var full = path + "/files" + Session.get('pathString')+"/"+file.name;
               var found = Documents.find({path: full}).fetch();
               if(found.length > 0) {
                   ErrorMessage("fileExists");
@@ -86,8 +86,8 @@ Template.ProjectsPage.onRendered(() => {
                   console.log("Error uploading" + error);
               } else {
                   console.log("Successfully uploaded" + fileObj.name);
-                  Meteor.call("assignFile", [fileObj._id, fileObj.name], function() {
-                      Meteor.call('unzip', [fileObj.name, fileObj._storagePath], function() {
+                  Meteor.call("assignFile", [fileObj._id, fileObj.name,Session.get('pathString')], function() {
+                      Meteor.call('unzip', [fileObj.name, fileObj._storagePath, Session.get('pathString')], function() {
                         Session.set("foldersRendered", Random.id());
                         Session.set("loading", false);
                       });
