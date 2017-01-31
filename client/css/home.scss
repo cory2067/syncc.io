@@ -418,11 +418,6 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
     }
 
     #Bio{
-      margin-top: 0;
-      overflow: hidden;
-      -webkit-transition: all 0.5s ease;
-      transition: all 0.5s ease;
-
       font-family: 'Open Sans'!important;
       font-size: 11pt;
       color: $charcoal;
@@ -430,9 +425,17 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
       border: none;
       box-shadow: none;
       padding: 5px 0 0 0;
+    }
+
+    #bio-wrap{
+      //margin-top: 0px;
+      overflow: hidden;
+      -webkit-transition: all 0.5s ease;
+      transition: all 0.5s ease;
 
       &.toggled{
-        margin-top: -20px;
+        //margin-top: -20px;
+        height: 0;
       }
     }
 
