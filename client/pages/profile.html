@@ -9,12 +9,24 @@
                     <p class="prof-subtitle">{{getUser.email}}</p>
                     </div>
                 <div class="row">
-                    <h3>Friends</h3>
-                    <ul>
+                    <div class="row prof-friends">
+                    <span>
+                        <h3 style="float: left;">Friends</h3>
+                        <a href="" class="btn-blacc-blue" style="float: right; margin: 25px 15px 0 0; font-size: 10pt;" onclick="friendInput()">
+                        add</a>
+                    </span>
+                    </div>
+                    <div class="row">
+                    <div class='email-box' id="friendUser">
+                        <input type="text" class="form-control" placeholder="example@email.com">
+                        <button type="button" class="btn btn-link add-btn" id="collabBtn"><i class="glyphicon glyphicon-plus"></i></button>
+                    </div>
+                    <ul style="list-style-type: none; padding: 0;">
                         <!--LOL this will be fixed somehow-->
                         <li>cor</li>
                         <li>mtan</li>
                     </ul>
+                    </div>
                 </div>
             </div>
             <div class="col-md-8">
@@ -29,4 +41,10 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function friendInput(){
+            $("#friendUser").toggleClass("toggled");
+        } 
+    </script>
 </template>

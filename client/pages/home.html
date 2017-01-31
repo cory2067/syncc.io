@@ -1,12 +1,10 @@
 <template name="HomePage">
-  {{#if getUser}}
-    <div id="profilebgd">
-      {{> Header}}
-      {{> ProfilePage}}
-    </div>
-  {{else}}
     <div id="homebgd">
     {{> Header}}
+    
+    {{#if getUser}}
+      {{> ProfilePage}}
+    {{else}}
       <div class="home-wrapper">
         <h1>SYNCC</h1>
           <p class="sub">collaborative code editor</p>
@@ -16,8 +14,8 @@
             {{>spinner}}
           {{/if}}
       </div>
-    </div>
   {{/if}}
+  </div>
 
   <script>
     //acts as if the sign in link in the header was clicked
