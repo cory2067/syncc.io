@@ -43,6 +43,7 @@ Template.HomePage.helpers({
     }
 });
 Template.HomePage.onCreated(()=>{
+  Meteor.subscribe("userList");
   Meteor.subscribe("documents");
   Meteor.subscribe("profiles", function() {
     var user  = Profiles.find({user: Meteor.userId()}).fetch();
@@ -91,6 +92,10 @@ Template.ProfilePage.helpers({
     friends() {
       var user = Profiles.find({user: Meteor.userId()}).fetch()
       if(!user.length) { return [] }
+      for(var q=0; q<user[0].friends.length; q++) {
+        user[0].friends[q] = Meteor.users.find(user[0].friends[q]).fetch()[0]['emails'][0]['address']
+      }
+      console.log(user[0].friends);
       return user[0].friends;
     },
     bio() {
@@ -111,10 +116,19 @@ Template.ProfilePage.events({
       Profiles.update(id, {$set: {bio: val}});
       $("#bioInput").toggleClass("toggled");
       $("#Bio").toggleClass("toggled");
+    },
+    'click #collabBtn': function(e) {
+      val = $("#collabUser").val();
+      Meteor.call("addFriend", val, function(e,r) {
+        if(r == 'err') {
+          ErrorMessage("user");
+          $("#errorBtn").click();
+        }
+      });
     }
 })
 
-Template.allModal.events({
+Template.newFileModal.events({
   'click #cloneGitRepo': function() {
       var repo = $("#repoURL").val();
       console.log(repo);

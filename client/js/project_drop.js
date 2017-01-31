@@ -16,7 +16,7 @@ Template.ProjectsPage.onRendered(() => {
 			file = files[0];
 			var name = file.name.split('.');
 			var zip = name[name.length-1]=='zip';
-			Session.set("loading", true);
+			Session.set("losidebarading", true);
       if (!zip) {
           var uploadInstance = Documents.insert({
               file: file,
