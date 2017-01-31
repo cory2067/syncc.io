@@ -110,7 +110,9 @@ Template.ProjectList.events({
           Documents.remove({_id: this._id});
           Meteor.call('removeFile', this.path);
         } catch(e) {
-          alert("error deleting");
+          //alert("error deleting");
+          ErrorMessage("delete");
+          $("#errorBtn").click();
         }
     },
     'click #removeFolder': function(event, template) {

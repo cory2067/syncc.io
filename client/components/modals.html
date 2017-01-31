@@ -36,4 +36,25 @@
             </div>
         </div>
     </div>
+
+    <!--Fake triggers for error modals-->
+    <button id="errorBtn" class="btn newBtn" style="display: none;" data-toggle="modal" data-target="#errorModal"></button>
+
+    <!-- ERROR MODAL -->
+    <div id="errorModal" class="modal fade newModal" role="dialog">
+        <div class="modal-content">
+            <div class="modal-dialog">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <h3 style="margin-top: 0;">Error</h3>
+                    <p id="errorMessage"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default btn-grey" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
