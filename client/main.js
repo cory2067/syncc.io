@@ -36,13 +36,18 @@ Template.HomePage.helpers({
       else {
         return '';
       }
+    },
+    loading() {
+      return Session.get("loadingDemo");
     }
 });
 Template.HomePage.onCreated(()=>{
   Meteor.subscribe("documents");
+  Session.set("loadingDemo", false);
 });
 Template.HomePage.events({
     'click #demoEditor': function(event, template) {
+        Session.set("loadingDemo", true);
         console.log("making new file");
         var nameInput = Random.id(8)+'.py';
         Meteor.call('newFile', [nameInput, "demo"], function() {
@@ -51,6 +56,7 @@ Template.HomePage.events({
             console.log(full);
             console.log("why th efuck doesnt this work");
             var found = Documents.find({path: full}).fetch()
+            Session.set("loadingDemo", false);
             window.location.href = "/" + found[0]['_id'];
           });
         });

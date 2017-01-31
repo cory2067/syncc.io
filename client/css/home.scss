@@ -113,6 +113,11 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
     }
   }
 
+  .btn-blacc-blue{
+    &:hover{color: $accent;}
+    &:active{color: $accented;}
+  }
+
 
 
 /***********************
@@ -245,9 +250,9 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
       Home Styles
 ***********************/
   #homebgd{ //home background
-    background-image: url('/imgs/coded.jpg');
-    background-position: center;
+    background-image: url('/imgs/thehorizon.png');
     background-size: cover;
+    background-position: center bottom;
     height: inherit;
   }
 
@@ -309,6 +314,11 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
 
   .profile-wrapper{
     margin: 7% 22% 0;
+    padding: 30px;
+    border-radius: 5px;
+    background-color: white;
+
+    .row{margin: 0;}
 
     .col-md-4{width: 275px;}
 
@@ -328,7 +338,69 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
       }
     }
 
+    .prof-friends{
+      background-color: white;
+      z-index: 999;
+      position: absolute;
+      width: 100%;
+    }
+
     h3{font-weight: bold; font-size: 1.4em;}
+
+    .email-box{
+      width: 260px;
+      background-color: $cloud;
+      color: $charcoal;
+      border-radius: 5px;
+      position: relative;
+      margin: 10px 0;
+      z-index: 99;
+      display: block;
+      -webkit-transition: all 0.5s ease;
+      transition: all 0.5s ease; 
+
+      &:focus {
+        background-color: $cloud;
+        color: $charcoal;
+      }
+
+      .form-control{
+        background-color: inherit;
+        color: $charcoal;
+      }
+
+      input[type=text]{
+        color: $chrome;
+        font-family: 'Open Sans';
+        border: none;
+        box-shadow: none;
+        display: inline-block;
+
+        &::-webkit-input-placeholder{
+          color: $charcoal;
+        }
+      }
+
+      .add-btn{
+        position: absolute;
+        right: 0px;
+        top: 0px;
+        color: $chrome;
+        border-bottom-right-radius: 5px;
+        border-top-right-radius: 5px;
+        font-size: 18px;
+        padding: 4px 7px 3px;
+
+        &:hover{
+          color: $white;
+          background-color: $accent;
+        }
+      }
+
+      &.toggled{
+        margin-top: 60px;
+      }
+    }
   }
 
 
@@ -379,6 +451,23 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
   #projbgd{//project background
     height: inherit;
     background-color: white;
+  }
+
+  #popup img{
+	  max-height: 300px;
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    margin:auto;
+  	opacity: 0;
+  	pointer-events: none;
+    transition: opacity 0.5s;
+  }
+
+  .hover #popup img{
+    opacity: 1.0;
   }
 
   //*******PROJECTS SIDEBAR********//
@@ -998,7 +1087,7 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
 /**********************
  Editor Console Styles
 **********************/
-  $miniheight: 20px;
+  $miniheight: 30px;
   $consoleheight: 220px;
 
   #output {
@@ -1014,7 +1103,7 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
     position: fixed;
     bottom: 0;
     margin-bottom: -$consoleheight;
-    width: 100%;
+    width: calc(100vw - 62px);
     height: $miniheight + $consoleheight;
     z-index: 999;
     -webkit-transition: all 0.5s ease;
@@ -1024,12 +1113,15 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
     &.toggled{
       margin-bottom: 0px;
     }
+
+    &.sidetoggled{
+      width: calc(100vw - 62px - 265px);
+    }
   }
 
   #mini-bottombar{
     background-color: $accented;
     height: $miniheight;
-    width: 100vw;
     //display: inline-block;
 
     ul{
@@ -1042,15 +1134,18 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
       float: left; //without this float, they will not populate on the same line
       height: $miniheight;
 
+      &:hover{
+        background-color: $accent;
+      }
+
       a{
         color: $cloud;
+        vertical-align: middle;
+        height: $miniheight;
+        line-height: $miniheight;
         text-align: center;
         padding: 0 10px;
         white-space: nowrap;
-
-        &:hover{
-          background-color: $accent;
-        }
       }
     }
   }

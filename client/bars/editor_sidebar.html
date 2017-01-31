@@ -129,8 +129,10 @@
             function checkWrapper() {
                 if ($("#users-wrapper").hasClass("toggled") || $("#tree-wrapper").hasClass("toggled") || $("#settings-wrapper").hasClass("toggled")) {
                     $("#page-content-wrapper").addClass("toggled");
+                    $("#console-wrapper").addClass("sidetoggled");
                 } else {
                     $("#page-content-wrapper").removeClass("toggled");
+                    $("#console-wrapper").removeClass("sidetoggled");
                 };
             };
 
