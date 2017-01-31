@@ -31,6 +31,8 @@
       $("#show-console").click(function(e){
           e.preventDefault();
           $("#console-wrapper").toggleClass("toggled");
+          //$("#mirror-wrap").toggleClass("minConsoleHeight");
+          $(".CodeMirror").toggleClass("minConsoleHeight");
       });
       $("#runBtn").on('click', function() {
         if($("#console-wrapper").toggleClass("toggled")) {

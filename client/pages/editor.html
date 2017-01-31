@@ -8,7 +8,7 @@
       <div class="row" style="height: 37px;">
         {{> FileTabs}}
       </div>
-      <div class="row" style="height: calc(100vh - 87px);">
+      <div class="row" id="mirror-wrap" style="height: calc(100vh - 87px - 30px);">
         <form>
         {{> CodeMirror id="code" name="codeName" code=editorCode options=editorOptions events=editorEvents}}
         </form>
