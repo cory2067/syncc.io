@@ -49,7 +49,7 @@ Template.HomePage.onCreated(()=>{
     var user  = Profiles.find({user: Meteor.userId()}).fetch();
     console.log(user);
     if(!user.length) {
-      Profiles.insert({user: Meteor.userId(), bio: "", friends: []});
+      Profiles.insert({user: Meteor.userId(), bio: "", friends: [], added: 0, removed: 0});
     }
     console.log(Profiles.find().fetch());
   });
@@ -102,6 +102,9 @@ Template.ProfilePage.helpers({
       var user = Profiles.find({user: Meteor.userId()}).fetch()
       if(!user.length) { return '' }
       return user[0].bio;
+    },
+    bestFriends() {
+
     }
 });
 
