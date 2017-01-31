@@ -78,7 +78,7 @@ Template.ProfilePage.helpers({
     }
 });
 
-Template.allModal.events({
+Template.newFileModal.events({
   'click #cloneGitRepo': function() {
       var repo = $("#repoURL").val();
       console.log(repo);
