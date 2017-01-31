@@ -419,6 +419,15 @@ Meteor.methods({
             }
         });
 
+    }, 
+    newFolder: function(a) {
+        var strPath = a[2];
+        console.log("Folder:"+strPath);
+        fs.ensureDirSync(strPath, function(err) {
+            if (err) {
+                console.log("Error ensuring directory");
+            }
+        });
     }
 
 });
