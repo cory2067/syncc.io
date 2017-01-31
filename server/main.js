@@ -65,6 +65,23 @@ Meteor.startup(() => {
 });
 
 Meteor.methods({
+    addFriend: function(email) {
+      console.log(email);
+      try {
+        var result = Accounts.findUserByEmail(email);
+        //console.log(Documents.find(editor).fetch());
+        var exists = Profiles.find({user: Meteor.userId()}).fetch()[0]['friends'].includes(result._id);
+        if(exists) {
+          return "exists"
+        }
+        Profiles.update({user: Meteor.userId()}, {$push: {friends: result._id}});
+        return result['_id'];
+      } catch (e) {
+        console.log(e);
+        console.log("It's ok, we're gonna ignore that error and move on.");
+        return "err"
+      }
+    },
     injectFile: function(params) {
       EditorContents.insert({editor: params['editor'], file:params['file'], user:'system', doc: "", refresh:""});
     },
