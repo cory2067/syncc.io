@@ -148,8 +148,12 @@ Template.EditorPage.onRendered(() => {
                 console.log("sync timeout cancelled");
                 console.log(changed);
                 if(init){
-                  doc.setValue(changed.doc);
+                  console.log("setting value")
+                  $('.CodeMirror')[0].CodeMirror.setValue(changed.doc);
+                  console.log("Set value.")
+                  console.log(doc);
                   init = false;
+                  console.log("updating editusers")
                   EditUsers.update({_id: userId}, {$set: {init: false}});
                   lock.splice(0,1);//remove self from lock
                   Session.set("lock", lock);
