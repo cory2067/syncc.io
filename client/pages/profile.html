@@ -1,5 +1,6 @@
 <template name="ProfilePage">
     <!--Will serve as the new home page when a user is logged in-->
+    <h1 id="proTitle">SYNCC</h1>
     <div class="profile-wrapper">
         <div class="row">
             <div class="col-md-4">
@@ -22,8 +23,9 @@
                     </div>
                     <ul style="list-style-type: none; padding: 0;">
                         <!--LOL this will be fixed somehow-->
-                        <li>cor</li>
-                        <li>mtan</li>
+                        {{#each friends}}
+                        <li>{{this}}</li>
+                        {{/each}}
                     </ul>
                     </div>
                 </div>
@@ -31,18 +33,14 @@
             <div class="col-md-8">
                 <div class="row prof-heads">
                     <h3 style="float: left;">Biography</h3>
-                    <a href="" class="btn-blacc-blue" style="float: right; margin: 25px 15px 0 0; font-size: 10pt;" onclick="bioEdit()">edit</a>
+                    <a href="" class="btn-blacc-blue" id="loadBioEdit" style="float: right; margin: 25px 15px 0 0; font-size: 10pt;" onclick="bioEdit()">edit</a>
                 </div>
                 <div class="row" style="margin-top: 50px;">
-                    <p id="Bio">I have no idea what the fcc to put on the profile page</p>
+                    <p id="Bio">{{bio}}</p>
                     <form id="bioInput">
-                        <textarea rows="3">Your Bio goes here. It should auto populate.</textarea>
-                        <button style="float: right;" class="btn btn-blue">Save</button>
+                        <textarea id="bioField" rows="3"></textarea>
+                        <button id="bioSubmit" style="float: right;" class="btn btn-blue">Save</button>
                     </form>
-                </div>
-                <div class="row">
-                    <h3>Projects</h3>
-                    <p>Not sure if we actually want this even (are we even implementing projects)</p>
                 </div>
             </div>
         </div>
@@ -51,7 +49,7 @@
     <script>
         function friendInput() {
             $("#friendUser").toggleClass("toggled");
-        } 
+        }
 
         function bioEdit() {
             $("#bioInput").toggleClass("toggled");

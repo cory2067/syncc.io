@@ -312,8 +312,12 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
     height: inherit;
   }
 
+  #proTitle{text-align: center;}
+
+
   .profile-wrapper{
     margin: 7% 22% 0;
+    margin-top: 15px;
     padding: 30px;
     border-radius: 5px;
     background-color: $white;
@@ -368,7 +372,7 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
       z-index: 99;
       display: block;
       -webkit-transition: all 0.5s ease;
-      transition: all 0.5s ease; 
+      transition: all 0.5s ease;
 
       &:focus {
         background-color: $cloud;

@@ -1,5 +1,6 @@
 import { Template } from 'meteor/templating';
 import { Documents } from '../collections/files'
+import { Profiles } from '../collections/profiles'
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Random } from 'meteor/random'
 import { EditUsers } from '../collections/editusers';
@@ -43,6 +44,14 @@ Template.HomePage.helpers({
 });
 Template.HomePage.onCreated(()=>{
   Meteor.subscribe("documents");
+  Meteor.subscribe("profiles", function() {
+    var user  = Profiles.find({user: Meteor.userId()}).fetch();
+    console.log(user);
+    if(!user.length) {
+      Profiles.insert({user: Meteor.userId(), bio: "", friends: []});
+    }
+    console.log(Profiles.find().fetch());
+  });
   Session.set("loadingDemo", false);
 });
 Template.HomePage.events({
@@ -63,6 +72,9 @@ Template.HomePage.events({
     }
 });
 
+Template.ProfilePage.onRendered(()=>{
+});
+
 Template.ProfilePage.helpers({
     getUser() {
       a= Meteor.user();
@@ -75,8 +87,32 @@ Template.ProfilePage.helpers({
       else {
         return '';
       }
+    },
+    friends() {
+      var user = Profiles.find({user: Meteor.userId()}).fetch()
+      if(!user.length) { return [] }
+      return user[0].friends;
+    },
+    bio() {
+      var user = Profiles.find({user: Meteor.userId()}).fetch()
+      if(!user.length) { return '' }
+      return user[0].bio;
     }
 });
+
+Template.ProfilePage.events({
+  'click #loadBioEdit': function(e) {
+    $("#bioField")[0].innerHTML = Profiles.find({user:Meteor.userId()}).fetch()[0].bio;
+  },
+    'click #bioSubmit': function(e) {
+      e.preventDefault();
+      id = Profiles.find({user: Meteor.userId()}).fetch()[0]._id
+      val = $("#bioField")[0].value;
+      Profiles.update(id, {$set: {bio: val}});
+      $("#bioInput").toggleClass("toggled");
+      $("#Bio").toggleClass("toggled");
+    }
+})
 
 Template.newFileModal.events({
   'click #cloneGitRepo': function() {
