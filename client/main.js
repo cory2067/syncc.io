@@ -182,6 +182,7 @@ Template.newFileModal.events({
   'click #createNewFolder': function(event, template) {
   $(function(){
     console.log("---------------------------------main start");
+    Session.set('loading', true);
     var nameInput = $("#folderName").val()
     if(!nameInput) {
       $("#errorBtn").click();
@@ -197,6 +198,8 @@ Template.newFileModal.events({
           Meteor.call("updateJSON", Meteor.userId());
       });
       console.log("------------------------------main end");
+      Session.set("foldersRendered", Random.id());;
+      Session.set('loading', false);
     });
   });
   }
