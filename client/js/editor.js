@@ -109,6 +109,7 @@ Template.EditorPage.onRendered(() => {
     } catch(e) { console.log("FUCK")}
   }, 1000); */
     var syncTimeout = null;
+    EditUsers.update({_id: userId}, {$set: {init: true}});
     Tracker.autorun(function (c) {
       if(!Meteor.user() && !Session.get("loginTimeout")) {
         console.log("usr wher u at")
