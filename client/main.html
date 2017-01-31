@@ -5,6 +5,31 @@
   <link href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed|Open+Sans" rel="stylesheet">
   <script src="http://www.skulpt.org/static/skulpt.min.js" type="text/javascript"></script>
   <script src="http://www.skulpt.org/static/skulpt-stdlib.js" type="text/javascript"></script>
+  <script>
+    function ErrorMessage(type) {
+      if (type == "user"){
+        $("#errorMessage").html("Could not add! Are you sure this user exists?");
+      } else if (type == "fileExists"){
+        $("#errorMessage").html("This file already exists. Delete the existing file before uploading again");
+      } else if (type == "onlyZIP"){
+        $("#errorMessage").html("Sorry, you can only add ZIP files. Try using the upload feature instead.")
+      } else if (type == "tooBig"){
+        $("#errorMessage").html("Please upload files less than 10MB.")
+      } else if (type == "delete"){
+        $("#errorMessage").html("Error deleting")
+      } else if (type == "name"){
+        $("#errorMessage").html("Illegal name!")
+      } else if (type == "uniqueName"){
+        $("#errorMessage").html("Please give your file a unique name!")
+      } else if (type == "why"){
+        $("#errorMessage").html("I honestly have no idea how this happened. Where did I got wrong? Why is our code so buggy?")
+      } else if (type == "fileFail"){
+        $("#errorMessage").html("File creation failed.")
+      } else {
+        $("#errorMessage").html("Oops, something happened")
+      }
+    }
+  </script>
 </head>
 
 <body>

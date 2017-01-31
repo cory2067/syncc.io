@@ -1,5 +1,6 @@
 import { Template } from 'meteor/templating';
 import { Documents } from '../collections/files'
+import { Profiles } from '../collections/profiles'
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Random } from 'meteor/random'
 import { EditUsers } from '../collections/editusers';
@@ -43,6 +44,14 @@ Template.HomePage.helpers({
 });
 Template.HomePage.onCreated(()=>{
   Meteor.subscribe("documents");
+  Meteor.subscribe("profiles", function() {
+    var user  = Profiles.find({user: Meteor.userId()}).fetch();
+    console.log(user);
+    if(!user.length) {
+      Profiles.insert({user: Meteor.userId(), bio: "", friends: []});
+    }
+    console.log(Profiles.find().fetch());
+  });
   Session.set("loadingDemo", false);
 });
 Template.HomePage.events({
@@ -63,21 +72,49 @@ Template.HomePage.events({
     }
 });
 
+Template.ProfilePage.onRendered(()=>{
+});
+
 Template.ProfilePage.helpers({
     getUser() {
       a= Meteor.user();
       if(a) {
         a['email'] = a['emails'][0]['address']
         a['name'] = a['email'].split("@")[0]
+        a['first'] = a['name'][0]
         return a;
       }
       else {
         return '';
       }
+    },
+    friends() {
+      var user = Profiles.find({user: Meteor.userId()}).fetch()
+      if(!user.length) { return [] }
+      return user[0].friends;
+    },
+    bio() {
+      var user = Profiles.find({user: Meteor.userId()}).fetch()
+      if(!user.length) { return '' }
+      return user[0].bio;
     }
 });
 
-Template.newFileModal.events({
+Template.ProfilePage.events({
+  'click #loadBioEdit': function(e) {
+    $("#bioField")[0].innerHTML = Profiles.find({user:Meteor.userId()}).fetch()[0].bio;
+  },
+    'click #bioSubmit': function(e) {
+      e.preventDefault();
+      id = Profiles.find({user: Meteor.userId()}).fetch()[0]._id
+      val = $("#bioField")[0].value;
+      Profiles.update(id, {$set: {bio: val}});
+      $("#bioInput").toggleClass("toggled");
+      $("#Bio").toggleClass("toggled");
+    }
+})
+
+Template.allModal.events({
   'click #cloneGitRepo': function() {
       var repo = $("#repoURL").val();
       console.log(repo);
@@ -93,7 +130,9 @@ Template.newFileModal.events({
     console.log("---------------------------------main start");
     var nameInput = $("#fileName").val()
     if(!nameInput) {
-      alert("Illegal name!");
+      $("#errorBtn").click();
+      ErrorMessage("name");
+      //alert("Illegal name!");
       return;
     }
     console.log(nameInput);
@@ -101,18 +140,24 @@ Template.newFileModal.events({
       var full = path + "/files/" + Meteor.userId()+"/"+nameInput;
       var found = Documents.find({path: full}).fetch()
       if(found.length > 0) {
-        alert("Please give your file a unique name!");
+        $("#errorBtn").click();
+        ErrorMessage("uniqueName")
+        //alert("Please give your file a unique name!");
         return;
       }
       Meteor.call('newFile', [nameInput, Meteor.userId()], function() {
           var found = Documents.find({path: full}).fetch()
           if(found.length > 1) {
-            alert("I honestly have no idea how this happened. Where did I go wrong? Why is our code so buggy?");
+            $("#errorBtn").click();
+            ErrorMessage("why");
+            //alert("I honestly have no idea how this happened. Where did I go wrong? Why is our code so buggy?");
           } else if(found.length == 1) {
             window.location.href = "/" + found[0]['_id'];
           }
           else {
-            alert("File creation failed D:");
+            $("#errorBtn").click();
+            ErrorMessage("fileFail");
+            //alert("File creation failed D:");
           }
           Meteor.call("updateJSON", Meteor.userId());
       });

@@ -1,19 +1,19 @@
 <template name="ProfilePage">
     <!--Will serve as the new home page when a user is logged in-->
+    <h1 id="proTitle">SYNCC</h1>
     <div class="profile-wrapper">
         <div class="row">
             <div class="col-md-4">
                 <div class="row prof-main">
-                    <div class="prof-pic"></div>
+                    <div class="prof-pic"><h2>{{getUser.first}}</h2></div>
                     <h2>{{getUser.name}}</h2>
                     <p class="prof-subtitle">{{getUser.email}}</p>
                     </div>
                 <div class="row">
-                    <div class="row prof-friends">
+                    <div class="row prof-heads">
                     <span>
                         <h3 style="float: left;">Friends</h3>
-                        <a href="" class="btn-blacc-blue" style="float: right; margin: 25px 15px 0 0; font-size: 10pt;" onclick="friendInput()">
-                        add</a>
+                        <a href="" class="btn-blacc-blue" style="float: right; margin: 25px 15px 0 0; font-size: 10pt;" onclick="friendInput()">add</a>
                     </span>
                     </div>
                     <div class="row">
@@ -23,28 +23,41 @@
                     </div>
                     <ul style="list-style-type: none; padding: 0;">
                         <!--LOL this will be fixed somehow-->
-                        <li>cor</li>
-                        <li>mtan</li>
+                        {{#each friends}}
+                        <li>{{this}}</li>
+                        {{/each}}
                     </ul>
                     </div>
                 </div>
             </div>
             <div class="col-md-8">
-                <div class="row">
-                    <h3>Biography</h3>
-                    <p>I have no idea what the fcc to put on the profile page</p>
+                <div class="row prof-heads">
+                    <h3 style="float: left;">Biography</h3>
+                    <a href="" class="btn-blacc-blue" id="loadBioEdit" style="float: right; margin: 25px 15px 0 0; font-size: 10pt;" onclick="bioEdit()">edit</a>
+                </div>
+                <div class="row" style="margin-top: 50px;">
+                    <p id="Bio">{{bio}}</p>
+                    <form id="bioInput">
+                        <textarea id="bioField" rows="3"></textarea>
+                        <button id="bioSubmit" style="float: right;" class="btn btn-blue">Save</button>
+                    </form>
                 </div>
                 <div class="row">
-                    <h3>Projects</h3>
-                    <p>Not sure if we actually want this even (are we even implementing projects)</p>
+                    <h3>Graphs</h3>
+                    <p>Wow look at the colors and what you've done.</p>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        function friendInput(){
+        function friendInput() {
             $("#friendUser").toggleClass("toggled");
-        } 
+        }
+
+        function bioEdit() {
+            $("#bioInput").toggleClass("toggled");
+            $("#Bio").toggleClass("toggled");
+        }
     </script>
 </template>

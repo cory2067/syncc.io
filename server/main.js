@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Changes } from '../collections/changes';
+import { Profiles } from '../collections/profiles';
 import { EditUsers } from '../collections/editusers';
 import { CurrJSON } from '../collections/json';
 import { Documents } from '../collections/files'
@@ -44,6 +45,13 @@ Meteor.startup(() => {
     }
     return this.ready();
   });
+  Meteor.publish('profiles', ()=> {
+    var a = Profiles.find();
+    if(a) {
+      return a;
+    }
+    return this.ready();
+  });
   Meteor.publish('currjson', ()=> {
     var a = CurrJSON.find();
     if(a) {
@@ -53,7 +61,7 @@ Meteor.startup(() => {
   });
   Meteor.publish('userList', ()=> {
     return Meteor.users.find();
-  })
+  });
 });
 
 Meteor.methods({
@@ -369,12 +377,12 @@ Meteor.methods({
         var query = { path: new RegExp('^' + rpath) };
         console.log(query);
         var matches = Documents.remove(query);
-    }, 
+    },
     removeFile: function(path) {
         console.log("Deleting file at: "+ path);
         fs.removeSync(path);
 
-    }, 
+    },
     moveFolder: function(a) {
         var pathToFile = a[0];
         var fileName = a[1];
@@ -393,7 +401,7 @@ Meteor.methods({
                 console.log("success");
             }
         });
-        
+
     }
 
 });

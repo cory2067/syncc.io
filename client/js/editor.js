@@ -389,7 +389,9 @@ Template.EditorSidebar.events({
     val = $("#collabUser").val();
     Meteor.call("findUser", [val, FlowRouter.getParam("editID")], function(e,r) {
       if(r == 'err') {
-        alert("Could not add! Are you sure this user exists?");
+        ErrorMessage("user");
+        $("#errorBtn").click();
+        //alert("Could not add! Are you sure this user exists?");
       }
     });
   },

@@ -42,7 +42,9 @@ Template.ProjectHead.events({
                 var full = path + "/files/" + Meteor.userId()+"/"+file.name;
                 var found = Documents.find({path: full}).fetch();
                 if(found.length > 0) {
-                    alert("This file already exists. Delete the existing file before uploading again");
+                    ErrorMessage("fileExists");
+                    $("#errorBtn").click();
+                    //alert("This file already exists. Delete the existing file before uploading again");
                     Session.set("loading", false);
                 } else {
                     uploadInstance.start();
@@ -62,13 +64,17 @@ Template.ProjectHead.events({
                 onBeforeUpload: function (file) {
                     if (/zip/i.test(file.extension)) {
                     } else {
-                        alert('Only allowed to add zip files, use the upload files feature instead')
+                        //alert('Only allowed to add zip files, use the upload files feature instead')
+                        $("#errorBtn").click();
+                        ErrorMessage("onlyZIP");
                         Session.set("loading", false);
                     }
                     if (file.size <= 10485760) {
                         return true;
                     } else {
-                        alert('Please upload files less than 10MB');
+                        $("#errorBtn").click();
+                        ErrorMessage("tooBig");
+                        //alert('Please upload files less than 10MB');
                         Session.set("loading", false);
                     }
                 }
