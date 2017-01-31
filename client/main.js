@@ -69,6 +69,7 @@ Template.ProfilePage.helpers({
       if(a) {
         a['email'] = a['emails'][0]['address']
         a['name'] = a['email'].split("@")[0]
+        a['first'] = a['name'][0]
         return a;
       }
       else {

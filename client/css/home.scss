@@ -316,7 +316,12 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
     margin: 7% 22% 0;
     padding: 30px;
     border-radius: 5px;
-    background-color: white;
+    background-color: $white;
+    box-shadow: $shadow;
+
+    @media (max-width: 1500px){
+      margin: 3% 10%;
+    }
 
     .row{margin: 0;}
 
@@ -330,6 +335,12 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
         height: 150px;
         background: $cloud;
         border-radius: 50%;
+
+        h2{
+          line-height: 150px;
+          text-align: center;
+          font-size: 4em;
+        }
       }
 
       .prof-subtitle{
@@ -338,8 +349,8 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
       }
     }
 
-    .prof-friends{
-      background-color: white;
+    .prof-heads{
+      background-color: $white;
       z-index: 999;
       position: absolute;
       width: 100%;
@@ -400,6 +411,40 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
       &.toggled{
         margin-top: 60px;
       }
+    }
+
+    #Bio{
+      margin-top: 0;
+      overflow: hidden;
+      -webkit-transition: all 0.5s ease;
+      transition: all 0.5s ease;
+
+      &.toggled{
+        margin-top: -20px;
+      }
+    }
+
+    #bioInput{
+      height: 0;
+      overflow: hidden;
+      -webkit-transition: all 0.5s ease;
+      transition: all 0.5s ease;
+
+      &.toggled{
+        height: 115px;
+      }
+    }
+
+    textarea{
+      border: none;
+      color: $charcoal;
+      background-color: $cloud!important;
+      box-shadow: none;
+      width: 100%;
+      border-radius: 5px;
+      padding: 8px;
+
+      &:focus{outline: none;}
     }
   }
 
