@@ -365,6 +365,26 @@ Meteor.methods({
         console.log("Deleting file at: "+ path);
         fs.removeSync(path);
 
+    }, 
+    moveFolder: function(a) {
+        var pathToFile = a[0];
+        var fileName = a[1];
+        var folderPath = a[2];
+        var fileId = a[3];
+        Documents.update(fileId, {$set: {_storagePath: folderPath}});
+
+        var oldPath = pathToFile;
+        var newPath = folderPath+"/"+fileName;
+        Documents.update(fileId, {$set: {path: newPath}});
+        console.log("attempting to move " + oldPath + " to "+ newPath);
+        fs.move(oldPath, newPath, function(err) {
+            if (err) {
+                console.log("error moving" + err);
+            } else {
+                console.log("success");
+            }
+        });
+        
     }
 
 });

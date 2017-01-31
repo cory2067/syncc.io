@@ -28,7 +28,7 @@
     </div>
     {{#each folders}}
         <div class="row docsrow">
-            <div class="col-md-6">
+            <div class="col-md-6" ondrop="drop(event)" ondragover="allowDrop(event)" id="folderDrop">
                 <i class="octicon glyphdocs octicon-file-directory"></i>
                 <a id="folder" href="#">{{this}}</a>
             </div>
@@ -48,7 +48,7 @@
     {{/each}}
     {{#each docs}}
         <div class="row docsrow">
-            <div class="col-md-6">
+            <div class="col-md-6" draggable="true" ondragstart="drag(event)" id="draggableFile">
                 <i class="octicon glyphdocs octicon-file-code"></i>
                 <a href="/{{this._id}}">{{this.name}}</a>
             </div>
