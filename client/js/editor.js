@@ -141,7 +141,7 @@ Template.EditorPage.onRendered(() => {
                 EditUsers.remove(current[p]._id);
               }
               location.reload();
-            }, 4000);
+            }, 8000);
             EditorContents.find({editor: id}).observe({
               changed: function(changed, o) {
                 console.log("sync timeout cancelled");
