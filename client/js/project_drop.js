@@ -1,5 +1,6 @@
 import { Documents } from '../../collections/files'
 import { Session } from 'meteor/session'
+import { Random } from 'meteor/random'
 
 Template.ProjectsPage.onCreated(() => {
 	Meteor.subscribe("documents");
@@ -13,8 +14,10 @@ Template.ProjectsPage.onRendered(() => {
 		if(files.length) //if there's actually something here
 		{
 			file = files[0];
+			var name = file.name.split('.');
+			var zip = name[name.length-1]=='zip';
 			Session.set("loading", true);
-      if (file) {
+      if (!zip) {
           var uploadInstance = Documents.insert({
               file: file,
               streams: 'dynamic',
@@ -51,6 +54,42 @@ Template.ProjectsPage.onRendered(() => {
                   uploadInstance.start();
               }
           });
+      }
+      else {
+					console.log("doing the zip")
+          var uploadInstance = Documents.insert({
+              file: file,
+              streams: 'dynamic',
+              chunkSize: 'dynamic',
+              onBeforeUpload: function (file) {
+                  if (/zip/i.test(file.extension)) {
+                  } else {
+                      alert('Only allowed to add zip files, use the upload files feature instead')
+                      Session.set("loading", false);
+                  }
+                  if (file.size <= 10485760) {
+                      return true;
+                  } else {
+                      alert('Please upload files less than 10MB');
+                      Session.set("loading", false);
+                  }
+              }
+          }, false);
+          uploadInstance.on('end', function (error, fileObj) {
+              if (error) {
+                  console.log("Error uploading" + error);
+              } else {
+                  console.log("Successfully uploaded" + fileObj.name);
+                  Meteor.call("assignFile", [fileObj._id, fileObj.name], function() {
+                      Meteor.call('unzip', [fileObj.name, fileObj._storagePath], function() {
+                        Session.set("foldersRendered", Random.id());
+                        Session.set("loading", false);
+                      });
+                  });
+                  Meteor.call("updateJSON", Meteor.userId());
+              }
+          });
+          uploadInstance.start();
       }
 			return true;
 		}
