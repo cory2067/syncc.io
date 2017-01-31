@@ -180,7 +180,7 @@ Template.EditorPage.onRendered(() => {
 
           //Set save file at intevals
           saveHandle = Meteor.setInterval(function() {
-              console.log("Interval saving");
+              /*console.log("Interval saving");
               var content = doc.getValue();
               var file = Documents.find({'_id': docId}).fetch();
               var path = file[0].path;
@@ -189,7 +189,7 @@ Template.EditorPage.onRendered(() => {
                   file_name =  file[0].name;
               }
               //console.log(file_name +"told to write" + content + " to "+ path
-              Meteor.call('writeFile', [content, path, file_name]);
+              Meteor.call('writeFile', [content, path, file_name]);*/
 
           }, 8000);
 
