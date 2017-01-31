@@ -108,7 +108,7 @@ Template.EditorPage.onRendered(() => {
       doc.setValue(updates[updates.length-2].doc);
     } catch(e) { console.log("FUCK")}
   }, 1000); */
-
+    var syncTimeout = null;
     Tracker.autorun(function (c) {
       if(!Meteor.user() && !Session.get("loginTimeout")) {
         console.log("usr wher u at")
@@ -135,7 +135,8 @@ Template.EditorPage.onRendered(() => {
           }
           if(current.length) {
             console.log("ur not the first one");
-            var syncTimeout = setTimeout(()=>{
+            clearTimeout(syncTimeout);
+            syncTimeout = setTimeout(()=>{
               console.log("you've timeout out, reloading")
               for(var p=0; p<current.length; p++) {
                 EditUsers.remove(current[p]._id);
@@ -153,7 +154,7 @@ Template.EditorPage.onRendered(() => {
                   lock.splice(0,1);//remove self from lock
                   Session.set("lock", lock);
                   console.log(lock);
-                  clearInterval(syncTimeout);
+                  clearTimeout(syncTimeout);
                 }
               }
             });
