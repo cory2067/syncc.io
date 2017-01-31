@@ -13,9 +13,8 @@
         {{> CodeMirror id="code" name="codeName" code=editorCode options=editorOptions events=editorEvents}}
         </form>
       </div>
+      {{> EditorConsole}}
     </div>
-
-    {{> EditorConsole}}
   </div>  
 
   {{#if lockUser}}

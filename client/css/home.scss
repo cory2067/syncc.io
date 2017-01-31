@@ -998,7 +998,7 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
 /**********************
  Editor Console Styles
 **********************/
-  $miniheight: 20px;
+  $miniheight: 30px;
   $consoleheight: 220px;
 
   #output {
@@ -1014,7 +1014,7 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
     position: fixed;
     bottom: 0;
     margin-bottom: -$consoleheight;
-    width: 100%;
+    width: calc(100vw - 62px);
     height: $miniheight + $consoleheight;
     z-index: 999;
     -webkit-transition: all 0.5s ease;
@@ -1024,12 +1024,15 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
     &.toggled{
       margin-bottom: 0px;
     }
+
+    &.sidetoggled{
+      width: calc(100vw - 62px - 265px);
+    }
   }
 
   #mini-bottombar{
     background-color: $accented;
     height: $miniheight;
-    width: 100vw;
     //display: inline-block;
 
     ul{
@@ -1042,15 +1045,18 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
       float: left; //without this float, they will not populate on the same line
       height: $miniheight;
 
+      &:hover{
+        background-color: $accent;
+      }
+
       a{
         color: $cloud;
+        vertical-align: middle;
+        height: $miniheight;
+        line-height: $miniheight;
         text-align: center;
         padding: 0 10px;
-        white-space: nowrap;
-
-        &:hover{
-          background-color: $accent;
-        }
+        white-space: nowrap;        
       }
     }
   }
