@@ -423,6 +423,14 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
       -webkit-transition: all 0.5s ease;
       transition: all 0.5s ease;
 
+      font-family: 'Open Sans'!important;
+      font-size: 11pt;
+      color: $charcoal;
+      background-color: $white;
+      border: none;
+      box-shadow: none;
+      padding: 5px 0 0 0;
+
       &.toggled{
         margin-top: -20px;
       }
@@ -555,10 +563,10 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
 
   //*******PROJECTS HEADER*********//
     .projecthead{
-      margin-left: 235px;
+      //margin-left: 235px;
 
       .padded{//pads the content not in the sidebar
-        width: calc(100vw - 235px);
+        width: 100vw; //calc(100vw - 235px);
 
         .col-md-4{//column on the right side
           padding: 0 2% 0 0;
