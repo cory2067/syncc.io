@@ -32,16 +32,16 @@ Template.TreeProj.onRendered(function () {
     });*/
     Meteor.call("updateJSON", Meteor.userId());
     Tracker.autorun(function(c) {
-      var entry = CurrJSON.findOne();
+      var entry = CurrJSON.findOne({id: Meteor.userId()});
       if(!entry) {
         return;
       }
       var str_JSON = entry.json;
+      try {
       str_JSON = str_JSON.replace(/name/g, 'text');
       console.log("###########################################################################");
       console.log("thing being rendered"+str_JSON);
       var tree = JSON.parse(str_JSON);
-      try {
         $('#jstree').jstree(true).settings.core.data = tree;
         $('#jstree').jstree(true).refresh();
       } catch(e) { console.log("huh idk why this is still running"); }

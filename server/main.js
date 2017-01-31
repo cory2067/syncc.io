@@ -215,14 +215,14 @@ Meteor.methods({
         var docs = Documents.find({userId: id}).fetch();
         if (id && docs.length != 0) {
             var basepath = Meteor.absolutePath + "/files/"+id;
-                
+
             fs.ensureDirSync(basepath, function(err) {
                 if (err) {
                     console.log("Error ensuring directory");
                 }
             });
             console.log("path:" + basepath);
-            var curr = CurrJSON.find().fetch();
+            var curr = CurrJSON.find({id: id}).fetch();
             DirectoryStructureJSON.getStructure(fs, basepath, Meteor.bindEnvironment(function (err, structure, total) {
                 if (err) {
                     console.log(err);
@@ -231,7 +231,7 @@ Meteor.methods({
                 //console.log("Total number of files"+total.files);
                 if(!curr.length) {
                     console.log("Nothing in JSON yet, inserting...");
-                    CurrJSON.insert({json:{}})
+                    CurrJSON.insert({id:id, json:{}})
                 }
                 else {
                     console.log("Updating existing JSON");
@@ -241,9 +241,9 @@ Meteor.methods({
             }));
         } else {
             console.log("NO USER");
-            var curr = CurrJSON.find().fetch();
+            var curr = CurrJSON.find({id: id}).fetch();
             if(!curr.length) {
-                CurrJSON.insert({json:{}})
+                CurrJSON.insert({id:id, json:{}})
             } else {
                 CurrJSON.update(curr[0]._id, {$set: {json: {}}});
             }
@@ -422,7 +422,7 @@ Meteor.methods({
             }
         });
 
-    }, 
+    },
     newFolder: function(a) {
         var strPath = a[2];
         console.log("Folder:"+strPath);

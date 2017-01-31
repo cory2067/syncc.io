@@ -23,6 +23,7 @@ var illegalTimeout = {};
 var saveHandle;
 
 Template.EditorPage.onCreated(() => {
+  init = true;
   Session.set("ready", false)
   Session.set("loginTimeout", false);
   setTimeout(()=>{Session.set("loginTimeout", true)}, 1000);
@@ -58,6 +59,7 @@ Template.EditorPage.onCreated(() => {
 });
 
 Template.EditorPage.onRendered(() => {
+  init = true;
     Meteor.call("getPath", function(err, path) {
       $("#jstree").on("activate_node.jstree", (a,b)=>{
         var content = doc.getValue();
@@ -108,7 +110,9 @@ Template.EditorPage.onRendered(() => {
       doc.setValue(updates[updates.length-2].doc);
     } catch(e) { console.log("FUCK")}
   }, 1000); */
-
+    var syncTimeout = null;
+    EditUsers.update({_id: userId}, {$set: {init: true}});
+    init = true;
     Tracker.autorun(function (c) {
       if(!Meteor.user() && !Session.get("loginTimeout")) {
         console.log("usr wher u at")
@@ -135,26 +139,31 @@ Template.EditorPage.onRendered(() => {
           }
           if(current.length) {
             console.log("ur not the first one");
-            var syncTimeout = setTimeout(()=>{
+            clearTimeout(syncTimeout);
+            syncTimeout = setTimeout(()=>{
               console.log("you've timeout out, reloading")
               for(var p=0; p<current.length; p++) {
                 EditUsers.remove(current[p]._id);
               }
               location.reload();
-            }, 1500);
+            }, 8000);
             EditorContents.find({editor: id}).observe({
               changed: function(changed, o) {
                 console.log("sync timeout cancelled");
                 console.log(changed);
-                if(init){
-                  doc.setValue(changed.doc);
+                //if(init){
+                  console.log("setting value")
+                  $('.CodeMirror')[0].CodeMirror.setValue(changed.doc);
+                  console.log("Set value.")
+                  console.log(doc);
                   init = false;
+                  console.log("updating editusers")
                   EditUsers.update({_id: userId}, {$set: {init: false}});
                   lock.splice(0,1);//remove self from lock
                   Session.set("lock", lock);
                   console.log(lock);
-                  clearInterval(syncTimeout);
-                }
+                  clearTimeout(syncTimeout);
+                //}
               }
             });
           } else {
@@ -180,7 +189,7 @@ Template.EditorPage.onRendered(() => {
 
           //Set save file at intevals
           saveHandle = Meteor.setInterval(function() {
-              console.log("Interval saving");
+              /*console.log("Interval saving");
               var content = doc.getValue();
               var file = Documents.find({'_id': docId}).fetch();
               var path = file[0].path;
@@ -189,7 +198,7 @@ Template.EditorPage.onRendered(() => {
                   file_name =  file[0].name;
               }
               //console.log(file_name +"told to write" + content + " to "+ path
-              Meteor.call('writeFile', [content, path, file_name]);
+              Meteor.call('writeFile', [content, path, file_name]);*/
 
           }, 8000);
 
