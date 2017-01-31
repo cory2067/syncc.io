@@ -151,7 +151,7 @@ Template.EditorPage.onRendered(() => {
               changed: function(changed, o) {
                 console.log("sync timeout cancelled");
                 console.log(changed);
-                if(init){
+                //if(init){
                   console.log("setting value")
                   $('.CodeMirror')[0].CodeMirror.setValue(changed.doc);
                   console.log("Set value.")
@@ -163,7 +163,7 @@ Template.EditorPage.onRendered(() => {
                   Session.set("lock", lock);
                   console.log(lock);
                   clearTimeout(syncTimeout);
-                }
+                //}
               }
             });
           } else {
