@@ -20,7 +20,7 @@ Template.TreeProj.onRendered(function () {
           icons: true,
           responsive: true
         },
-        data: {text: "Loading..."}
+        data: {text: "No files found"}
       }
 
       });

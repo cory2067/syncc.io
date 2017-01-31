@@ -186,8 +186,11 @@ Meteor.methods({
     updateJSON: function(id) {
         console.log("initially called update JSON");
         console.log("User"+ id);
-        if (id) {
+        var docs = Documents.find({userId: id}).fetch();
+        console.log(docs);
+        if (id && docs.length != 0) {
             var basepath = Meteor.absolutePath + "/files/"+id;
+                
             fs.ensureDirSync(basepath, function(err) {
                 if (err) {
                     console.log("Error ensuring directory");
@@ -203,7 +206,7 @@ Meteor.methods({
                 //console.log("Total number of files"+total.files);
                 if(!curr.length) {
                     console.log("Nothing in JSON yet, inserting...");
-                    CurrJSON.insert({json:JSON.stringify(structure, null, 4)})
+                    CurrJSON.insert({json:{}})
                 }
                 else {
                     console.log("Updating existing JSON");
@@ -213,6 +216,12 @@ Meteor.methods({
             }));
         } else {
             console.log("NO USER");
+            var curr = CurrJSON.find().fetch();
+            if(!curr.length) {
+                CurrJSON.insert({json:{}})
+            } else {
+                CurrJSON.update(curr[0]._id, {$set: {json: {}}});
+            }
 
         }
     },
