@@ -77,6 +77,16 @@ Template.ProfilePage.onRendered(()=>{
 });
 
 Template.ProfilePage.helpers({
+    /*randomColor() {
+      var seed = Meteor.userId();
+      var meme = 0;
+      for(var p=0; p<16; p++) {
+        meme += seed.charCodeAt(p) * 3**p;
+      }
+      console.log(meme);
+      var x = Math.sin(meme) * 10000;
+      return (x - Math.floor(x)).toString(16).substr(-6);
+    },*/
     getUser() {
       a= Meteor.user();
       if(a) {
@@ -93,7 +103,9 @@ Template.ProfilePage.helpers({
       var user = Profiles.find({user: Meteor.userId()}).fetch()
       if(!user.length) { return [] }
       for(var q=0; q<user[0].friends.length; q++) {
-        user[0].friends[q] = Meteor.users.find(user[0].friends[q]).fetch()[0]['emails'][0]['address']
+        var userPro = Profiles.find({user: user[0].friends[q]}).fetch()[0];
+        user[0].friends[q] = {name: Meteor.users.find(user[0].friends[q]).fetch()[0]['emails'][0]['address'],
+                              added: userPro['added'], removed: userPro['removed']}
       }
       console.log(user[0].friends);
       return user[0].friends;
@@ -102,6 +114,11 @@ Template.ProfilePage.helpers({
       var user = Profiles.find({user: Meteor.userId()}).fetch()
       if(!user.length) { return '' }
       return user[0].bio;
+    },
+    stats() {
+      var user = Profiles.find({user: Meteor.userId()}).fetch()
+      if(!user.length) { return {added: 0, removed: 0} }
+      return {added: user[0].added, removed: user[0].removed};
     }
 });
 
@@ -178,7 +195,7 @@ Template.newFileModal.events({
       console.log("------------------------------main end");
     });
   });
-  }, 
+  },
   'click #createNewFolder': function(event, template) {
   $(function(){
     console.log("---------------------------------main start");

@@ -41,7 +41,9 @@ Template.TreeProj.onRendered(function () {
       console.log("###########################################################################");
       console.log("thing being rendered"+str_JSON);
       var tree = JSON.parse(str_JSON);
-      $('#jstree').jstree(true).settings.core.data = tree;
-      $('#jstree').jstree(true).refresh();
+      try {
+        $('#jstree').jstree(true).settings.core.data = tree;
+        $('#jstree').jstree(true).refresh();
+      } catch(e) { console.log("huh idk why this is still running"); }
     });
   });
