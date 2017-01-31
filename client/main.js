@@ -102,11 +102,31 @@ Template.ProfilePage.helpers({
       var user = Profiles.find({user: Meteor.userId()}).fetch()
       if(!user.length) { return '' }
       return user[0].bio;
-    },
-    bestFriends() {
-
     }
 });
+
+Template.ProfilePage.events({
+  'click #loadBioEdit': function(e) {
+    $("#bioField")[0].innerHTML = Profiles.find({user:Meteor.userId()}).fetch()[0].bio;
+  },
+    'click #bioSubmit': function(e) {
+      e.preventDefault();
+      id = Profiles.find({user: Meteor.userId()}).fetch()[0]._id
+      val = $("#bioField")[0].value;
+      Profiles.update(id, {$set: {bio: val}});
+      $("#bioInput").toggleClass("toggled");
+      $("#Bio").toggleClass("toggled");
+    },
+    'click #collabBtn': function(e) {
+      val = $("#collabUser").val();
+      Meteor.call("addFriend", val, function(e,r) {
+        if(r == 'err') {
+          ErrorMessage("user");
+          $("#errorBtn").click();
+        }
+      });
+    }
+})
 
 Template.newFileModal.events({
   'click #cloneGitRepo': function() {
@@ -165,7 +185,7 @@ Template.newFileModal.events({
     var nameInput = $("#folderName").val()
     if(!nameInput) {
       $("#errorBtn").click();
-      ErrorMessage("name");
+      ErrorMessage("folderFail");
       //alert("Illegal name!");
       return;
     }
