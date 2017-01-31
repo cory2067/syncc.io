@@ -164,5 +164,26 @@ Template.allModal.events({
       console.log("------------------------------main end");
     });
   });
+  }, 
+  'click #createNewFolder': function(event, template) {
+  $(function(){
+    console.log("---------------------------------main start");
+    var nameInput = $("#folderName").val()
+    if(!nameInput) {
+      $("#errorBtn").click();
+      ErrorMessage("name");
+      //alert("Illegal name!");
+      return;
+    }
+    console.log(nameInput);
+    Meteor.call("getPath", function(err, path) {
+      var full = path + "/files" + Session.get('pathString')+"/"+nameInput;
+      var found = Documents.find({path: full}).fetch();
+      Meteor.call('newFolder', [nameInput, Meteor.userId(),full], function() {
+          Meteor.call("updateJSON", Meteor.userId());
+      });
+      console.log("------------------------------main end");
+    });
+  });
   }
 });
