@@ -9,9 +9,12 @@
     {{> Header}}
       <div class="home-wrapper">
         <h1>SYNCC</h1>
-          <p class="sub">welcome to the site thing</p>
+          <p class="sub">collaborative code editor</p>
           <a href="#" id="demoEditor" class="button">Demo</a>
           <a href="" class="button" id="signup">Log in</a>
+          {{#if loading}}
+            {{>spinner}}
+          {{/if}}
       </div>
     </div>
   {{/if}}
