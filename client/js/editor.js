@@ -4,6 +4,7 @@ import { EditUsers } from '../../collections/editusers'
 import { Session } from 'meteor/session'
 import { Tracker } from 'meteor/tracker'
 import { Changes } from '../../collections/changes'
+import { Profiles } from '../../collections/profiles'
 import { EditorContents } from '../../collections/editor'
 import { Meteor } from 'meteor/meteor';
 import { Documents } from '../../collections/files'
@@ -17,6 +18,7 @@ var editId = null;
 var init = true;
 var docId = null;
 var illegals = [];
+var profileId = null;
 var illegalTimeout = {};
 var saveHandle;
 
@@ -32,6 +34,11 @@ Template.EditorPage.onCreated(() => {
   });
   Meteor.subscribe("documents");
   Meteor.subscribe("userList");
+  Meteor.subscribe("profiles", function() {
+    var found = Profiles.find({user: Meteor.userId()}).fetch();
+    if(found.length)
+      profileId = found[0]._id;
+  });
 
   $(window).bind('beforeunload', function() {
     EditUsers.remove({_id : userId});
@@ -472,13 +479,15 @@ Template.EditorPage.helpers({
             change['time'] = (new Date()).toJSON();
             Changes.insert(change);
 
-            if(change['text'].length > 1) {
-              var a = change['text'].length - 1;
-              Profiles.update(profileId, {$inc: {added: 1}})
-            }
-            if(change['removed'].length > 1){
-              var r = change['removed'].length - 1;
-              Profiles.update(profileId, {inc: {removed: 1}})
+            if(profileId) {
+              if(change['text'].length > 1) {
+                var a = change['text'].length - 1;
+                Profiles.update(profileId, {$inc: {added: 1}})
+              }
+              if(change['removed'].length > 1){
+                var r = change['removed'].length - 1;
+                Profiles.update(profileId, {$inc: {removed: 1}})
+              }
             }
           }
          },
