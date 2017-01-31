@@ -212,7 +212,6 @@ Meteor.methods({
         console.log("initially called update JSON");
         console.log("User"+ id);
         var docs = Documents.find({userId: id}).fetch();
-        console.log(docs);
         if (id && docs.length != 0) {
             var basepath = Meteor.absolutePath + "/files/"+id;
                 
@@ -253,18 +252,20 @@ Meteor.methods({
     newFile: function(a) {
         var name = a[0];
         var userId = a[1];
+        var path = a[2];
+        console.log("PATHHHH"+path);
         console.log("newFile called" + name +"  for "+userId);
-        var path = Meteor.absolutePath + "/files/"+userId;
-        console.log("touching "+path+"/"+name);
-        fs.ensureDirSync(path, function(err) {
+        console.log("touching "+path);
+        console.log(path.substr(0,path.indexOf(name)));
+        fs.ensureDirSync(path.substr(path.indexOf(name)), function(err) {
             if (err) {
                 console.log("Error ensuring directory");
             }
         });
-        touch.sync(path+"/"+name);
+        touch.sync(path);
         console.log("User: " + Meteor.userId());
         var done = false;
-        Documents.addFile(path+"/"+name, {
+        Documents.addFile(path, {
             fileName: name,
             userId: Meteor.userId()
         }, function(err, fileObj) {

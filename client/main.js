@@ -151,7 +151,7 @@ Template.newFileModal.events({
     }
     console.log(nameInput);
     Meteor.call("getPath", function(err, path) {
-      var full = path + "/files/" + Meteor.userId()+"/"+nameInput;
+      var full = path + "/files" + Session.get('pathString')+"/"+nameInput;
       var found = Documents.find({path: full}).fetch()
       if(found.length > 0) {
         $("#errorBtn").click();
@@ -159,7 +159,7 @@ Template.newFileModal.events({
         //alert("Please give your file a unique name!");
         return;
       }
-      Meteor.call('newFile', [nameInput, Meteor.userId()], function() {
+      Meteor.call('newFile', [nameInput, Meteor.userId(), full], function() {
           var found = Documents.find({path: full}).fetch()
           if(found.length > 1) {
             $("#errorBtn").click();
