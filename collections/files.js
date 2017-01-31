@@ -8,5 +8,5 @@ export const Documents = new Meteor.Files({
             console.log("Name of thing you're trying to add " + name);
             return name.substr(0, name.indexOf('.'));
         }
-    }
+    }, 
 });

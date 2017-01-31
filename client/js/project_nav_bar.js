@@ -6,6 +6,7 @@ import { Meteor } from 'meteor/meteor';
 
 Template.TreeProj.onCreated(() => {
   Meteor.subscribe("currjson")
+  Meteor.call("updateJSON", Meteor.userId());
 });
 Template.TreeProj.onRendered(function () {
       this.$('#jstree').jstree({
@@ -37,7 +38,8 @@ Template.TreeProj.onRendered(function () {
       }
       var str_JSON = entry.json;
       str_JSON = str_JSON.replace(/name/g, 'text');
-      //console.log(str_JSON);
+      console.log("###########################################################################");
+      console.log("thing being rendered"+str_JSON);
       var tree = JSON.parse(str_JSON);
       $('#jstree').jstree(true).settings.core.data = tree;
       $('#jstree').jstree(true).refresh();
