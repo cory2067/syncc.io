@@ -66,34 +66,6 @@
     </div>
 
     <script>
-    function outf(text) {
-        console.log(text);
-    }
-    function builtinRead(x) {
-      if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
-              throw "File not found: '" + x + "'";
-      return Sk.builtinFiles["files"][x];
-    }
-
-    $("#runJsBtn").on('click', function() {
-      var code = $('.CodeMirror')[0].CodeMirror.getValue();
-      code = code.replace(/console.log/g, 'alert');
-      eval(code);
-    });
-    $("#runBtn").on('click', function() {
-      var prog = $('.CodeMirror')[0].CodeMirror.getValue();
-      Sk.pre = "output";
-      Sk.configure({output:outf, read:builtinRead});
-      var myPromise = Sk.misceval.asyncToPromise(function() {
-          return Sk.importMainWithBody("<stdin>", false, prog, true);
-      });
-      myPromise.then(function(mod) {
-          console.log('success');
-      },
-          function(err) {
-          console.log(err.toString());
-      });
-    });
     function showSave() {
         //console.log("mamaee");
         $("#saveMsg").fadeIn(500);

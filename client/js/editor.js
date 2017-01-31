@@ -31,22 +31,7 @@ Template.EditorPage.onCreated(() => {
     Session.set("ready", true);
   });
   Meteor.subscribe("documents");
-
-  //Set save file at intevals
-  saveHandle = Meteor.setInterval(function() {
-      console.log("Interval saving");
-      var content = doc.getValue();
-      var file = Documents.find({'_id': docId}).fetch();
-      var path = file[0].path;
-      var file_name;
-      if(file.length) {
-          file_name =  file[0].name;
-      }
-      console.log(file_name +"told to write" + content + " to "+ path);
-      Meteor.call('writeFile', [content, path, file_name]);
-
-  }, 3000);
-
+  Meteor.subscribe("userList");
 
   $(window).bind('beforeunload', function() {
     EditUsers.remove({_id : userId});
@@ -59,7 +44,7 @@ Template.EditorPage.onCreated(() => {
     if(file.length) {
       file_name =  file[0].name;
     }
-    console.log(file_name +"told to write" + content + " to "+ path);
+    //console.log(file_name +"told to write" + content + " to "+ path);
     Meteor.call('writeFile', [content, path, file_name]);
     Meteor.call("logServer", "deelt page beforeunload");
   });
@@ -185,6 +170,21 @@ Template.EditorPage.onRendered(() => {
           EditorContents.insert({editor: id, user: userId, doc: "", refresh:""}, function(err, _id) {
             editId = _id;
           });
+
+          //Set save file at intevals
+          saveHandle = Meteor.setInterval(function() {
+              console.log("Interval saving");
+              var content = doc.getValue();
+              var file = Documents.find({'_id': docId}).fetch();
+              var path = file[0].path;
+              var file_name;
+              if(file.length) {
+                  file_name =  file[0].name;
+              }
+              //console.log(file_name +"told to write" + content + " to "+ path
+              Meteor.call('writeFile', [content, path, file_name]);
+
+          }, 8000);
 
           setInterval(() => {
             EditorContents.update({_id: editId}, {$set: {doc: doc.getValue()}});
@@ -337,11 +337,16 @@ Template.EditorSidebar.helpers({
         var collabId = file[0].collab;
         console.log("returning");
         console.log(collabId);
+        console.log(Meteor.users.find().fetch());
         var collabEmail = collabId.map(function(id) {
-            var user =  Meteor.users.find().fetch();
+            console.log("id="+id);
+            var user =  Meteor.users.find(id).fetch();
+            console.log(user);
+            if(!user.length) return '';
+            console.log(user)
             console.log("User:");
             return user[0].emails[0].address;
-            
+
         });
         return collabEmail;
     }
@@ -383,7 +388,9 @@ Template.EditorSidebar.events({
   "click #collabBtn": function() {
     val = $("#collabUser").val();
     Meteor.call("findUser", [val, FlowRouter.getParam("editID")], function(e,r) {
-      console.log(r)
+      if(r == 'err') {
+        alert("Could not add! Are you sure this user exists?");
+      }
     });
   },
 });
@@ -397,6 +404,20 @@ Template.FileTabs.helpers({
       return file[0].name;
     }
     return "Loading...";
+  }
+});
+
+Template.EditorConsole.helpers({
+  type() {
+    var l = false;
+    var file = Documents.find({'_id': FlowRouter.getParam("editID")}).fetch();
+    console.log(file);
+    if(file.length) {
+      splitted = file[0].name.split(".");
+      e = splitted[splitted.length-1];
+      if(e == "js" || e == "py") { l = true }
+      return {ext: e, legal:l};
+    }
   }
 });
 
@@ -483,35 +504,9 @@ Template.EditorPage.events({
       if(file.length) {
         file_name =  file[0].name;
       }
-      console.log(file_name +"told to write" + content + " to "+ path);
+      //console.log(file_name +"told to write" + content + " to "+ path);
       Meteor.call('writeFile', [content, path, file_name]);
     }
-});
-
-Template.EditorConsole.helpers({
-    fileType() {
-      var modeInput = Documents.find({'_id': FlowRouter.getParam("editID")}).fetch();
-      if(modeInput.length==0) {
-        return;
-      }
-      var val = modeInput[0].name, m, mode, spec;
-      //console.log(val);
-      if (m = /.+\.([^.]+)$/.exec(val)) {
-        var info = CodeMirror.findModeByExtension(m[1]);
-        //console.log("logged info is" + info);
-        if (info) {
-          mode = info.mode;
-          spec = info.mime;
-          //console.log("logged mode is" + mode);
-        }
-      }
-      if (mode) {
-        a = {name: val, type: mode,}
-        return a;
-      } else {
-        console.log("Could not find a mode corresponding to " + val);
-      }
-  }
 });
 
 Template.EditorPage.onDestroyed(function() {
@@ -526,7 +521,7 @@ Template.EditorPage.onDestroyed(function() {
   if(file.length) {
     file_name =  file[0].name;
   }
-  console.log(file_name +"told to write" + content + " to "+ path);
+  //console.log(file_name +"told to write" + content + " to "+ path);
   Meteor.call('writeFile', [content, path, file_name]);
   Meteor.clearInterval(saveHandle);
 });

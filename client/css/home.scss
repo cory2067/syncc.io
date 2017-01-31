@@ -123,7 +123,7 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
     width: 100%; //increases to span top of page
     display: inline-block; //spans the page
     box-shadow: $shadow;
-    
+
     ul{
       list-style-type: none; //removes bullets
       margin: 0;
@@ -175,7 +175,7 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
             text-transform: none;
             font-size: .7em;
             font-family: 'Open Sans', sans-serif;
-    
+
             &:hover{
               background-color: white;
               color: $accent;
@@ -200,7 +200,7 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
             display: inline; //allows to be on the same line
           }
 
-          #signup-link{ //signup button 
+          #signup-link{ //signup button
             float: left;
           }
 
@@ -223,7 +223,7 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
           }
         }
     }
-    
+
     //Responsive Navbar {fixed}
     @media screen and (max-width: 600px){
       ul { padding: 0; }
@@ -263,7 +263,7 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
       width: 180px;
       padding: 8px 0;
       border-radius: 5px;
-      
+
       &:hover{
         color: $cloud;
         background: $accent;
@@ -280,7 +280,7 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
   padding: 65px 30px;
   text-align: center;
   border-radius: 5px;
-    
+
     //responsive location
     @media screen and (max-width: 800px){
       margin: 25% auto auto auto;
@@ -327,7 +327,7 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
         color: $chrome;
       }
     }
-    
+
     h3{font-weight: bold; font-size: 1.4em;}
   }
 
@@ -560,7 +560,7 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
           margin: 0;
           .padded{width:100vw}
           .floater{
-            float:left; 
+            float:left;
             width: 100%;
             .search-box{margin:0;}
           }
@@ -660,7 +660,7 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
           &:focus{
             background-color: $accented;
           }
-        }        
+        }
 
       .title{
         color: $white;
@@ -684,7 +684,7 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
       margin: 9px 10px 0 0;
       padding: 0 20px;
       border-radius: 5px;
-      
+
       &:hover{
         color: $cloud;
         background: $grey;
@@ -991,7 +991,7 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
     }
     input:focus + .slider{ box-shadow: 0 0 1px $accent; }
     input:checked + .slider:before{ transform: translateX(16px); }
-  }  
+  }
 
 
 
@@ -999,7 +999,16 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
  Editor Console Styles
 **********************/
   $miniheight: 20px;
-  $consoleheight: 150px;
+  $consoleheight: 220px;
+
+  #output {
+      height: $consoleheight;
+      background-color: $charcoal;
+      border-color: $charcoal;
+      color: $cloud;
+      line-height: 1.2;
+      font-size: inherit;
+  }
 
   #console-wrapper{
     position: fixed;
@@ -1016,14 +1025,14 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
       margin-bottom: 0px;
     }
   }
-  
+
   #mini-bottombar{
     background-color: $accented;
     height: $miniheight;
     width: 100vw;
-    //display: inline-block; 
+    //display: inline-block;
 
-    ul{ 
+    ul{
       padding: 0 10px;
       list-style-type: none; //removes the bullets
       margin:0;
@@ -1043,7 +1052,7 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
           background-color: $accent;
         }
       }
-    }  
+    }
   }
 
   #console-bottombar{
@@ -1078,7 +1087,7 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
 
     .file-tabs{
       background-color: $darkgrey;
-      border: none; 
+      border: none;
       border-left: 2px solid $accent;
       color: $cloud;
       margin: 7px 0 0 7px; //creates top+left margin
@@ -1152,7 +1161,7 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
 
       .modal-body{
         padding: 0 10px 10px;
-        
+
         .form-control{border: 1px solid $chrome;}
 
         .fileName{

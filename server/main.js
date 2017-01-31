@@ -51,6 +51,9 @@ Meteor.startup(() => {
     }
     return this.ready();
   });
+  Meteor.publish('userList', ()=> {
+    return Meteor.users.find();
+  })
 });
 
 Meteor.methods({
@@ -61,13 +64,19 @@ Meteor.methods({
       var email = params[0];
       var editor = params[1];
       console.log(email);
-      var result = Accounts.findUserByEmail(email);
       try {
         var result = Accounts.findUserByEmail(email);
+        //console.log(Documents.find(editor).fetch());
+        var exists = Documents.find(editor).fetch()[0]['collab'].includes(result._id);
+        if(exists) {
+          return "exists"
+        }
         Documents.update(editor, {$push: {collab: result._id}});
         return result['_id'];
       } catch (e) {
-        return ""
+        console.log(e);
+        console.log("It's ok, we're gonna ignore that error and move on.");
+        return "err"
       }
     },
     logServer: function(msg) {
@@ -343,7 +352,7 @@ Meteor.methods({
       }));
       while(!done) Meteor.sleep(100);
       return "done"
-    }, 
+    },
     removeFolder: function(path) {
         var rpath = Meteor.absolutePath+"/files"+path;
         console.log(rpath);
