@@ -78,7 +78,7 @@ Template.ProfilePage.helpers({
     }
 });
 
-Template.newFileModal.events({
+Template.allModal.events({
   'click #cloneGitRepo': function() {
       var repo = $("#repoURL").val();
       console.log(repo);
@@ -94,7 +94,9 @@ Template.newFileModal.events({
     console.log("---------------------------------main start");
     var nameInput = $("#fileName").val()
     if(!nameInput) {
-      alert("Illegal name!");
+      $("#errorBtn").click();
+      ErrorMessage("name");
+      //alert("Illegal name!");
       return;
     }
     console.log(nameInput);
@@ -102,18 +104,24 @@ Template.newFileModal.events({
       var full = path + "/files/" + Meteor.userId()+"/"+nameInput;
       var found = Documents.find({path: full}).fetch()
       if(found.length > 0) {
-        alert("Please give your file a unique name!");
+        $("#errorBtn").click();
+        ErrorMessage("uniqueName")
+        //alert("Please give your file a unique name!");
         return;
       }
       Meteor.call('newFile', [nameInput, Meteor.userId()], function() {
           var found = Documents.find({path: full}).fetch()
           if(found.length > 1) {
-            alert("I honestly have no idea how this happened. Where did I go wrong? Why is our code so buggy?");
+            $("#errorBtn").click();
+            ErrorMessage("why");
+            //alert("I honestly have no idea how this happened. Where did I go wrong? Why is our code so buggy?");
           } else if(found.length == 1) {
             window.location.href = "/" + found[0]['_id'];
           }
           else {
-            alert("File creation failed D:");
+            $("#errorBtn").click();
+            ErrorMessage("fileFail");
+            //alert("File creation failed D:");
           }
           Meteor.call("updateJSON", Meteor.userId());
       });
