@@ -63,8 +63,10 @@ Template.ProjectList.helpers({
         Meteor.call('makeDir');
         console.log("fetching folders");
         var pathString = Session.get('pathString');
+        Session.set("loading", true);
         Meteor.call('getSubDir', ['/files'+pathString],
             function(err, serverResult) {
+                Session.set('loading', false);
                 console.log("serverResult"+serverResult);
                 if (err) {
                     console.log("error getting subdir from callback"+ err);
