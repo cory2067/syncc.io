@@ -381,6 +381,23 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
     background-color: white;
   }
 
+  #popup img{
+	  max-height: 300px;
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    margin:auto;
+  	opacity: 0;
+  	pointer-events: none;
+    transition: opacity 0.5s;
+  }
+
+  .hover #popup img{
+    opacity: 1.0;
+  }
+
   //*******PROJECTS SIDEBAR********//
   //Credit: http://bootsnipp.com/snippets/featured/side-menu-on-hover//
     #projectSidebar{
@@ -1056,7 +1073,7 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
         line-height: $miniheight;
         text-align: center;
         padding: 0 10px;
-        white-space: nowrap;        
+        white-space: nowrap;
       }
     }
   }
