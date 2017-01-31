@@ -29,7 +29,7 @@ Syncc is an online collaborative coding platform that combines the real-time cap
 * directory-structure-json, fs-extra, unzip, dPaste
 
 ## Other tools
-*jsTree, Octicons, spin.js
+* jsTree, Octicons, spin.js
 
 
 
