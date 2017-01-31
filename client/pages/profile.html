@@ -1,6 +1,6 @@
 <template name="ProfilePage">
     <!--Will serve as the new home page when a user is logged in-->
-    <h1 id="proTitle">SYNCC</h1>
+    <h1 id="proTitle" style="font-size: 40pt; margin-top: 35px;"></h1>
     <div class="profile-wrapper">
         <div class="row">
             <div class="col-md-4">
@@ -59,5 +59,21 @@
             $("#bioInput").toggleClass("toggled");
             $("#Bio").toggleClass("toggled");
         }
+
+        $(function(){
+            var rand = Math.floor((Math.random() * 10));
+            //this should've been an array
+            var things = ["welcome back!",
+            "that's a dancc database",
+            "code on",
+            "drag n drop easter egg in projects?",
+            "what's beyond the horizon?",
+            "yo gurl nice commit",
+            "next update will include giraffes",
+            "the sky is always blue here",
+            "mntan says hi",
+            "syncc it up"]
+            $("#proTitle").html(things[rand]);
+        })
     </script>
 </template>

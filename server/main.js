@@ -110,9 +110,10 @@ Meteor.methods({
     unzip: function(file) {
         var fileName = file[0];
         var id = Meteor.userId();
+        var sessPath = file[2];
         console.log("meteor.userId()"+ Meteor.userId());
-        var filePath = file[1]+"/"+id+"/"+fileName;
-        var outPath = file[1] + "/"+id;
+        var filePath = file[1]+sessPath+"/"+fileName;
+        var outPath = file[1] + sessPath;
         //console.log(filePath + " -> " + outPath);
         readStream = fs.createReadStream(filePath);
         console.log("starting unzip");
@@ -212,7 +213,6 @@ Meteor.methods({
         console.log("initially called update JSON");
         console.log("User"+ id);
         var docs = Documents.find({userId: id}).fetch();
-        console.log(docs);
         if (id && docs.length != 0) {
             var basepath = Meteor.absolutePath + "/files/"+id;
                 
@@ -253,18 +253,20 @@ Meteor.methods({
     newFile: function(a) {
         var name = a[0];
         var userId = a[1];
+        var path = a[2];
+        console.log("PATHHHH"+path);
         console.log("newFile called" + name +"  for "+userId);
-        var path = Meteor.absolutePath + "/files/"+userId;
-        console.log("touching "+path+"/"+name);
-        fs.ensureDirSync(path, function(err) {
+        console.log("touching "+path);
+        console.log(path.substr(0,path.indexOf(name)));
+        fs.ensureDirSync(path.substr(path.indexOf(name)), function(err) {
             if (err) {
                 console.log("Error ensuring directory");
             }
         });
-        touch.sync(path+"/"+name);
+        touch.sync(path);
         console.log("User: " + Meteor.userId());
         var done = false;
-        Documents.addFile(path+"/"+name, {
+        Documents.addFile(path, {
             fileName: name,
             userId: Meteor.userId()
         }, function(err, fileObj) {
@@ -299,10 +301,11 @@ Meteor.methods({
     assignFile: function(f) {
         var id = f[0];
         var name = f[1];
+        var sessPath = f[2];
         console.log("setting you as collaborator");
         Documents.update(id, {$set: {collab: []}});
-        console.log("giving to user path: " + Meteor.absolutePath+"/files/"+Meteor.userId());
-        var path = Meteor.absolutePath+"/files/"+Meteor.userId();
+        console.log("giving to user path: " + Meteor.absolutePath+"/files"+sessPath);
+        var path = Meteor.absolutePath+"/files"+sessPath;
         Documents.update(id, {$set: {_storagePath: path}});
 
         var oldPath = Meteor.absolutePath+"/files/"+name;
