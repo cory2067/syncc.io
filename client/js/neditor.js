@@ -5,6 +5,9 @@ Template.NeditorPage.onCreated(() => {
 });
 
 Template.NeditorPage.onRendered(() => {
+    $("#exportBtn").remove();
+    $("#saveFile").remove();
+    $("#shareBtn").remove();
     setTimeout(() => {$("#tree-toggle").click()}, 50);
     Meteor.call("getPath", function(err, path) {
       $("#jstree").on("activate_node.jstree", (a,b)=>{

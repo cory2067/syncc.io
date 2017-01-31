@@ -32,7 +32,7 @@ Template.TreeProj.onRendered(function () {
     });*/
     Meteor.call("updateJSON", Meteor.userId());
     Tracker.autorun(function(c) {
-      var entry = CurrJSON.findOne();
+      var entry = CurrJSON.findOne({id: Meteor.userId()});
       if(!entry) {
         return;
       }

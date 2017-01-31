@@ -435,7 +435,8 @@ font-family: 'Fira Sans Extra Condensed', sans-serif;
 
       &.toggled{
         //margin-top: -20px;
-        height: 0;
+        //height: 0;
+        //this was breaking as hecc before ^
       }
     }
 
