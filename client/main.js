@@ -60,7 +60,7 @@ Template.HomePage.events({
         Session.set("loadingDemo", true);
         console.log("making new file");
         var nameInput = Random.id(8)+'.py';
-        Meteor.call('newFile', [nameInput, "demo"], function() {
+        Meteor.call('newFile', [nameInput, "demo",""], function() {
           Meteor.call("getPath", function(err, path) {
             var full = path + "/files/demo/" + nameInput;
             console.log(full);

@@ -253,14 +253,20 @@ Meteor.methods({
     newFile: function(a) {
         var name = a[0];
         var userId = a[1];
-        var path = a[2];
-        console.log("PATHHHH"+path);
         console.log("newFile called" + name +"  for "+userId);
+        if(a[2] != "") {
+            var path = a[2];
+        } else {
+            var path = Meteor.absolutePath+"/files/demo/"+a[0];
+        }
+        console.log("PATHHHH"+path);
         console.log("touching "+path);
-        console.log(path.substr(0,path.indexOf(name)));
-        fs.ensureDirSync(path.substr(path.indexOf(name)), function(err) {
+        console.log(path.substr(path.indexOf(name)));
+        fs.ensureDirSync(path.substr(0, path.indexOf(name)), function(err) {
             if (err) {
                 console.log("Error ensuring directory");
+            } else {
+                console.log(path.substr(path.indexOf(name)) +" should exist");
             }
         });
         touch.sync(path);
