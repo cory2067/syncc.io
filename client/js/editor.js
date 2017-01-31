@@ -471,6 +471,15 @@ Template.EditorPage.helpers({
             change['user'] = userId;
             change['time'] = (new Date()).toJSON();
             Changes.insert(change);
+
+            if(change['text'].length > 1) {
+              var a = change['text'].length - 1;
+              Profiles.update(profileId, {$inc: {added: 1}})
+            }
+            if(change['removed'].length > 1){
+              var r = change['removed'].length - 1;
+              Profiles.update(profileId, {inc: {removed: 1}})
+            }
           }
          },
         "cursorActivity": function(doc) {
