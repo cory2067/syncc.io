@@ -110,9 +110,10 @@ Meteor.methods({
     unzip: function(file) {
         var fileName = file[0];
         var id = Meteor.userId();
+        var sessPath = file[2];
         console.log("meteor.userId()"+ Meteor.userId());
-        var filePath = file[1]+"/"+id+"/"+fileName;
-        var outPath = file[1] + "/"+id;
+        var filePath = file[1]+sessPath+"/"+fileName;
+        var outPath = file[1] + sessPath;
         //console.log(filePath + " -> " + outPath);
         readStream = fs.createReadStream(filePath);
         console.log("starting unzip");
@@ -300,10 +301,11 @@ Meteor.methods({
     assignFile: function(f) {
         var id = f[0];
         var name = f[1];
+        var sessPath = f[2];
         console.log("setting you as collaborator");
         Documents.update(id, {$set: {collab: []}});
-        console.log("giving to user path: " + Meteor.absolutePath+"/files/"+Meteor.userId());
-        var path = Meteor.absolutePath+"/files/"+Meteor.userId();
+        console.log("giving to user path: " + Meteor.absolutePath+"/files"+sessPath);
+        var path = Meteor.absolutePath+"/files"+sessPath;
         Documents.update(id, {$set: {_storagePath: path}});
 
         var oldPath = Meteor.absolutePath+"/files/"+name;
