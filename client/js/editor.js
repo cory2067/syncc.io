@@ -23,6 +23,7 @@ var illegalTimeout = {};
 var saveHandle;
 
 Template.EditorPage.onCreated(() => {
+  init = true;
   Session.set("ready", false)
   Session.set("loginTimeout", false);
   setTimeout(()=>{Session.set("loginTimeout", true)}, 1000);
@@ -58,6 +59,7 @@ Template.EditorPage.onCreated(() => {
 });
 
 Template.EditorPage.onRendered(() => {
+  init = true;
     Meteor.call("getPath", function(err, path) {
       $("#jstree").on("activate_node.jstree", (a,b)=>{
         var content = doc.getValue();
@@ -110,6 +112,7 @@ Template.EditorPage.onRendered(() => {
   }, 1000); */
     var syncTimeout = null;
     EditUsers.update({_id: userId}, {$set: {init: true}});
+    init = true;
     Tracker.autorun(function (c) {
       if(!Meteor.user() && !Session.get("loginTimeout")) {
         console.log("usr wher u at")
