@@ -168,7 +168,11 @@ Template.newFileModal.events({
     }
     console.log(nameInput);
     Meteor.call("getPath", function(err, path) {
-      var full = path + "/files" + Session.get('pathString')+"/"+nameInput;
+      if (!Session.get('pathString')) {
+          var full = path + "/files/" +Meteor.userId() +"/"+nameInput;
+      } else {
+        var full = path + "/files" + Session.get('pathString')+"/"+nameInput;
+      }
       var found = Documents.find({path: full}).fetch()
       if(found.length > 0) {
         $("#errorBtn").click();
